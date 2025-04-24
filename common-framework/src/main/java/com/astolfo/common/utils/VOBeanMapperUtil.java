@@ -3,6 +3,7 @@ package com.astolfo.common.utils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class VOBeanMapperUtil {
@@ -24,5 +25,12 @@ public class VOBeanMapperUtil {
                 .stream()
                 .map(entity -> entityToVO(entity, entityVOClass))
                 .collect(Collectors.toList());
+    }
+
+    public static <T, V> Set<V> toVOSet(Set<T> entitySet, Class<V> entityVOClass) {
+        return entitySet
+                .stream()
+                .map(entity -> entityToVO(entity, entityVOClass))
+                .collect(Collectors.toSet());
     }
 }
