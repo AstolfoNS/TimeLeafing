@@ -12,10 +12,5 @@ public enum ArticleStatus {
 
     final String status;
 
-
-//    ArticleStatus(String status) {
-//        this.status = status;
-//    }
-
 }
 

@@ -13,4 +13,5 @@ public class ServerGuestApplication
     public static void main(String[] args) {
         SpringApplication.run(ServerGuestApplication.class, args);
     }
+
 }

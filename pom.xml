@@ -10,7 +10,7 @@
   <name>system-project-root</name>
   <url>http://maven.apache.org</url>
   <modules>
-    <module>framework-common</module>
+    <module>common-framework</module>
     <module>server-admin</module>
     <module>server-guest</module>
   </modules>
@@ -51,6 +51,12 @@
       <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        <version>3.5.11</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-jsqlparser</artifactId>
         <version>3.5.11</version>
       </dependency>
 

@@ -4,6 +4,7 @@ import com.astolfo.common.result.PageResult;
 import com.astolfo.common.result.ResponseResult;
 import com.astolfo.entity.Article;
 import com.astolfo.service.ArticleService;
+import com.astolfo.vo.HomepageArticleVO;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,13 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping("/")
-    public ResponseResult<PageResult<Article>> fetchAllArticles(
+    @GetMapping("/homepage")
+    public ResponseResult<PageResult<HomepageArticleVO>> fetchAllArticles(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "sort", required = false) String sort
     ) {
-        return articleService.fetchAllArticles(page, size, sort);
+        return articleService.fetchAllArticlesOnHomePage(page, size, sort);
     }
 
     @GetMapping("/{articleId}")
