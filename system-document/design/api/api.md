@@ -1,12 +1,12 @@
 # 项目接口设计
 
 + ## 1. 首页接口设计
-    + ### 1- 热门列表
+    + ### 1- 首页列表展示
         ```
             // sort默认采用文章访问数
             // sort参数有：viewCounts，likeCounts，createTime
       
-            GET /article?page=1&sort=viewCount
+            GET /article/homepage?page=1&sort=viewCount
         ``` 
     + ### 2- 文章详情
         ```

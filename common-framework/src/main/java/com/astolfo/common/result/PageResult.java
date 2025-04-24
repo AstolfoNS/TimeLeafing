@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class PageResult<T> {
 
     private List<T> records;
