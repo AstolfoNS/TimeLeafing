@@ -6,7 +6,7 @@
             // sort默认采用文章访问数
             // sort参数有：viewCounts，likeCounts，createTime
       
-            GET /article/homepage?page=1&sort=viewCount
+            GET /article/homepage?page=1&size=6&sort=viewCount
         ``` 
     + ### 2- 文章详情
         ```
