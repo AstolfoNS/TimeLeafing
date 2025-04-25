@@ -2,12 +2,19 @@
 
 + ## 1. 首页接口设计
     + ### 1- 首页列表展示
+        + #### api 
         ```
             // sort默认采用文章访问数
             // sort参数有：viewCounts，likeCounts，createTime
       
             GET /article/homepage?page=1&size=6&sort=viewCount
         ``` 
+        + #### 数据格式
+        ```
+            {
+                
+            }    
+        ```
     + ### 2- 文章详情
         ```
             GET /article/{articlId}
