@@ -1,5 +1,6 @@
 package com.astolfo.controller;
 
+import com.astolfo.common.enums.ArticleSortField;
 import com.astolfo.common.result.PageResult;
 import com.astolfo.common.result.ResponseResult;
 import com.astolfo.entity.Article;
@@ -19,9 +20,9 @@ public class ArticleController {
     public ResponseResult<PageResult<HomepageArticleVO>> fetchAllArticles(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "sort", required = false) String sort
+            @RequestParam(value = "sort", required = false) String sortName
     ) {
-        return articleService.fetchAllArticlesOnHomePage(page, size, sort);
+        return articleService.fetchAllArticlesOnHomepage(page, size, ArticleSortField.getByFieldName(sortName));
     }
 
     @GetMapping("/{articleId}")
