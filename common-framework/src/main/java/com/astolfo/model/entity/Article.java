@@ -1,6 +1,7 @@
-package com.astolfo.entity;
+package com.astolfo.model.entity;
 
 import com.astolfo.common.enums.ArticleStatus;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,11 +10,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @TableName("article")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Article {
 
@@ -43,4 +45,7 @@ public class Article {
     private Long viewCounts;                                                                                            // 访问数量
 
     private Long likeCounts;                                                                                            // 点赞数量
+
+    @TableField(exist = false)
+    private List<String> tags;
 }
