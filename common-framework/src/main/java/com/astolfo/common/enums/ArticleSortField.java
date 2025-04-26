@@ -1,6 +1,6 @@
 package com.astolfo.common.enums;
 
-import com.astolfo.entity.Article;
+import com.astolfo.model.entity.Article;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +22,15 @@ public enum ArticleSortField {
 
     public final SFunction<Article, ?> sortMethod;
 
-    private static final Map<String, ArticleSortField> FIELD_NAME_TO_ENUM =
-            Stream.of(values()).collect(Collectors.toMap(ArticleSortField::getFieldName, Function.identity()));
+    private static final Map<String, ArticleSortField> ENUM_MAP;
 
+
+    static {
+        ENUM_MAP = Stream.of(values()).collect(Collectors.toMap(ArticleSortField::getFieldName, Function.identity()));
+    }
 
     public static ArticleSortField getByFieldName(String fieldName) {
-        return FIELD_NAME_TO_ENUM.getOrDefault(fieldName, CREATE_TIME);
+        return ENUM_MAP.getOrDefault(fieldName, CREATE_TIME);
     }
 
 }
