@@ -14,13 +14,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("""
         SELECT
-            article.id,
-            article.title,
-            article.summary,
-            article.cover_image,
-            article.create_time,
-            article.view_counts,
-            article.like_counts,
+            article.*,
             user.username AS author_name
         FROM
             article
@@ -37,23 +31,14 @@ public interface ArticleMapper extends BaseMapper<Article> {
         DESC
     """)
     @Results({
+            @Result(property = "id", column = "id"),
             @Result(property = "tags", column = "id", many = @Many(select = "getTagNamesByArticleId"))
     })
     Page<ArticleSummaryVO> getHomepageArticles(Page<ArticleSummaryVO> page, @Param("sortField") String sortField);
 
     @Select("""
         SELECT
-            article.id,
-            article.title,
-            article.content,
-            article.summary,
-            article.cover_image,
-            article.status,
-            article.is_deleted,
-            article.is_public,
-            article.create_time,
-            article.view_counts,
-            article.like_counts,
+            article.*,
             user.username AS author_name
         FROM
             article
@@ -69,7 +54,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
             article.id = #{id}
     """)
     @Results({
-        @Result(property = "tags", column = "id", many = @Many(select = "getTagNamesByArticleId"))
+            @Result(property = "id", column = "id"),
+            @Result(property = "tags", column = "id", many = @Many(select = "getTagNamesByArticleId"))
     })
     ArticleDetailsVO getArticleDetailsVOById(@Param("id") Long id);
 
