@@ -20,7 +20,7 @@ import java.util.List;
 public class Article {
 
     @TableId
-    private Long articleId;                                                                                             // 文章ID
+    private Long id;                                                                                                    // 文章ID
 
     private String authorName;                                                                                          // 作者姓名
 
@@ -46,6 +46,4 @@ public class Article {
 
     private Long likeCounts;                                                                                            // 点赞数量
 
-    @TableField(exist = false)
-    private List<String> tags;
 }

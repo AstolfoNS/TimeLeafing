@@ -1,6 +1,7 @@
 package com.astolfo.model.vo;
 
 import com.astolfo.common.enums.ArticleStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ArticleDetailsVO {
 
-    private Long articleId;
+    private Long id;
 
     private String authorName;
 
