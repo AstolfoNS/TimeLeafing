@@ -52,7 +52,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         wrapper
                 .orderByDesc(articleSortField.getSortMethod())                                                          // 指定wrapper排序方式
                 .eq(Article::getStatus, ArticleStatus.ARTICLE)                                                          // 首页文章为已发布
-                .eq(Article::getIsPublic, true);                                                                        // 首页文章为公开
+                .eq(Article::getIsPublic, Boolean.TRUE);                                                                // 首页文章为公开
 
         Page<Article> articlePage = createHomepageArticlePage(page, size);
 
@@ -77,7 +77,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
 
         wrapper
-                .eq(Article::getIsPublic, true)
+                .eq(Article::getIsPublic, Boolean.TRUE)
                 .eq(Article::getStatus, ArticleStatus.ARTICLE)
                 .eq(Article::getArticleId, articleId);
 
