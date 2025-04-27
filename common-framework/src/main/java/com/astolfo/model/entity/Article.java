@@ -1,7 +1,6 @@
 package com.astolfo.model.entity;
 
 import com.astolfo.common.enums.ArticleStatus;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @TableName("article")
 @NoArgsConstructor
