@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface ArticleService extends IService<Article> {
 
-    ResponseResult<PageResult<ArticleSummaryVO>> fetchAllArticlesOnHomepage(
+    ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
             Integer page,
             Integer size,
             ArticleSortField articleSortField
     );
 
-    ResponseResult<ArticleDetailsVO> getArticleByArticleId(Long articleId);
+    ResponseResult<ArticleDetailsVO> getArticleById(Long id);
 }

@@ -1,7 +1,5 @@
 package com.astolfo.common.enums;
 
-import com.astolfo.model.entity.Article;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,13 +12,13 @@ import java.util.stream.Stream;
 @Getter
 public enum ArticleSortField {
 
-    LIKE_COUNTS("likeCounts", Article::getLikeCounts),
-    VIEW_COUNTS("viewCounts", Article::getViewCounts),
-    CREATE_TIME("createTime", Article::getCreateTime);
+    LIKE_COUNTS("likeCounts", "article.like_counts"),
+    VIEW_COUNTS("viewCounts", "article.view_counts"),
+    CREATE_TIME("createTime", "article.create_time"),;
 
     public final String fieldName;
 
-    public final SFunction<Article, ?> sortMethod;
+    public final String sortField;
 
     private static final Map<String, ArticleSortField> ENUM_MAP;
 

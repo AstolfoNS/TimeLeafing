@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS `article` (
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `view_counts`               BIGINT DEFAULT 0,                                                                       -- 浏览量
     `like_counts`               BIGINT DEFAULT 0,                                                                       -- 点赞量
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 文章是否被删除（软删）
+    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 文章是否被删除（软删）
+
+    FOREIGN KEY (author_id) REFERENCES user(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -92,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 评论时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 评论是否被删除（软删）
 
+    FOREIGN KEY (article_id) REFERENCES article(id),
+    FOREIGN KEY (reviewer_id) REFERENCES user(id),
     FOREIGN KEY (root_id) REFERENCES comment(id),
     FOREIGN KEY (parent_id) REFERENCES comment(id)
 

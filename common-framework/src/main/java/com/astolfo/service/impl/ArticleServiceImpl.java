@@ -2,23 +2,18 @@ package com.astolfo.service.impl;
 
 import com.astolfo.common.constants.ArticleHomepageConstant;
 import com.astolfo.common.enums.ArticleSortField;
-import com.astolfo.common.enums.ArticleStatus;
 import com.astolfo.common.enums.HttpCode;
 import com.astolfo.common.result.PageResult;
 import com.astolfo.common.result.ResponseResult;
-import com.astolfo.mapper.TagMapper;
 import com.astolfo.model.entity.Article;
 import com.astolfo.mapper.ArticleMapper;
-import com.astolfo.service.ArticleService;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.astolfo.service.ArticleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
@@ -26,11 +21,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Resource
     private ArticleMapper articleMapper;
 
-    @Resource
-    private TagMapper tagMapper;
 
-
-    private Page<Article> createHomepageArticlePage(Integer page, Integer size) {
+    private Page<ArticleSummaryVO> setHomepageArticlePage(Integer page, Integer size) {
         if (page == null || page == 0) {
             page = ArticleHomepageConstant.DEFAULT_PAGE;
         }
@@ -42,51 +34,34 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public ResponseResult<PageResult<ArticleSummaryVO>> fetchAllArticlesOnHomepage(
+    public ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
             Integer page,
             Integer size,
             ArticleSortField articleSortField
     ) {
-        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-
-        wrapper
-                .orderByDesc(articleSortField.getSortMethod())                                                          // 指定wrapper排序方式
-                .eq(Article::getStatus, ArticleStatus.ARTICLE)                                                          // 首页文章为已发布
-                .eq(Article::getIsPublic, Boolean.TRUE);                                                                // 首页文章为公开
-
-        Page<Article> articlePage = createHomepageArticlePage(page, size);
-
-        this.page(articlePage, wrapper);
-
-        List<Article> articleList = articlePage.getRecords();
+        Page<ArticleSummaryVO> resultPage =
+                articleMapper.getHomepageArticles(setHomepageArticlePage(page, size), articleSortField.getSortField());
 
         return ResponseResult.okResult(
                 PageResult
                         .<ArticleSummaryVO>builder()
-                        .records()
-                        .pages(articlePage.getPages())                                                                  // 总页数
-                        .total(articlePage.getTotal())                                                                  // 总数
-                        .current(articlePage.getCurrent())                                                              // 当前页数
-                        .size(articlePage.getSize())                                                                    // 每页数量
+                        .records(resultPage.getRecords())
+                        .pages(resultPage.getPages())
+                        .total(resultPage.getTotal())
+                        .current(resultPage.getCurrent())
+                        .size(resultPage.getSize())
                         .build()
         );
     }
 
     @Override
-    public ResponseResult<ArticleDetailsVO> getArticleByArticleId(Long articleId) {
-        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
+    public ResponseResult<ArticleDetailsVO> getArticleById(Long id) {
+        ArticleDetailsVO articleDetailsVO = articleMapper.getArticleDetailsVOById(id);
 
-        wrapper
-                .eq(Article::getIsPublic, Boolean.TRUE)
-                .eq(Article::getStatus, ArticleStatus.ARTICLE)
-                .eq(Article::getArticleId, articleId);
-
-        Article article = articleMapper.selectOne(wrapper);
-
-        if (article == null) {
+        if (articleDetailsVO == null) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
-            return ResponseResult.okResult();
+            return ResponseResult.okResult(articleDetailsVO);
         }
     }
 
