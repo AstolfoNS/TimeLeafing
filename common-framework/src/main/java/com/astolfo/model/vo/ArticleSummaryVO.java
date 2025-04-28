@@ -26,6 +26,8 @@ public class ArticleSummaryVO {
 
     private Date createTime;
 
+    private Date updateTime;
+
     private Long viewCounts;
 
     private Long likeCounts;

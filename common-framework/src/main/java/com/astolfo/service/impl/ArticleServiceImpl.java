@@ -1,6 +1,7 @@
 package com.astolfo.service.impl;
 
 import com.astolfo.common.constants.ArticleHomepageConstant;
+import com.astolfo.common.enums.ArticleStatus;
 import com.astolfo.common.enums.HttpCode;
 import com.astolfo.common.result.PageResult;
 import com.astolfo.common.result.ResponseResult;
@@ -73,11 +74,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public ResponseResult<List<TagVO>> getTagVOListById(Long id) {
-        if (articleMapper.selectById(id) == null) {
+    public ResponseResult<List<TagVO>> getTagVOsById(Long id) {
+        Article article = articleMapper.selectById(id);
+
+        if (article == null || article.getIsPublic() == Boolean.FALSE || article.getStatus() == ArticleStatus.DRAFT) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
-            return ResponseResult.okResult(articleMapper.getTagVOListById(id));
+            return ResponseResult.okResult(articleMapper.getTagVOsById(id));
         }
     }
 
