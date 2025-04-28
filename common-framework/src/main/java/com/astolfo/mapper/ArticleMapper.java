@@ -14,6 +14,20 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("""
         SELECT
+            tag.tag_name
+        FROM
+            tag
+        JOIN
+            article_tag
+        ON
+            tag.id = article_tag.tag_id
+        WHERE
+            article_tag.article_id = #{articleId}
+    """)
+    List<String> getTagNamesByArticleId(@Param("articleId") Long articleId);
+
+    @Select("""
+        SELECT
             article.*,
             user.username AS author_name
         FROM
@@ -61,16 +75,25 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("""
         SELECT
-            tag.tag_name
+            article.*,
+            user.username AS author_name
         FROM
-            tag
+            article
         JOIN
-            article_tag
+            user
         ON
-            tag.id = article_tag.tag_id
+            article.author_id = user.id
         WHERE
-            article_tag.article_id = #{articleId}
+            article.is_public = true
+            AND
+            article.status = 'ARTICLE'
+            AND
+            article.id = #{id}
     """)
-    List<String> getTagNamesByArticleId(@Param("articleId") Long articleId);
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "tags", column = "id", many = @Many(select = "getTagNamesByArticleId"))
+    })
+    ArticleSummaryVO getArticleSummaryVOById(@Param("id") Long id);
 
 }

@@ -15,6 +15,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
@@ -22,7 +24,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
 
-    private Page<ArticleSummaryVO> setHomepageArticlePage(Integer page, Integer size) {
+    private Page<ArticleSummaryVO> setArticleHomepage(Integer page, Integer size) {
         if (page == null || page == 0) {
             page = ArticleHomepageConstant.DEFAULT_PAGE;
         }
@@ -37,10 +39,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
             Integer page,
             Integer size,
-            ArticleSortField articleSortField
+            String field
     ) {
-        Page<ArticleSummaryVO> resultPage =
-                articleMapper.getHomepageArticles(setHomepageArticlePage(page, size), articleSortField.getSortField());
+        Page<ArticleSummaryVO> resultPage = articleMapper.getHomepageArticles(setArticleHomepage(page, size), field);
 
         return ResponseResult.okResult(
                 PageResult
@@ -55,7 +56,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public ResponseResult<ArticleDetailsVO> getArticleById(Long id) {
+    public ResponseResult<ArticleDetailsVO> getArticleDetailsVOById(Long id) {
         ArticleDetailsVO articleDetailsVO = articleMapper.getArticleDetailsVOById(id);
 
         if (articleDetailsVO == null) {
@@ -65,4 +66,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
     }
 
+    @Override
+    public ResponseResult<ArticleSummaryVO> getArticleSummaryVOById(Long id) {
+        ArticleSummaryVO articleSummaryVO = articleMapper.getArticleSummaryVOById(id);
+
+        if (articleSummaryVO == null) {
+            return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
+        } else {
+            return ResponseResult.okResult(articleSummaryVO);
+        }
+    }
+
+    @Override
+    public ResponseResult<List<String>> getTagNamesByArticleId(Long articleId) {
+        if (articleMapper.selectById(articleId) == null) {
+            return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
+        } else {
+            return ResponseResult.okResult(articleMapper.getTagNamesByArticleId(articleId));
+        }
+    }
 }
