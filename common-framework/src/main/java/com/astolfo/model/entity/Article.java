@@ -20,7 +20,7 @@ public class Article {
     @TableId
     private Long id;                                                                                                    // 文章ID
 
-    private String authorName;                                                                                          // 作者姓名
+    private String authorId;                                                                                            // 作者ID
 
     private String title;                                                                                               // 标题
 

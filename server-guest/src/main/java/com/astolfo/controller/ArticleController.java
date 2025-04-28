@@ -9,6 +9,8 @@ import com.astolfo.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/article")
 @RestController
 public class ArticleController {
@@ -20,13 +22,24 @@ public class ArticleController {
     public ResponseResult<PageResult<ArticleSummaryVO>> fetchAllArticles(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "sort", required = false) String sortName
+            @RequestParam(value = "sort", required = false) String field
     ) {
-        return articleService.getHomepageArticles(page, size, ArticleSortField.getByFieldName(sortName));
+        return articleService.getHomepageArticles(page, size, ArticleSortField.getByFieldName(field).getSortField());
     }
 
-    @GetMapping("/{articleId}")
-    public ResponseResult<ArticleDetailsVO> getArticleByArticleId(@PathVariable("articleId") Long articleId) {
-        return articleService.getArticleById(articleId);
+    @GetMapping("/{id}/details")
+    public ResponseResult<ArticleDetailsVO> getArticleDetailsVOById(@PathVariable("id") Long id) {
+        return articleService.getArticleDetailsVOById(id);
     }
+
+    @GetMapping("/{id}/summary")
+    public ResponseResult<ArticleSummaryVO> getArticleSummaryVOById(@PathVariable("id") Long id) {
+        return articleService.getArticleSummaryVOById(id);
+    }
+
+    @GetMapping("/{id}/tags")
+    public ResponseResult<List<String>> getTagNamesByArticleId(@PathVariable("id") Long articleId) {
+        return articleService.getTagNamesByArticleId(articleId);
+    }
+
 }
