@@ -1,5 +1,6 @@
 package com.astolfo.common.result;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,15 @@ public class PageResult<T> {
 
     private Long size;
 
+
+    public static <T> PageResult<T> init(IPage<T> page) {
+        return PageResult
+               .<T>builder()
+               .records(page.getRecords())
+               .pages(page.getPages())
+               .total(page.getTotal())
+               .current(page.getCurrent())
+               .size(page.getSize())
+               .build();
+    }
 }
