@@ -23,35 +23,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
 
-    private Page<ArticleSummaryVO> setArticleHomepage(Integer page, Integer size) {
-        if (page == null || page == 0) {
-            page = ArticleHomepageConstant.DEFAULT_PAGE;
-        }
-        if (size == null || size == 0) {
-            size = ArticleHomepageConstant.DEFAULT_SIZE;
-        }
-
-        return Page.of(page, size);
-    }
-
     @Override
     public ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
             Integer page,
             Integer size,
             String field
     ) {
-        Page<ArticleSummaryVO> resultPage = articleMapper.getHomepageArticles(setArticleHomepage(page, size), field);
+        if (page == null || page < 1) {
+            page = ArticleHomepageConstant.DEFAULT_PAGE;
+        }
+        if (size == null || size < 1) {
+            size = ArticleHomepageConstant.DEFAULT_SIZE;
+        }
 
-        return ResponseResult.okResult(
-                PageResult
-                        .<ArticleSummaryVO>builder()
-                        .records(resultPage.getRecords())
-                        .pages(resultPage.getPages())
-                        .total(resultPage.getTotal())
-                        .current(resultPage.getCurrent())
-                        .size(resultPage.getSize())
-                        .build()
-        );
+        return ResponseResult.okResult(PageResult.init(articleMapper.getHomepageArticles(Page.of(page, size), field)));
     }
 
     @Override
@@ -84,4 +69,5 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return ResponseResult.okResult(articleMapper.getTagNamesByArticleId(articleId));
         }
     }
+
 }
