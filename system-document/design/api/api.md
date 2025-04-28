@@ -1,14 +1,14 @@
 # 项目接口设计
 
 + ## 1. 首页接口设计
-    + ### 1- 首页列表展示
+    + ### 1- 首页列表展示（详细）
         + #### api 
         ```
             // page默认值为1
             // size默认值为6
             // sort默认采用创建时间，sort参数有：viewCounts，likeCounts，createTime
-      
-            GET /article/homepage?page=1&size=6&sort=viewCount
+            
+            GET /article/details?page=1&size=6&sort=viewCount
         ``` 
         + #### 数据格式
         ```json
@@ -18,38 +18,73 @@
             "data": {
                 "records": [
                     {
-                        "id": 3,
-                        "authorName": "alice",
-                        "title": "algorithm",
+                        "id": 1,
+                        "author": {
+                            "id": 1,
+                            "username": "astolfo"
+                        },
+                        "title": "spring",
+                        "content": "teach spring",
+                        "status": "ARTICLE",
+                        "isDeleted": false,
+                        "isPublic": true,
                         "createTime": "2025-04-27T14:02:53.000+00:00",
+                        "updateTime": "2025-04-27T14:02:53.000+00:00",
                         "viewCounts": 0,
                         "likeCounts": 0,
                         "tags": [
-                            "动态规划",
-                            "贪心"
+                            {
+                                "id": 3,
+                                "tagName": "后端开发"
+                            },
+                            {
+                                "id": 4,
+                                "tagName": "java"
+                            }
                         ]
                     },
                     {
-                        "id": 4,
-                        "authorName": "alice",
-                        "title": "language large model",
+                        "id": 2,
+                        "author": {
+                            "id": 1,
+                            "username": "astolfo"
+                        },
+                        "title": "django",
+                        "content": "teach django",
+                        "status": "ARTICLE",
+                        "isDeleted": false,
+                        "isPublic": true,
                         "createTime": "2025-04-27T14:02:53.000+00:00",
+                        "updateTime": "2025-04-27T14:02:53.000+00:00",
                         "viewCounts": 0,
                         "likeCounts": 0,
-                        "tags": []
+                        "tags": [
+                            {
+                                "id": 3,
+                                "tagName": "后端开发"
+                            },
+                            {
+                                "id": 5,
+                                "tagName": "python"
+                            }
+                        ]
                     }
                 ],
                 "total": 4,
                 "pages": 2,
-                "current": 2,
+                "current": 1,
                 "size": 2
             }
         }
         ```
-    + ### 2- 文章详情
+    + ### 2- 首页列表展示（摘要）
         + #### api
         ```
-            GET /article/{id}/details
+            // page默认值为1
+            // size默认值为6
+            // sort默认采用创建时间，sort参数有：viewCounts，likeCounts，createTime       
+            
+            GET /article/summary?page=1&size=6&sort=viewCount
         ```
         + #### 数据格式
         ```json
@@ -57,25 +92,57 @@
             "code": 200,
             "message": "操作成功",
             "data": {
-                "id": 1,
-                "authorName": "astolfo",
-                "title": "spring",
-                "content": "teach spring",
-                "status": "ARTICLE",
-                "isDeleted": false,
-                "isPublic": true,
-                "createTime": "2025-04-27T14:02:53.000+00:00",
-                "updateTime": "2025-04-27T14:02:53.000+00:00",
-                "viewCounts": 0,
-                "likeCounts": 0,
-                "tags": [
-                    "后端开发",
-                    "java"
-                ]
+                "records": [
+                    {
+                        "id": 1,
+                        "author": {
+                            "id": 1,
+                            "username": "astolfo"
+                        },
+                        "title": "spring",
+                        "createTime": "2025-04-27T14:02:53.000+00:00",
+                        "viewCounts": 0,
+                        "likeCounts": 0,
+                        "tags": [
+                            {
+                                "id": 3,
+                                "tagName": "后端开发"
+                            },
+                            {
+                                "id": 4,
+                                "tagName": "java"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "author": {
+                            "id": 1,
+                            "username": "astolfo"
+                        },
+                        "title": "django",
+                        "createTime": "2025-04-27T14:02:53.000+00:00",
+                        "viewCounts": 0,
+                        "likeCounts": 0,
+                        "tags": [
+                            {
+                                "id": 3,
+                                "tagName": "后端开发"
+                            },
+                            {
+                                "id": 5,
+                                "tagName": "python"
+                            }
+                        ]
+                    }
+                ],
+                "total": 4,
+                "pages": 2,
+                "current": 1,
+                "size": 2
             }
         }
         ```
-    
     + ### 3- 文章摘要
         + #### api
         ```
@@ -87,34 +154,104 @@
             "code": 200,
             "message": "操作成功",
             "data": {
-                "id": 1,
-                "authorName": "astolfo",
-                "title": "spring",
+                "id": 3,
+                "author": {
+                    "id": 2,
+                    "username": "alice"
+                },
+                "title": "algorithm",
                 "createTime": "2025-04-27T14:02:53.000+00:00",
+                "updateTime": "2025-04-27T14:02:53.000+00:00",
                 "viewCounts": 0,
                 "likeCounts": 0,
                 "tags": [
-                    "后端开发",
-                    "java"
+                    {
+                        "id": 1,
+                        "tagName": "动态规划"
+                    },
+                    {
+                        "id": 2,
+                        "tagName": "贪心"
+                    }
                 ]
             }
         }
         ```
-    + ### 4- 获取文章标签
+    + ### 4- 文章详情
         + #### api
         ```
-            GET /article/{id}/tags
+            GET /article/{id}/details
+        ```
+        + #### 数据格式
+        ```json 
+        {
+            "code": 200,
+            "message": "操作成功",
+            "data": {
+                "id": 3,
+                "author": {
+                    "id": 2,
+                    "username": "alice"
+                },
+                "title": "algorithm",
+                "content": "teach algorithm",
+                "status": "ARTICLE",
+                "isDeleted": false,
+                "isPublic": true,
+                "createTime": "2025-04-27T14:02:53.000+00:00",
+                "updateTime": "2025-04-27T14:02:53.000+00:00",
+                "viewCounts": 0,
+                "likeCounts": 0,
+                "tags": [
+                    {
+                        "id": 1,
+                        "tagName": "动态规划"
+                    },
+                    {
+                        "id": 2,
+                        "tagName": "贪心"
+                    }
+                ]
+            }
+        }
+        ```
+      + ### 5- 获取文章标签
+          + #### api
+          ```
+              GET /article/{id}/tags
+          ```
+          + #### 数据格式
+          ```json
+          {
+              "code": 200,
+              "message": "操作成功",
+              "data": [
+                  {
+                      "id": 1,
+                      "tagName": "动态规划"
+                  },
+                  {
+                      "id": 2,
+                      "tagName": "贪心"
+                  }
+              ]
+         }
+          ```
+    + ### 5- 获得文章作者
+        + #### api
+        ```
+            GET /article/{id}/author
         ```
         + #### 数据格式
         ```json
         {
             "code": 200,
             "message": "操作成功",
-            "data": [
-                "后端开发",
-                "python"
-            ]
-        }
+            "data": {
+                "id": 2,
+                "username": "alice"
+            }
+        }           
         ```
     + ### 5- 增加浏览量
         + #### api

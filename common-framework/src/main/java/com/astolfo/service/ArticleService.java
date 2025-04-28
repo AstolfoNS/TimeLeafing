@@ -28,7 +28,7 @@ public interface ArticleService extends IService<Article> {
 
     ResponseResult<ArticleSummaryVO> getArticleSummaryVOById(Long id);
 
-    ResponseResult<List<TagVO>> getTagVOListById(Long id);
+    ResponseResult<List<TagVO>> getTagVOsById(Long id);
 
     ResponseResult<UserVO> getUserVOById(Long id);
 

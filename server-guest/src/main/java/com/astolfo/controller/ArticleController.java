@@ -50,8 +50,8 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}/tags")
-    public ResponseResult<List<TagVO>> getTagVOListById(@PathVariable("id") Long id) {
-        return articleService.getTagVOListById(id);
+    public ResponseResult<List<TagVO>> getTagVOsById(@PathVariable("id") Long id) {
+        return articleService.getTagVOsById(id);
     }
 
     @GetMapping("/{id}/author")
