@@ -17,7 +17,7 @@ public class ArticleDetailsVO {
 
     private Long id;
 
-    private String authorName;
+    private UserVO author;
 
     private String title;
 
@@ -41,6 +41,6 @@ public class ArticleDetailsVO {
 
     private Long likeCounts;
 
-    private List<String> tags;
+    private List<TagVO> tags;
 
 }
