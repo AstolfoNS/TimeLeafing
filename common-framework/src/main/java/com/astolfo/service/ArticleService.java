@@ -5,13 +5,20 @@ import com.astolfo.common.result.ResponseResult;
 import com.astolfo.model.entity.Article;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
+import com.astolfo.model.vo.UserVO;
+import com.astolfo.model.vo.TagVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
 public interface ArticleService extends IService<Article> {
+    ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+            Integer page,
+            Integer size,
+            String field
+    );
 
-    ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
+    ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
             Integer page,
             Integer size,
             String field
@@ -21,6 +28,8 @@ public interface ArticleService extends IService<Article> {
 
     ResponseResult<ArticleSummaryVO> getArticleSummaryVOById(Long id);
 
-    ResponseResult<List<String>> getTagNamesByArticleId(Long articleId);
+    ResponseResult<List<TagVO>> getTagVOListById(Long id);
+
+    ResponseResult<UserVO> getUserVOById(Long id);
 
 }

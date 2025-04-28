@@ -8,6 +8,8 @@ import com.astolfo.model.entity.Article;
 import com.astolfo.mapper.ArticleMapper;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
+import com.astolfo.model.vo.UserVO;
+import com.astolfo.model.vo.TagVO;
 import com.astolfo.service.ArticleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,12 +25,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
 
-    @Override
-    public ResponseResult<PageResult<ArticleSummaryVO>> getHomepageArticles(
-            Integer page,
-            Integer size,
-            String field
-    ) {
+    private static <T> Page<T> page(Integer page, Integer size) {
         if (page == null || page < 1) {
             page = ArticleHomepageConstant.DEFAULT_PAGE;
         }
@@ -36,37 +33,60 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             size = ArticleHomepageConstant.DEFAULT_SIZE;
         }
 
-        return ResponseResult.okResult(PageResult.init(articleMapper.getHomepageArticles(Page.of(page, size), field)));
+        return new Page<>(page, size);
+    }
+
+    @Override
+    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+            Integer page,
+            Integer size,
+            String field
+    ) {
+        return ResponseResult.okResult(PageResult.init(articleMapper.getDetailsArticles(page(page, size), field)));
+    }
+
+    @Override
+    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
+            Integer page,
+            Integer size,
+            String field
+    ) {
+        return ResponseResult.okResult(PageResult.init(articleMapper.getSummaryArticles(page(page, size), field)));
+    }
+
+    public static <T> ResponseResult<T> checkArticleResult(T result) {
+        if (result == null) {
+            return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
+        } else {
+            return ResponseResult.okResult(result);
+        }
     }
 
     @Override
     public ResponseResult<ArticleDetailsVO> getArticleDetailsVOById(Long id) {
-        ArticleDetailsVO articleDetailsVO = articleMapper.getArticleDetailsVOById(id);
-
-        if (articleDetailsVO == null) {
-            return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
-        } else {
-            return ResponseResult.okResult(articleDetailsVO);
-        }
+        return checkArticleResult(articleMapper.getArticleDetailsVOById(id));
     }
 
     @Override
     public ResponseResult<ArticleSummaryVO> getArticleSummaryVOById(Long id) {
-        ArticleSummaryVO articleSummaryVO = articleMapper.getArticleSummaryVOById(id);
+        return checkArticleResult(articleMapper.getArticleSummaryVOById(id));
+    }
 
-        if (articleSummaryVO == null) {
+    @Override
+    public ResponseResult<List<TagVO>> getTagVOListById(Long id) {
+        if (articleMapper.selectById(id) == null) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
-            return ResponseResult.okResult(articleSummaryVO);
+            return ResponseResult.okResult(articleMapper.getTagVOListById(id));
         }
     }
 
     @Override
-    public ResponseResult<List<String>> getTagNamesByArticleId(Long articleId) {
-        if (articleMapper.selectById(articleId) == null) {
+    public ResponseResult<UserVO> getUserVOById(Long id) {
+        if (articleMapper.selectById(id) == null) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
-            return ResponseResult.okResult(articleMapper.getTagNamesByArticleId(articleId));
+            return ResponseResult.okResult(articleMapper.getUserVOById(id));
         }
     }
 
