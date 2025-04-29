@@ -1,11 +1,10 @@
 package com.astolfo.mapper.provider;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.jdbc.SQL;
 
 public class TagSqlProvider {
 
-    public String getArticleByTagName(@Param("tagName") String tagName, @Param("field") String field) {
+    public String getArticlesByTagName(@Param("tagName") String tagName, @Param("field") String field) {
         return """
             SELECT
                 article.*
@@ -30,4 +29,27 @@ public class TagSqlProvider {
             DESC
         """;
     }
+
+    public String getArticlesById(@Param("id") Long id, @Param("field") String field) {
+        return """
+            SELECT
+                article.*
+            FROM
+                article
+            JOIN
+                article_tag
+            ON
+                article.id = article_tag.article_id
+            WHERE
+                tag.tag_id = #{id}
+                AND
+                article.is_public = true
+                AND
+                article.status = 'ARTICLE'
+            ORDER BY
+                ${field}
+            DESC
+        """;
+    }
+
 }
