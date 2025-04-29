@@ -53,4 +53,9 @@ public class ArticleController {
         return articleService.getTagVOsById(id);
     }
 
+    @PutMapping("/{id}/add-view-counts")
+    public ResponseResult<Integer> addViewCounts(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
+        return articleService.addViewCounts(id, count == null ? 0 : count);
+    }
+
 }

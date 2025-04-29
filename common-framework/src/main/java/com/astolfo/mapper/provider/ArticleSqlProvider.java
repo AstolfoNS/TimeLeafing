@@ -50,4 +50,15 @@ public class ArticleSqlProvider {
         """;
     }
 
+    public String addViewCounts(@Param("id") Long id, @Param("count") Integer count) {
+        return """
+            UPDATE
+                article
+            SET
+                article.view_counts = article.view_counts + #{count}
+            WHERE
+                article.id = #{id}
+        """;
+    }
+
 }

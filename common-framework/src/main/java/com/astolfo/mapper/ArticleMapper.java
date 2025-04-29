@@ -80,4 +80,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     ArticleSummaryVO getArticleSummaryVOById(@Param("id") Long id);
 
+    @UpdateProvider(type = ArticleSqlProvider.class, method = "addViewCounts")
+    Integer addViewCounts(@Param("id") Long id, @Param("count") Integer count);
+
 }
