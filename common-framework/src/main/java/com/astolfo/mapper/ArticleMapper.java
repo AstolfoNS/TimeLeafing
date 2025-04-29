@@ -1,5 +1,6 @@
 package com.astolfo.mapper;
 
+import com.astolfo.mapper.provider.ArticleSqlProvider;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.entity.Article;
@@ -13,33 +14,10 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-    @Select("""
-        SELECT
-            tag.*
-        FROM
-            tag
-        JOIN
-            article_tag
-        ON
-            tag.id = article_tag.tag_id
-        WHERE
-            article_tag.article_id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getTagsById")
     List<TagVO> getTagVOsById(@Param("id") Long id);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${field}
-        DESC
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticles")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
@@ -55,19 +33,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     Page<ArticleSummaryVO> getSummaryArticleVOs(Page<ArticleSummaryVO> page, @Param("field") String field);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${field}
-        DESC
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticles")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
@@ -83,18 +49,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     Page<ArticleDetailsVO> getDetailsArticleVOs(Page<ArticleDetailsVO> page, @Param("field") String field);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticleById")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
@@ -109,18 +64,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     ArticleDetailsVO getArticleDetailsVOById(@Param("id") Long id);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticleById")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(

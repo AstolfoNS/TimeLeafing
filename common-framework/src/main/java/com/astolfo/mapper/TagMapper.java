@@ -1,5 +1,6 @@
 package com.astolfo.mapper;
 
+import com.astolfo.mapper.provider.TagSqlProvider;
 import com.astolfo.model.entity.Tag;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
@@ -10,29 +11,7 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface TagMapper extends BaseMapper<Tag> {
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            article_tag
-        ON
-            article.id = article_tag.article_id
-        JOIN
-            tag
-        ON
-            article_tag.tag_id = tag.id
-        WHERE
-            tag.tag_name = #{tagName}
-            AND
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${field}
-        DESC
-    """)
+    @SelectProvider(type = TagSqlProvider.class, method = "getArticleByTagName")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
@@ -52,29 +31,7 @@ public interface TagMapper extends BaseMapper<Tag> {
             @Param("tagName") String tagName
     );
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            article_tag
-        ON
-            article.id = article_tag.article_id
-        JOIN
-            tag
-        ON
-            article_tag.tag_id = tag.id
-        WHERE
-            tag.tag_name = #{tagName}
-            AND
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${field}
-        DESC
-    """)
+    @SelectProvider(type = TagSqlProvider.class, method = "getArticleByTagName")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
