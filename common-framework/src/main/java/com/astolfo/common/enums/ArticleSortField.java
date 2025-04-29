@@ -16,6 +16,7 @@ public enum ArticleSortField {
     VIEW_COUNTS("viewCounts", "article.view_counts"),
     CREATE_TIME("createTime", "article.create_time"),;
 
+
     public final String fieldName;
 
     public final String sortField;

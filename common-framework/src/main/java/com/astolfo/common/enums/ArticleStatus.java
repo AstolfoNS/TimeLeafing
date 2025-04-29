@@ -10,6 +10,7 @@ public enum ArticleStatus {
     DRAFT("DRAFT"),
     ARTICLE("ARTICLE");
 
+
     final String status;
 
 }

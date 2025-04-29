@@ -11,6 +11,7 @@ public enum UserRole {
     ADMIN("ADMIN"),
     SYSTEM("SYSTEM");
 
+
     final String role;
 
 }

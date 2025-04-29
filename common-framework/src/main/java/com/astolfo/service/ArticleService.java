@@ -29,4 +29,6 @@ public interface ArticleService extends IService<Article> {
 
     ResponseResult<List<TagVO>> getTagVOsById(Long id);
 
+    ResponseResult<Integer> addViewCounts(Long id, Integer count);
+
 }

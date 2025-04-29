@@ -83,4 +83,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
     }
 
+    @Override
+    public ResponseResult<Integer> addViewCounts(Long id, Integer count) {
+        return ResponseResult.okResult(articleMapper.addViewCounts(id, count));
+    }
+
 }
