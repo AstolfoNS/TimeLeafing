@@ -1,10 +1,10 @@
 package com.astolfo.mapper;
 
+import com.astolfo.mapper.provider.ArticleSqlProvider;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.entity.Article;
 import com.astolfo.model.vo.TagVO;
-import com.astolfo.model.vo.UserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.*;
@@ -14,129 +14,69 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-    @Select("""
-        SELECT
-            tag.*
-        FROM
-            tag
-        JOIN
-            article_tag
-        ON
-            tag.id = article_tag.tag_id
-        WHERE
-            article_tag.article_id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getTagsById")
     List<TagVO> getTagVOsById(@Param("id") Long id);
 
-    @Select("""
-        SELECT
-            user.*
-        FROM
-            user
-        JOIN
-            article
-        ON
-            user.id = article.author_id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
-    UserVO getUserVOById(@Param("id") Long id);
-
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${sortField}
-        DESC
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticles")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
-    Page<ArticleSummaryVO> getSummaryArticles(Page<ArticleSummaryVO> page, @Param("sortField") String sortField);
+    Page<ArticleSummaryVO> getSummaryArticleVOs(Page<ArticleSummaryVO> page, @Param("field") String field);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-        ORDER BY
-            ${sortField}
-        DESC
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticles")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
-    Page<ArticleDetailsVO> getDetailsArticles(Page<ArticleDetailsVO> page, @Param("sortField") String sortField);
+    Page<ArticleDetailsVO> getDetailsArticleVOs(Page<ArticleDetailsVO> page, @Param("field") String field);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticleById")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     ArticleDetailsVO getArticleDetailsVOById(@Param("id") Long id);
 
-    @Select("""
-        SELECT
-            article.*
-        FROM
-            article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getArticleById")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     ArticleSummaryVO getArticleSummaryVOById(@Param("id") Long id);
 

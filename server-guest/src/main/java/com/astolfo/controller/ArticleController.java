@@ -6,7 +6,6 @@ import com.astolfo.common.result.ResponseResult;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.vo.TagVO;
-import com.astolfo.model.vo.UserVO;
 import com.astolfo.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -22,21 +21,21 @@ public class ArticleController {
 
 
     @GetMapping("/summary")
-    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
+    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "sort", required = false) String field
     ) {
-        return articleService.getSummaryArticles(page, size, ArticleSortField.getByFieldName(field).getSortField());
+        return articleService.getSummaryArticleVOs(page, size, ArticleSortField.toSortField(field));
     }
 
     @GetMapping("/details")
-    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "sort", required = false) String field
     ) {
-        return articleService.getDetailsArticles(page, size, ArticleSortField.getByFieldName(field).getSortField());
+        return articleService.getDetailsArticleVOs(page, size, ArticleSortField.toSortField(field));
     }
 
     @GetMapping("/{id}/details")
@@ -54,8 +53,4 @@ public class ArticleController {
         return articleService.getTagVOsById(id);
     }
 
-    @GetMapping("/{id}/author")
-    public ResponseResult<UserVO> getUserVOById(@PathVariable("id") Long id) {
-        return articleService.getUserVOById(id);
-    }
 }
