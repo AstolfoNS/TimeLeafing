@@ -11,13 +11,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 public interface ArticleService extends IService<Article> {
-    ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+    ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticleVOs(
             Integer page,
             Integer size,
             String field
     );
 
-    ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
+    ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticleVOs(
             Integer page,
             Integer size,
             String field

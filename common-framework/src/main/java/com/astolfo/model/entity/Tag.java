@@ -24,4 +24,5 @@ public class Tag {
     private Date tagDate;
 
     private Boolean isDeleted;
+
 }

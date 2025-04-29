@@ -37,7 +37,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
             AND
             article.status = 'ARTICLE'
         ORDER BY
-            ${sortField}
+            ${field}
         DESC
     """)
     @Results({
@@ -53,7 +53,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     many = @Many(select = "getTagVOsById")
             )
     })
-    Page<ArticleSummaryVO> getSummaryArticles(Page<ArticleSummaryVO> page, @Param("sortField") String sortField);
+    Page<ArticleSummaryVO> getSummaryArticleVOs(Page<ArticleSummaryVO> page, @Param("field") String field);
 
     @Select("""
         SELECT
@@ -65,7 +65,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
             AND
             article.status = 'ARTICLE'
         ORDER BY
-            ${sortField}
+            ${field}
         DESC
     """)
     @Results({
@@ -81,7 +81,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     many = @Many(select = "getTagVOsById")
             )
     })
-    Page<ArticleDetailsVO> getDetailsArticles(Page<ArticleDetailsVO> page, @Param("sortField") String sortField);
+    Page<ArticleDetailsVO> getDetailsArticleVOs(Page<ArticleDetailsVO> page, @Param("field") String field);
 
     @Select("""
         SELECT

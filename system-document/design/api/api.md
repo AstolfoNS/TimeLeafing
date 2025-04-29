@@ -215,43 +215,27 @@
             }
         }
         ```
-      + ### 5- 获取文章标签
-          + #### api
-          ```
-              GET /article/{id}/tags
-          ```
-          + #### 数据格式
-          ```json
-          {
-              "code": 200,
-              "message": "操作成功",
-              "data": [
-                  {
-                      "id": 1,
-                      "tagName": "动态规划"
-                  },
-                  {
-                      "id": 2,
-                      "tagName": "贪心"
-                  }
-              ]
-         }
-          ```
-    + ### 5- 获得文章作者
+    + ### 5- 获取文章标签
         + #### api
         ```
-            GET /article/{id}/author
+            GET /article/{id}/tags
         ```
         + #### 数据格式
         ```json
         {
             "code": 200,
             "message": "操作成功",
-            "data": {
-                "id": 2,
-                "username": "alice"
-            }
-        }           
+            "data": [
+                {
+                    "id": 1,
+                    "tagName": "动态规划"
+                },
+                {
+                    "id": 2,
+                    "tagName": "贪心"
+                }
+            ]
+        }
         ```
     + ### 5- 增加浏览量
         + #### api

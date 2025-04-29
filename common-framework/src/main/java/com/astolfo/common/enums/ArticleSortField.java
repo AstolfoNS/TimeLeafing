@@ -31,4 +31,8 @@ public enum ArticleSortField {
         return ENUM_MAP.getOrDefault(fieldName, CREATE_TIME);
     }
 
+    public static String toSortField(String field) {
+        return getByFieldName(field).getSortField();
+    }
+
 }
