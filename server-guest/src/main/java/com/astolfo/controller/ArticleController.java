@@ -21,21 +21,21 @@ public class ArticleController {
 
 
     @GetMapping("/summary")
-    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
+    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "sort", required = false) String field
     ) {
-        return articleService.getSummaryArticles(page, size, ArticleSortField.getByFieldName(field).getSortField());
+        return articleService.getSummaryArticleVOs(page, size, ArticleSortField.toSortField(field));
     }
 
     @GetMapping("/details")
-    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "sort", required = false) String field
     ) {
-        return articleService.getDetailsArticles(page, size, ArticleSortField.getByFieldName(field).getSortField());
+        return articleService.getDetailsArticleVOs(page, size, ArticleSortField.toSortField(field));
     }
 
     @GetMapping("/{id}/details")

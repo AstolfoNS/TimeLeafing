@@ -37,21 +37,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticles(
+    public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticleVOs(
             Integer page,
             Integer size,
             String field
     ) {
-        return ResponseResult.okResult(PageResult.init(articleMapper.getDetailsArticles(page(page, size), field)));
+        return ResponseResult.okResult(PageResult.init(articleMapper.getDetailsArticleVOs(page(page, size), field)));
     }
 
     @Override
-    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticles(
+    public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticleVOs(
             Integer page,
             Integer size,
             String field
     ) {
-        return ResponseResult.okResult(PageResult.init(articleMapper.getSummaryArticles(page(page, size), field)));
+        return ResponseResult.okResult(PageResult.init(articleMapper.getSummaryArticleVOs(page(page, size), field)));
     }
 
     public static <T> ResponseResult<T> checkArticleResult(T result) {
