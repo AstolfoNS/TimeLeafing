@@ -6,7 +6,6 @@ import com.astolfo.common.result.ResponseResult;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.vo.TagVO;
-import com.astolfo.model.vo.UserVO;
 import com.astolfo.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -54,8 +53,4 @@ public class ArticleController {
         return articleService.getTagVOsById(id);
     }
 
-    @GetMapping("/{id}/author")
-    public ResponseResult<UserVO> getUserVOById(@PathVariable("id") Long id) {
-        return articleService.getUserVOById(id);
-    }
 }
