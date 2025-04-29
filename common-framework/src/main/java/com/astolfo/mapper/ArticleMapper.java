@@ -4,7 +4,6 @@ import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.entity.Article;
 import com.astolfo.model.vo.TagVO;
-import com.astolfo.model.vo.UserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.*;
@@ -30,31 +29,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("""
         SELECT
-            user.*
-        FROM
-            user
-        JOIN
-            article
-        ON
-            user.id = article.author_id
-        WHERE
-            article.is_public = true
-            AND
-            article.status = 'ARTICLE'
-            AND
-            article.id = #{id}
-    """)
-    UserVO getUserVOById(@Param("id") Long id);
-
-    @Select("""
-        SELECT
             article.*
         FROM
             article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
         WHERE
             article.is_public = true
             AND
@@ -65,8 +42,16 @@ public interface ArticleMapper extends BaseMapper<Article> {
     """)
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     Page<ArticleSummaryVO> getSummaryArticles(Page<ArticleSummaryVO> page, @Param("sortField") String sortField);
 
@@ -75,10 +60,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
             article.*
         FROM
             article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
         WHERE
             article.is_public = true
             AND
@@ -89,8 +70,16 @@ public interface ArticleMapper extends BaseMapper<Article> {
     """)
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     Page<ArticleDetailsVO> getDetailsArticles(Page<ArticleDetailsVO> page, @Param("sortField") String sortField);
 
@@ -99,10 +88,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
             article.*
         FROM
             article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
         WHERE
             article.is_public = true
             AND
@@ -112,8 +97,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
     """)
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     ArticleDetailsVO getArticleDetailsVOById(@Param("id") Long id);
 
@@ -122,10 +114,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
             article.*
         FROM
             article
-        JOIN
-            user
-        ON
-            article.author_id = user.id
         WHERE
             article.is_public = true
             AND
@@ -135,8 +123,16 @@ public interface ArticleMapper extends BaseMapper<Article> {
     """)
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "author", column = "id", one = @One(select = "getUserVOById")),
-            @Result(property = "tags", column = "id", many = @Many(select = "getTagVOsById"))
+            @Result(
+                    property = "author",
+                    column = "author_id",
+                    one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
+            ),
+            @Result(
+                    property = "tags",
+                    column = "id",
+                    many = @Many(select = "getTagVOsById")
+            )
     })
     ArticleSummaryVO getArticleSummaryVOById(@Param("id") Long id);
 

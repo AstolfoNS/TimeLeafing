@@ -9,7 +9,6 @@ import com.astolfo.model.entity.Article;
 import com.astolfo.mapper.ArticleMapper;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
-import com.astolfo.model.vo.UserVO;
 import com.astolfo.model.vo.TagVO;
 import com.astolfo.service.ArticleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -81,15 +80,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
             return ResponseResult.okResult(articleMapper.getTagVOsById(id));
-        }
-    }
-
-    @Override
-    public ResponseResult<UserVO> getUserVOById(Long id) {
-        if (articleMapper.selectById(id) == null) {
-            return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
-        } else {
-            return ResponseResult.okResult(articleMapper.getUserVOById(id));
         }
     }
 
