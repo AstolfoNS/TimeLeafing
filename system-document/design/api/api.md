@@ -240,7 +240,9 @@
     + ### 5- 增加浏览量
         + #### api
         ```
-            PUT /article/{articleId}/add-view-count
+            // 可以传入增加的数量count，默认为0
+      
+            PUT /article/{articleId}/add-view-counts?count=3
         ```
     
 + ## 2. 搜索接口设计
