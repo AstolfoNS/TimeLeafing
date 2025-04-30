@@ -11,6 +11,8 @@ spring:
       max-request-size: 5MB
   config:
     import: classpath:application-secret.yml
+  cache:
+    type: redis
 
 
 mybatis-plus:

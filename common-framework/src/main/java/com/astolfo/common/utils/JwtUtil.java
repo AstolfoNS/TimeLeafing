@@ -39,6 +39,7 @@ public class JwtUtil {
                 .subject(userDetails.getUsername())
                 .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
+                .issuer("Astolfo")
                 .expiresAt(issuedAt.plusSeconds(expire))
                 .build();
 

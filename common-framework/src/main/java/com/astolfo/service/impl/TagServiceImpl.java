@@ -19,6 +19,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     @Resource
     private TagMapper tagMapper;
 
+
     private static <T> Page<T> page(Integer page, Integer size) {
         if (page == null || page < 1) {
             page = ArticleSearchPageConstant.DEFAULT_PAGE;
