@@ -1,5 +1,6 @@
 package com.astolfo.common.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
@@ -12,8 +13,10 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     public JacksonRedisSerializer(Class<T> type, ObjectMapper objectMapper) {
         this.type = type;
-        this.objectMapper = objectMapper.copy();
-        this.objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
+        this.objectMapper = objectMapper
+                .copy()
+                .activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL)
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
     @Override
