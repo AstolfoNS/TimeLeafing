@@ -82,7 +82,7 @@
         ```
             // page默认值为1
             // size默认值为6
-            // sort默认采用创建时间，sort参数有：viewCounts，likeCounts，createTime       
+            // sort默认采用创建时间，sort参数有：viewCounts，likeCounts，createTime 
             
             GET /article/summary?page=1&size=6&sort=viewCount
         ```
