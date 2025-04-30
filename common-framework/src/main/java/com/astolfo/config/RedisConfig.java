@@ -1,7 +1,7 @@
 package com.astolfo.config;
 
 import com.astolfo.common.utils.JacksonRedisSerializer;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -20,20 +20,19 @@ import java.time.Duration;
 public class RedisConfig {
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory, ObjectMapper objectMapper) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
 
-        template.setConnectionFactory(connectionFactory);
+        template.setConnectionFactory(factory);
 
-        JacksonRedisSerializer<Object> jacksonRedisSerializer = new JacksonRedisSerializer<>(new TypeReference<>() {});
+        JacksonRedisSerializer<Object> jacksonSerializer = new JacksonRedisSerializer<>(Object.class, objectMapper);
 
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        StringRedisSerializer stringSerializer = new StringRedisSerializer();
 
-        template.setKeySerializer(stringRedisSerializer);
-        template.setHashKeySerializer(stringRedisSerializer);
-
-        template.setValueSerializer(jacksonRedisSerializer);
-        template.setHashValueSerializer(jacksonRedisSerializer);
+        template.setKeySerializer(stringSerializer);
+        template.setValueSerializer(jacksonSerializer);
+        template.setHashKeySerializer(stringSerializer);
+        template.setHashValueSerializer(jacksonSerializer);
 
         template.afterPropertiesSet();
 
@@ -41,21 +40,21 @@ public class RedisConfig {
     }
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        JacksonRedisSerializer<Object> jacksonRedisSerializer = new JacksonRedisSerializer<>(new TypeReference<>() {});
+    public CacheManager cacheManager(RedisConnectionFactory connectionFactory, ObjectMapper objectMapper) {
+        JacksonRedisSerializer<Object> jacksonSerializer = new JacksonRedisSerializer<>(Object.class, objectMapper);
 
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        StringRedisSerializer stringSerializer = new StringRedisSerializer();
 
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
+        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration
                 .defaultCacheConfig()
-                .entryTtl(Duration.ofHours(1))
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jacksonRedisSerializer))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jacksonSerializer))
+                .entryTtl(Duration.ofMinutes(30))
                 .disableCachingNullValues();
 
         return RedisCacheManager
                 .builder(connectionFactory)
-                .cacheDefaults(redisCacheConfiguration)
+                .cacheDefaults(cacheConfiguration)
                 .build();
     }
 
