@@ -2,7 +2,6 @@ package com.astolfo.common.utils;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,8 +45,16 @@ public class JwtUtil {
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(userDetails, Instant.now());
+    }
+
     public ParseToken parseToken(String token) throws JwtException {
-        return new ParseToken(jwtDecoder.decode(token));
+        try {
+            return new ParseToken(jwtDecoder.decode(token));
+        } catch (JwtException e) {
+            throw new JwtException("无效的Token：" + e.getMessage(), e);
+        }
     }
 
     @AllArgsConstructor
@@ -64,8 +71,8 @@ public class JwtUtil {
             return jwt.getClaimAsStringList("authorities");
         }
 
-        public Boolean validate() {
-            return jwt.getExpiresAt() != null && jwt.getExpiresAt().isBefore(Instant.now());
+        public Boolean isValid() {
+            return jwt.getExpiresAt() != null && jwt.getExpiresAt().isAfter(Instant.now());
         }
     }
 
