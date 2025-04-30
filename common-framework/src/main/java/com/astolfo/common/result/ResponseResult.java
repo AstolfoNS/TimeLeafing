@@ -13,7 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseResult<T> implements Serializable {
 
     private Integer code;

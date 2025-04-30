@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `password`                  VARCHAR(128) NOT NULL,                                                                  -- 用户密码
     `email`                     VARCHAR(256) UNIQUE NOT NULL,                                                           -- 用户邮箱
     `avatar`                    VARCHAR(256),                                                                           -- 用户头像
+    `gender`                    ENUM('MALE', 'FEMALE', 'UNKNOWN'),                                                      -- 用户性别
     `introduction`              TEXT,                                                                                   -- 用户简介
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 账号状态
     `role`                      ENUM('USER', 'ADMIN', 'SYSTEM') DEFAULT 'USER',                                         -- 用户角色
