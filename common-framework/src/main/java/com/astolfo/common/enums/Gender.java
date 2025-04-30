@@ -1,9 +1,17 @@
 package com.astolfo.common.enums;
 
-public enum Gender {
-    MALE,
-    FEMALE,
-    UNKNOWN;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
+public enum Gender {
+
+    MALE("male"),
+    FEMALE("female"),
+    UNKNOWN("unknown");
+
+
+    private final String gender;
 
 }
