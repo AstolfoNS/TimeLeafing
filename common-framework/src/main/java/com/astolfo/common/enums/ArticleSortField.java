@@ -17,9 +17,9 @@ public enum ArticleSortField {
     CREATE_TIME("createTime", "article.create_time"),;
 
 
-    public final String fieldName;
+    private final String fieldName;
 
-    public final String sortField;
+    private final String sortField;
 
     private static final Map<String, ArticleSortField> ENUM_MAP;
 

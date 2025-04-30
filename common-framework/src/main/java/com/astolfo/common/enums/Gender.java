@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum UserRole {
+public enum Gender {
 
-    USER("user"),
-    ADMIN("admin"),
-    SYSTEM("system");
+    MALE("male"),
+    FEMALE("female"),
+    UNKNOWN("unknown");
 
 
-    private final String role;
+    private final String gender;
 
 }

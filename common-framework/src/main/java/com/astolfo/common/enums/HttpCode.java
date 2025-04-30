@@ -25,8 +25,8 @@ public enum HttpCode {
     ARTICLE_NOT_FOUND(603, "没有查找到文章");
 
 
-    final Integer code;
+    private final Integer code;
 
-    final String message;
+    private final String message;
 
 }

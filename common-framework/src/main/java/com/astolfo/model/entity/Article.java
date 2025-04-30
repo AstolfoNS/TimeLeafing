@@ -3,7 +3,6 @@ package com.astolfo.model.entity;
 import com.astolfo.common.enums.ArticleStatus;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,34 +13,33 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Article {
 
     @TableId
-    private Long id;                                                                                                    // 文章ID
+    private Long id;
 
-    private String authorId;                                                                                            // 作者ID
+    private String authorId;
 
-    private String title;                                                                                               // 标题
+    private String title;
 
-    private String content;                                                                                             // 内容
+    private String content;
 
-    private String summary;                                                                                             // 摘要
+    private String summary;
 
-    private String coverImage;                                                                                          // 封面
+    private String coverImage;
 
-    private ArticleStatus status;                                                                                       // 状态
+    private ArticleStatus status;
 
-    private Boolean isDeleted;                                                                                          // 是否被删除
+    private Boolean isDeleted;
 
-    private Boolean isPublic;                                                                                           // 是否公开
+    private Boolean isPublic;
 
-    private Date createTime;                                                                                            // 创建时间
+    private Date createTime;
 
-    private Date updateTime;                                                                                            // 更新时间
+    private Date updateTime;
 
-    private Long viewCounts;                                                                                            // 访问数量
+    private Long viewCounts;
 
-    private Long likeCounts;                                                                                            // 点赞数量
+    private Long likeCounts;
 
 }

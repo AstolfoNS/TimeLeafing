@@ -1,6 +1,6 @@
 package com.astolfo.model.vo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.astolfo.common.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserVO {
 
     private Long id;
@@ -16,6 +15,8 @@ public class UserVO {
     private String username;
 
     private String avatar;
+
+    private Gender gender;
 
     private String introduction;
 

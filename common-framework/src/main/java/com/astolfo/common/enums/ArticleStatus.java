@@ -7,11 +7,11 @@ import lombok.Getter;
 @Getter
 public enum ArticleStatus {
 
-    DRAFT("DRAFT"),
-    ARTICLE("ARTICLE");
+    DRAFT("draft"),
+    ARTICLE("article");
 
 
-    final String status;
+    private final String status;
 
 }
 
