@@ -1,5 +1,6 @@
 package com.astolfo.model.entity;
 
+import com.astolfo.common.enums.Gender;
 import com.astolfo.common.enums.UserRole;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -25,6 +26,8 @@ public class User {
     private String email;
 
     private String avatar;
+
+    private Gender gender;
 
     private String introduction;
 
