@@ -11,7 +11,7 @@ public enum ArticleStatus {
     ARTICLE("article");
 
 
-    private final String status;
+    private final String statusName;
 
 }
 

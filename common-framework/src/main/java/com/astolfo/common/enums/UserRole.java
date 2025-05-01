@@ -12,6 +12,6 @@ public enum UserRole {
     SYSTEM("system");
 
 
-    private final String role;
+    private final String roleName;
 
 }

@@ -1,7 +1,10 @@
 package com.astolfo.security.service.impl;
 
 import com.astolfo.mapper.UserMapper;
+import com.astolfo.model.entity.User;
 import com.astolfo.model.vo.UserVO;
+import com.astolfo.security.entity.LoginUser;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,10 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserVO userVO = userMapper.getUserVOByUsername(username);
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
 
-        if (Objects.isNull(userVO)) {
-            throw new UsernameNotFoundException("<UNK>");
+        if (Objects.isNull(user)) {
+            throw new UsernameNotFoundException("用户名或者密码错误");
         }
+
+        return new LoginUser(user);
     }
 }
