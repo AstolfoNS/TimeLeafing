@@ -1,7 +1,6 @@
 package com.astolfo.common.utils;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 

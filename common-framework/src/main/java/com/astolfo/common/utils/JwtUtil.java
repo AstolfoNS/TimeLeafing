@@ -34,21 +34,25 @@ public class JwtUtil {
                 .collect(Collectors.toList());
     }
 
-    public String generateToken(UserDetails userDetails, Instant issuedAt) {
+    public String generateToken(UserDetails userDetails, Instant issuedAt, Long expiresInMillis) {
         JwtClaimsSet claims = JwtClaimsSet
                 .builder()
                 .subject(userDetails.getUsername())
                 .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
                 .issuer("Astolfo")
-                .expiresAt(issuedAt.plusSeconds(expire))
+                .expiresAt(issuedAt.plusSeconds(expiresInMillis))
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
+    public String generateToken(UserDetails userDetails, Long expireInMillis) {
+        return generateToken(userDetails, Instant.now(), expireInMillis);
+    }
+
     public String generateToken(UserDetails userDetails) {
-        return generateToken(userDetails, Instant.now());
+        return generateToken(userDetails, Instant.now(), expire);
     }
 
     public ParseToken parseToken(String token) throws JwtException {
