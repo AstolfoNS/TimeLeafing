@@ -12,6 +12,6 @@ public enum Gender {
     UNKNOWN("unknown");
 
 
-    private final String gender;
+    private final String genderName;
 
 }
