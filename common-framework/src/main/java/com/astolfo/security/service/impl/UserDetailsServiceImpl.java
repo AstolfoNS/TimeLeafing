@@ -2,7 +2,6 @@ package com.astolfo.security.service.impl;
 
 import com.astolfo.mapper.UserMapper;
 import com.astolfo.model.entity.User;
-import com.astolfo.model.vo.UserVO;
 import com.astolfo.security.entity.LoginUser;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Resource;
