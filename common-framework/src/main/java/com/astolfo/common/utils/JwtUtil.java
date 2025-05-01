@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -73,7 +74,7 @@ public class JwtUtil {
         }
 
         public Boolean isValid() {
-            return jwt.getExpiresAt() != null && jwt.getExpiresAt().isAfter(Instant.now());
+            return Objects.nonNull(jwt.getExpiresAt()) && jwt.getExpiresAt().isAfter(Instant.now());
         }
     }
 

@@ -16,6 +16,7 @@ public class TagController {
     @Resource
     private TagService tagService;
 
+
     @GetMapping("/{tagName}/summary")
     public ResponseResult<PageResult<ArticleSummaryVO>> getSummaryArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,

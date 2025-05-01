@@ -1,6 +1,7 @@
 package com.astolfo.model.vo;
 
 import com.astolfo.common.enums.Gender;
+import com.astolfo.common.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class UserVO {
     private String avatar;
 
     private Gender gender;
+
+    private UserRole role;
 
     private String introduction;
 

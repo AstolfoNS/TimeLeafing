@@ -17,6 +17,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
@@ -26,10 +27,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 
     private static <T> Page<T> page(Integer page, Integer size) {
-        if (page == null || page < 1) {
+        if (Objects.isNull(page) || page < 1) {
             page = ArticleHomepageConstant.DEFAULT_PAGE;
         }
-        if (size == null || size < 1) {
+        if (Objects.isNull(size) || size < 1) {
             size = ArticleHomepageConstant.DEFAULT_SIZE;
         }
 
@@ -55,7 +56,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     public static <T> ResponseResult<T> checkArticleResult(T result) {
-        if (result == null) {
+        if (Objects.isNull(result)) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
             return ResponseResult.okResult(result);
@@ -76,7 +77,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult<List<TagVO>> getTagVOsById(Long id) {
         Article article = articleMapper.selectById(id);
 
-        if (article == null || article.getIsPublic() == Boolean.FALSE || article.getStatus() == ArticleStatus.DRAFT) {
+        if (Objects.isNull(article) || !article.getIsPublic() || article.getStatus() == ArticleStatus.DRAFT) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
             return ResponseResult.okResult(articleMapper.getTagVOsById(id));

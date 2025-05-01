@@ -11,6 +11,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RequestMapping("/article")
 @RestController
@@ -55,7 +56,7 @@ public class ArticleController {
 
     @PutMapping("/{id}/add-view-counts")
     public ResponseResult<Integer> addViewCounts(@PathVariable("id") Long id, @RequestParam("count") Integer count) {
-        return articleService.addViewCounts(id, count == null ? 0 : count);
+        return articleService.addViewCounts(id, Objects.isNull(count) ? 0 : count);
     }
 
 }
