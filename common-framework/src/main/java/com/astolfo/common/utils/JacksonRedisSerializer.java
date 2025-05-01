@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
+import java.util.Objects;
+
 public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     private final ObjectMapper objectMapper;
@@ -21,7 +23,7 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     @Override
     public byte[] serialize(T t) throws SerializationException {
-        if (t == null) {
+        if (Objects.isNull(t)) {
             return new byte[0];
         }
         try {
@@ -33,7 +35,7 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
-        if (bytes == null || bytes.length == 0) {
+        if (Objects.isNull(bytes) || bytes.length == 0) {
             return null;
         }
         try {

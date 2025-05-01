@@ -14,7 +14,7 @@ public enum ArticleSortField {
 
     LIKE_COUNTS("likeCounts", "article.like_counts"),
     VIEW_COUNTS("viewCounts", "article.view_counts"),
-    CREATE_TIME("createTime", "article.create_time"),;
+    CREATE_TIME("createTime", "article.create_time");
 
 
     private final String fieldName;

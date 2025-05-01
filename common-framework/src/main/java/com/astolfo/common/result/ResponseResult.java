@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class ResponseResult<T> implements Serializable {
     }
 
     public static <T> ResponseResult<T> errorResult(HttpCode httpCode, String message) {
-        if (httpCode == null) {
+        if (Objects.isNull(httpCode)) {
             return errorResult(600, "未知错误");
         } else {
             return errorResult(httpCode.getCode(), message);
