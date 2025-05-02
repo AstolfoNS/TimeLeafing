@@ -13,6 +13,8 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     private final Class<T> type;
 
+
+
     public JacksonRedisSerializer(Class<T> type, ObjectMapper objectMapper) {
         this.type = type;
         this.objectMapper = objectMapper
