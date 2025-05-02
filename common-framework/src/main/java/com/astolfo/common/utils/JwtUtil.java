@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,6 +27,10 @@ public class JwtUtil {
     @Value("${spring.security.jwt.expire}")
     private Long expire;
 
+
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
     private static List<String> getAuthoritiesFromUserDetails(Collection<? extends GrantedAuthority> authorities) {
         return authorities
