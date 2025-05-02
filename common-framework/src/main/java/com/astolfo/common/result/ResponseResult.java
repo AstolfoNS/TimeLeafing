@@ -1,13 +1,13 @@
 package com.astolfo.common.result;
 
 import com.astolfo.common.enums.HttpCode;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,39 +22,7 @@ public class ResponseResult<T> implements Serializable {
     private T data;
 
 
-    public static <T> ResponseResult<T> errorResult(HttpCode httpCode) {
-        return errorResult(httpCode, httpCode.getMessage());
-    }
-
-    public static <T> ResponseResult<T> errorResult(HttpCode httpCode, String message) {
-        if (httpCode == null) {
-            return errorResult(600, "未知错误");
-        } else {
-            return errorResult(httpCode.getCode(), message);
-        }
-    }
-
-    public static <T> ResponseResult<T> errorResult(Integer code, String message) {
-        return ResponseResult
-                .<T>builder()
-                .code(code)
-                .message(message)
-                .build();
-    }
-
-    public static <T> ResponseResult<T> okResult() {
-        return okResult(HttpCode.SUCCESS.getCode(), HttpCode.SUCCESS.getMessage(), null);
-    }
-
-    public static <T> ResponseResult<T> okResult(T data) {
-        return okResult(HttpCode.SUCCESS.getCode(), HttpCode.SUCCESS.getMessage(), data);
-    }
-
-    public static <T> ResponseResult<T> okResult(
-            Integer code,
-            String message,
-            T data
-    ) {
+    private static <T> ResponseResult<T> buildResult(Integer code, String message, T data) {
         return ResponseResult
                 .<T>builder()
                 .code(code)
@@ -63,4 +31,27 @@ public class ResponseResult<T> implements Serializable {
                 .build();
     }
 
+    public static <T> ResponseResult<T> okResult() {
+        return buildResult(HttpCode.SUCCESS.getCode(), HttpCode.SUCCESS.getMessage(), null);
+    }
+
+    public static <T> ResponseResult<T> okResult(T data) {
+        return buildResult(HttpCode.SUCCESS.getCode(), HttpCode.SUCCESS.getMessage(), data);
+    }
+
+    public static <T> ResponseResult<T> okResult(Integer code, String message, T data) {
+        return buildResult(code, message, data);
+    }
+
+    public static <T> ResponseResult<T> errorResult(HttpCode httpCode) {
+        if (Objects.isNull(httpCode)) {
+            return errorResult(600, "未知错误");
+        } else {
+            return errorResult(httpCode.getCode(), httpCode.getMessage());
+        }
+    }
+
+    public static <T> ResponseResult<T> errorResult(Integer code, String message) {
+        return buildResult(code, message, null);
+    }
 }

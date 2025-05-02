@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,20 +34,25 @@ public class JwtUtil {
                 .collect(Collectors.toList());
     }
 
-    public String generateToken(UserDetails userDetails, Instant issuedAt) {
+    public String generateToken(UserDetails userDetails, Instant issuedAt, Long expiresInMillis) {
         JwtClaimsSet claims = JwtClaimsSet
                 .builder()
                 .subject(userDetails.getUsername())
                 .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
-                .expiresAt(issuedAt.plusSeconds(expire))
+                .issuer("Astolfo")
+                .expiresAt(issuedAt.plusSeconds(expiresInMillis))
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
+    public String generateToken(UserDetails userDetails, Long expireInMillis) {
+        return generateToken(userDetails, Instant.now(), expireInMillis);
+    }
+
     public String generateToken(UserDetails userDetails) {
-        return generateToken(userDetails, Instant.now());
+        return generateToken(userDetails, Instant.now(), expire);
     }
 
     public ParseToken parseToken(String token) throws JwtException {
@@ -72,7 +78,7 @@ public class JwtUtil {
         }
 
         public Boolean isValid() {
-            return jwt.getExpiresAt() != null && jwt.getExpiresAt().isAfter(Instant.now());
+            return Objects.nonNull(jwt.getExpiresAt()) && jwt.getExpiresAt().isAfter(Instant.now());
         }
     }
 

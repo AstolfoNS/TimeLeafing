@@ -31,6 +31,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson-spring-boot-starter</artifactId>
+        <version>3.45.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         <version>3.4.4</version>
@@ -79,21 +85,9 @@
       </dependency>
 
       <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>3.0.0</version>
-      </dependency>
-
-      <dependency>
         <groupId>com.mysql</groupId>
         <artifactId>mysql-connector-j</artifactId>
         <version>9.2.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>3.0.0</version>
       </dependency>
 
       <dependency>

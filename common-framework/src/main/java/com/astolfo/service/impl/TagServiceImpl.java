@@ -13,17 +13,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
 
     @Resource
     private TagMapper tagMapper;
 
+
     private static <T> Page<T> page(Integer page, Integer size) {
-        if (page == null || page < 1) {
+        if (Objects.isNull(page) || page < 1) {
             page = ArticleSearchPageConstant.DEFAULT_PAGE;
         }
-        if (size == null || size < 1) {
+        if (Objects.isNull(size) || size < 1) {
             size = ArticleSearchPageConstant.DEFAULT_SIZE;
         }
 
