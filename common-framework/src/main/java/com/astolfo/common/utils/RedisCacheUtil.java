@@ -124,8 +124,7 @@ public class RedisCacheUtil {
 
     public <T> Map<String, T> getMap(final String key, Class<T> clazz) {
         try {
-            Map<Object, Object> rawMap = redisTemplate.opsForHash().entries(key);
-            return MapConverter.convertMap(rawMap, String.class, clazz);
+            return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
         } catch (Exception e) {
             logger.error("Error getting map from Redis: {}", key, e);
 
