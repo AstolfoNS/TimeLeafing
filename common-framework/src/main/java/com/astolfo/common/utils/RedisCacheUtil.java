@@ -1,18 +1,16 @@
 package com.astolfo.common.utils;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 public class RedisCacheUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(RedisCacheUtil.class);
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
@@ -22,7 +20,7 @@ public class RedisCacheUtil {
         try {
             redisTemplate.opsForValue().set(key, value);
         } catch (Exception e) {
-            logger.error("Error setting object to Redis: {}", key, e);
+            log.error("Error setting object to Redis: {}", key, e);
         }
     }
 
@@ -30,7 +28,7 @@ public class RedisCacheUtil {
         try {
             redisTemplate.opsForValue().set(key, value, timeout, unit);
         } catch (Exception e) {
-            logger.error("Error setting object with timeout to Redis: {}", key, e);
+            log.error("Error setting object with timeout to Redis: {}", key, e);
         }
     }
 
@@ -38,7 +36,7 @@ public class RedisCacheUtil {
         try {
             return redisTemplate.expire(key, timeout, unit);
         } catch (Exception e) {
-            logger.error("Error setting expiration for key: {}", key, e);
+            log.error("Error setting expiration for key: {}", key, e);
 
             return false;
         }
@@ -49,7 +47,7 @@ public class RedisCacheUtil {
         try {
             return (T) redisTemplate.opsForValue().get(key);
         } catch (Exception e) {
-            logger.error("Error getting object from Redis: {}", key, e);
+            log.error("Error getting object from Redis: {}", key, e);
 
             return null;
         }
@@ -59,7 +57,7 @@ public class RedisCacheUtil {
         try {
             return redisTemplate.delete(key);
         } catch (Exception e) {
-            logger.error("Error deleting key from Redis: {}", key, e);
+            log.error("Error deleting key from Redis: {}", key, e);
 
             return false;
         }
@@ -69,7 +67,7 @@ public class RedisCacheUtil {
         try {
             return redisTemplate.delete(keys);
         } catch (Exception e) {
-            logger.error("Error deleting keys from Redis: {}", keys, e);
+            log.error("Error deleting keys from Redis: {}", keys, e);
 
             return 0L;
         }
@@ -79,7 +77,7 @@ public class RedisCacheUtil {
         try {
             return redisTemplate.opsForList().rightPushAll(key, list);
         } catch (Exception e) {
-            logger.error("Error setting list to Redis: {}", key, e);
+            log.error("Error setting list to Redis: {}", key, e);
 
             return 0L;
         }
@@ -90,7 +88,7 @@ public class RedisCacheUtil {
         try {
             return (List<T>) redisTemplate.opsForList().range(key, 0, -1);
         } catch (Exception e) {
-            logger.error("Error getting list from Redis: {}", key, e);
+            log.error("Error getting list from Redis: {}", key, e);
 
             return Collections.emptyList();
         }
@@ -105,7 +103,7 @@ public class RedisCacheUtil {
 
             return setOps;
         } catch (Exception e) {
-            logger.error("Error setting bound set to Redis: {}", key, e);
+            log.error("Error setting bound set to Redis: {}", key, e);
 
             return null;
         }
@@ -116,7 +114,7 @@ public class RedisCacheUtil {
         try {
             return (Set<T>) redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
-            logger.error("Error getting set from Redis: {}", key, e);
+            log.error("Error getting set from Redis: {}", key, e);
 
             return Collections.emptySet();
         }
@@ -126,7 +124,7 @@ public class RedisCacheUtil {
         try {
             return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
         } catch (Exception e) {
-            logger.error("Error getting map from Redis: {}", key, e);
+            log.error("Error getting map from Redis: {}", key, e);
 
             return Collections.emptyMap();
         }
@@ -136,7 +134,7 @@ public class RedisCacheUtil {
         try {
             redisTemplate.opsForHash().put(key, hashKey, value);
         } catch (Exception e) {
-            logger.error("Error setting map value to Redis: {} -> {}", key, hashKey, e);
+            log.error("Error setting map value to Redis: {} -> {}", key, hashKey, e);
         }
     }
 
@@ -145,7 +143,7 @@ public class RedisCacheUtil {
         try {
             return (T) redisTemplate.opsForHash().get(key, hashKey);
         } catch (Exception e) {
-            logger.error("Error getting map value from Redis: {} -> {}", key, hashKey, e);
+            log.error("Error getting map value from Redis: {} -> {}", key, hashKey, e);
 
             return null;
         }
@@ -155,7 +153,7 @@ public class RedisCacheUtil {
         try {
             redisTemplate.opsForHash().delete(key, hashKey);
         } catch (Exception e) {
-            logger.error("Error deleting map value from Redis: {} -> {}", key, hashKey, e);
+            log.error("Error deleting map value from Redis: {} -> {}", key, hashKey, e);
         }
     }
 
@@ -164,7 +162,7 @@ public class RedisCacheUtil {
         try {
             return (List<T>) redisTemplate.opsForHash().multiGet(key, hashKeys);
         } catch (Exception e) {
-            logger.error("Error getting multiple map values from Redis: {}", key, e);
+            log.error("Error getting multiple map values from Redis: {}", key, e);
 
             return Collections.emptyList();
         }
@@ -174,7 +172,7 @@ public class RedisCacheUtil {
         try {
             return redisTemplate.keys(pattern);
         } catch (Exception e) {
-            logger.error("Error fetching keys with pattern: {}", pattern, e);
+            log.error("Error fetching keys with pattern: {}", pattern, e);
 
             return Collections.emptyList();
         }
