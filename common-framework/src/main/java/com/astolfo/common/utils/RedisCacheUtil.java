@@ -23,11 +23,20 @@ public class RedisCacheUtil {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public <T> void setObject(final String key, final T value, final long timeout, final TimeUnit unit) {
+    public <T> void setObject(
+            final String key,
+            final T value,
+            final long timeout,
+            final TimeUnit unit
+    ) {
         redisTemplate.opsForValue().set(key, value, timeout, unit);
     }
 
-    public Boolean expire(final String key, final long timeout, final TimeUnit unit) {
+    public Boolean expire(
+            final String key,
+            final long timeout,
+            final TimeUnit unit
+    ) {
         return redisTemplate.expire(key, timeout, unit);
     }
 
@@ -72,7 +81,11 @@ public class RedisCacheUtil {
         return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
     }
 
-    public <T> void setMapValue(final String key, final String hashKey, final T value) {
+    public <T> void setMapValue(
+            final String key,
+            final String hashKey,
+            final T value
+    ) {
         redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
