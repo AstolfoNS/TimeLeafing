@@ -5,6 +5,6 @@ import com.astolfo.model.dto.UserDTO;
 
 public interface LoginService {
 
-    ResponseResult<?> login(UserDTO userDTO);
+    ResponseResult<Void> login(UserDTO userDTO);
 
 }
