@@ -18,11 +18,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+
     @Value("${spring.data.redis.host}")
     private String redisHost;
 
     @Value("${spring.data.redis.port}")
     private Integer redisPort;
+
+    @Value("${spring.data.redis.password}")
+    private String redisPassword;
 
     @Value("${custom.redis.redisson-address}")
     private String redissonAddress;
@@ -34,11 +38,14 @@ public class RedisConfig {
     @Bean
     public RedissonClient redissonClient() {
         Config config = new Config();
-
         config
                 .useSingleServer()
                 .setAddress(redissonAddress)
                 .setDatabase(redissonDatabase);
+
+        if (!redisPassword.isEmpty()) {
+            config.useSingleServer().setPassword(redisPassword);
+        }
 
         return Redisson.create(config);
     }
