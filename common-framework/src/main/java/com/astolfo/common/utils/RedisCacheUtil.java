@@ -1,180 +1,118 @@
 package com.astolfo.common.utils;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 @Component
 public class RedisCacheUtil {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Resource
+    private RedissonClient redissonClient;
+
 
     public <T> void setObject(final String key, final T value) {
-        try {
-            redisTemplate.opsForValue().set(key, value);
-        } catch (Exception e) {
-            log.error("Error setting object to Redis: {}", key, e);
-        }
+        redisTemplate.opsForValue().set(key, value);
     }
 
     public <T> void setObject(final String key, final T value, final long timeout, final TimeUnit unit) {
-        try {
-            redisTemplate.opsForValue().set(key, value, timeout, unit);
-        } catch (Exception e) {
-            log.error("Error setting object with timeout to Redis: {}", key, e);
-        }
+        redisTemplate.opsForValue().set(key, value, timeout, unit);
     }
 
     public Boolean expire(final String key, final long timeout, final TimeUnit unit) {
-        try {
-            return redisTemplate.expire(key, timeout, unit);
-        } catch (Exception e) {
-            log.error("Error setting expiration for key: {}", key, e);
-
-            return false;
-        }
+        return redisTemplate.expire(key, timeout, unit);
     }
 
     @SuppressWarnings("unchecked")
     public <T> T getObject(final String key) {
-        try {
-            return (T) redisTemplate.opsForValue().get(key);
-        } catch (Exception e) {
-            log.error("Error getting object from Redis: {}", key, e);
-
-            return null;
-        }
+        return (T) redisTemplate.opsForValue().get(key);
     }
 
     public Boolean delete(final String key) {
-        try {
-            return redisTemplate.delete(key);
-        } catch (Exception e) {
-            log.error("Error deleting key from Redis: {}", key, e);
+        return redisTemplate.delete(key);
 
-            return false;
-        }
     }
 
     public Long delete(final Collection<String> keys) {
-        try {
-            return redisTemplate.delete(keys);
-        } catch (Exception e) {
-            log.error("Error deleting keys from Redis: {}", keys, e);
-
-            return 0L;
-        }
+        return redisTemplate.delete(keys);
     }
 
     public <T> Long setList(final String key, final List<T> list) {
-        try {
-            return redisTemplate.opsForList().rightPushAll(key, list);
-        } catch (Exception e) {
-            log.error("Error setting list to Redis: {}", key, e);
-
-            return 0L;
-        }
+        return redisTemplate.opsForList().rightPushAll(key, list);
     }
 
     @SuppressWarnings("unchecked")
     public <T> List<T> getList(final String key) {
-        try {
-            return (List<T>) redisTemplate.opsForList().range(key, 0, -1);
-        } catch (Exception e) {
-            log.error("Error getting list from Redis: {}", key, e);
-
-            return Collections.emptyList();
-        }
+        return (List<T>) redisTemplate.opsForList().range(key, 0, -1);
     }
 
     @SuppressWarnings("unchecked")
     public <T> BoundSetOperations<String, T> boundSet(String key, Set<T> set) {
-        try {
-            BoundSetOperations<String, T> setOps = (BoundSetOperations<String, T>) redisTemplate.boundSetOps(key);
+        BoundSetOperations<String, T> setOps = (BoundSetOperations<String, T>) redisTemplate.boundSetOps(key);
 
-            setOps.add((T) set);
+        setOps.add((T) set);
 
-            return setOps;
-        } catch (Exception e) {
-            log.error("Error setting bound set to Redis: {}", key, e);
-
-            return null;
-        }
+        return setOps;
     }
 
     @SuppressWarnings("unchecked")
     public <T> Set<T> getSet(final String key) {
-        try {
-            return (Set<T>) redisTemplate.opsForSet().members(key);
-        } catch (Exception e) {
-            log.error("Error getting set from Redis: {}", key, e);
-
-            return Collections.emptySet();
-        }
+        return (Set<T>) redisTemplate.opsForSet().members(key);
     }
 
     public <T> Map<String, T> getMap(final String key, Class<T> clazz) {
-        try {
-            return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
-        } catch (Exception e) {
-            log.error("Error getting map from Redis: {}", key, e);
-
-            return Collections.emptyMap();
-        }
+        return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
     }
 
     public <T> void setMapValue(final String key, final String hashKey, final T value) {
-        try {
-            redisTemplate.opsForHash().put(key, hashKey, value);
-        } catch (Exception e) {
-            log.error("Error setting map value to Redis: {} -> {}", key, hashKey, e);
-        }
+        redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
     @SuppressWarnings("unchecked")
     public <T> T getMapValue(final String key, final String hashKey) {
-        try {
-            return (T) redisTemplate.opsForHash().get(key, hashKey);
-        } catch (Exception e) {
-            log.error("Error getting map value from Redis: {} -> {}", key, hashKey, e);
-
-            return null;
-        }
+        return (T) redisTemplate.opsForHash().get(key, hashKey);
     }
 
     public void delete(final String key, final String hashKey) {
-        try {
-            redisTemplate.opsForHash().delete(key, hashKey);
-        } catch (Exception e) {
-            log.error("Error deleting map value from Redis: {} -> {}", key, hashKey, e);
-        }
+        redisTemplate.opsForHash().delete(key, hashKey);
     }
 
     @SuppressWarnings("unchecked")
     public <T> List<T> getMultiMapValue(final String key, final Collection<Object> hashKeys) {
-        try {
-            return (List<T>) redisTemplate.opsForHash().multiGet(key, hashKeys);
-        } catch (Exception e) {
-            log.error("Error getting multiple map values from Redis: {}", key, e);
-
-            return Collections.emptyList();
-        }
+        return (List<T>) redisTemplate.opsForHash().multiGet(key, hashKeys);
     }
 
     public Collection<String> keys(final String pattern) {
-        try {
-            return redisTemplate.keys(pattern);
-        } catch (Exception e) {
-            log.error("Error fetching keys with pattern: {}", pattern, e);
+        return redisTemplate.keys(pattern);
+    }
 
-            return Collections.emptyList();
+    public RLock tryLock(
+            String lockKey,
+            long waitTime,
+            long leaseTime,
+            TimeUnit unit
+    ) throws InterruptedException {
+        RLock lock = redissonClient.getLock(lockKey);
+
+        if (lock.tryLock(waitTime, leaseTime, unit)) {
+            return lock;
+        } else {
+            return null;
         }
     }
+
+    public void unlock(RLock lock) {
+        if (Objects.nonNull(lock) && lock.isHeldByCurrentThread()) {
+            lock.unlock();
+        }
+    }
+
 }
