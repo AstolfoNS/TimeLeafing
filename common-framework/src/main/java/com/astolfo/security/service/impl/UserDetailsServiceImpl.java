@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
 
         if (Objects.isNull(user)) {
-            throw new UsernameNotFoundException("用户名或者密码错误");
+            throw new UsernameNotFoundException("Username or password is incorrect.");
         }
 
         return new LoginUser(user);

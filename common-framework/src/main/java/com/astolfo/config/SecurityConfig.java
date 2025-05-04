@@ -27,7 +27,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // 核心安全配置
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -42,18 +41,7 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .exceptionHandling(
-                        ex -> ex.authenticationEntryPoint((request, response, authException) -> {
-                            response.setContentType("application/json");
-                            response.setCharacterEncoding("UTF-8");
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.getWriter().write("{\"code\":401, \"message\":\"未登录或登录已过期\"}");
-                        })
-                )
                 .formLogin(AbstractHttpConfigurer::disable);
-
-        // JWT过滤器（如有）
-//        http.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
