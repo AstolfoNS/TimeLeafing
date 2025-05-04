@@ -27,6 +27,9 @@ public class JwtUtil {
     @Value("${spring.security.jwt.expire}")
     private Long expire;
 
+    @Value("${spring.security.jwt.issuer}")
+    private String issuer;
+
 
     public static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
@@ -39,13 +42,17 @@ public class JwtUtil {
                 .collect(Collectors.toList());
     }
 
-    public String generateToken(UserDetails userDetails, Instant issuedAt, Long expiresInMillis) {
+    public String generateToken(
+            UserDetails userDetails,
+            Instant issuedAt,
+            Long expiresInMillis
+    ) {
         JwtClaimsSet claims = JwtClaimsSet
                 .builder()
                 .subject(userDetails.getUsername())
                 .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
-                .issuer("Astolfo")
+                .issuer(issuer)
                 .expiresAt(issuedAt.plusSeconds(expiresInMillis))
                 .build();
 
