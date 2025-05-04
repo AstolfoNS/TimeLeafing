@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,36 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 @Configuration
 public class RedisConfig {
+
+    @Value("${spring.data.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.data.redis.port}")
+    private Integer redisPort;
+
+    @Value("${custom.redis.redisson-address}")
+    private String redissonAddress;
+
+    @Value("${custom.redis.redisson-database}")
+    private Integer redissonDatabase;
+
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+
+        config
+                .useSingleServer()
+                .setAddress(redissonAddress)
+                .setDatabase(redissonDatabase);
+
+        return Redisson.create(config);
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(redisHost, redisPort);
+    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory, ObjectMapper objectMapper) {
@@ -35,22 +66,6 @@ public class RedisConfig {
         template.afterPropertiesSet();
 
         return template;
-    }
-
-    @Bean
-    public RedissonClient redissonClient() {
-        Config config = new Config();
-        config
-                .useSingleServer()
-                .setAddress("redis://8.138.136.39:6379")
-                .setDatabase(0);
-
-        return Redisson.create(config);
-    }
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory("8.138.136.39", 6379);
     }
 
 }
