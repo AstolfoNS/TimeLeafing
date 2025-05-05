@@ -21,10 +21,6 @@ public class EnterController {
 
     @PostMapping("/login")
     public ResponseResult<Map<String, String>> login(@RequestBody UserDTO userDTO) {
-
-        System.out.println(userDTO.getUsername());
-        System.out.println(userDTO.getPassword());
-
         return loginService.login(userDTO);
     }
 
