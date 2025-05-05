@@ -1,11 +1,14 @@
 package com.astolfo.common.utils;
 
-import com.astolfo.security.entity.LoginUser;
+import com.astolfo.common.constants.JwtConstant;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+// 导入 JwsHeader 和 SignatureAlgorithm
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -21,6 +25,7 @@ public class JwtUtil {
 
     @Resource
     private JwtDecoder jwtDecoder;
+
 
     @Value("${spring.security.jwt.expire}")
     private Long expire;
@@ -51,10 +56,20 @@ public class JwtUtil {
                 .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
                 .issuer(issuer)
-                .expiresAt(issuedAt.plusSeconds(expiresInMillis))
+                .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        JwsHeader jwsHeader = JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build();
+
+        JwtEncoderParameters parameters = JwtEncoderParameters.from(jwsHeader, claims);
+
+        try {
+            return jwtEncoder.encode(parameters).getTokenValue();
+        } catch (JwtEncodingException e) {
+            log.error("Error encoding JWT: {}", e.getMessage(), e);
+
+            throw e;
+        }
     }
 
     public String generateToken(UserDetails userDetails, Long expireInMillis) {
@@ -69,6 +84,7 @@ public class JwtUtil {
         try {
             return new ParseToken(jwtDecoder.decode(token));
         } catch (JwtException e) {
+            log.warn("Invalid JWT token received: {}", e.getMessage());
             throw new JwtException("无效的Token：" + e.getMessage(), e);
         }
     }
@@ -88,7 +104,7 @@ public class JwtUtil {
         }
 
         public Boolean isValid() {
-            return Objects.nonNull(jwt.getExpiresAt()) && jwt.getExpiresAt().isAfter(Instant.now());
+            return !(Objects.nonNull(jwt.getExpiresAt()) && jwt.getExpiresAt().isBefore(Instant.now()));
         }
     }
 
