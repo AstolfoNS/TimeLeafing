@@ -63,13 +63,7 @@ public class JwtUtil {
 
         JwtEncoderParameters parameters = JwtEncoderParameters.from(jwsHeader, claims);
 
-        try {
-            return jwtEncoder.encode(parameters).getTokenValue();
-        } catch (JwtEncodingException e) {
-            log.error("Error encoding JWT: {}", e.getMessage(), e);
-
-            throw e;
-        }
+        return jwtEncoder.encode(parameters).getTokenValue();
     }
 
     public String generateToken(UserDetails userDetails, Long expireInMillis) {
