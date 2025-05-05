@@ -1,6 +1,5 @@
 package com.astolfo.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,21 +29,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/login", "/register")
+                                .requestMatchers("/user/login", "/user/register")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
-
-        return http.build();
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .build();
     }
 
 }
