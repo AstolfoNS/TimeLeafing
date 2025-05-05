@@ -43,9 +43,13 @@ public class ResponseResult<T> implements Serializable {
         return buildResult(code, message, data);
     }
 
+    public static <T> ResponseResult<T> okResult(HttpCode code, T data) {
+        return buildResult(code.getCode(), code.getMessage(), data);
+    }
+
     public static <T> ResponseResult<T> errorResult(HttpCode httpCode) {
         if (Objects.isNull(httpCode)) {
-            return errorResult(600, "未知错误");
+            return errorResult(600, "Unknown error.");
         } else {
             return errorResult(httpCode.getCode(), httpCode.getMessage());
         }
