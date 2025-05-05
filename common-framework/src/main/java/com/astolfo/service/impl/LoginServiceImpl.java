@@ -37,9 +37,6 @@ public class LoginServiceImpl implements LoginService {
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
-        System.out.println(loginUser.getUsername());
-        System.out.println(loginUser.getPassword());
-
         redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getId().toString()), loginUser);
 
         return ResponseResult.okResult(HttpCode.SUCCESS, Map.of("token", jwtUtil.generateToken(loginUser)));
