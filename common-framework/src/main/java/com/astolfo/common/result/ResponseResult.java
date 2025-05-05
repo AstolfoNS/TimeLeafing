@@ -22,7 +22,11 @@ public class ResponseResult<T> implements Serializable {
     private T data;
 
 
-    private static <T> ResponseResult<T> buildResult(Integer code, String message, T data) {
+    private static <T> ResponseResult<T> buildResult(
+            Integer code,
+            String message,
+            T data
+    ) {
         return ResponseResult
                 .<T>builder()
                 .code(code)
@@ -39,7 +43,11 @@ public class ResponseResult<T> implements Serializable {
         return buildResult(HttpCode.SUCCESS.getCode(), HttpCode.SUCCESS.getMessage(), data);
     }
 
-    public static <T> ResponseResult<T> okResult(Integer code, String message, T data) {
+    public static <T> ResponseResult<T> okResult(
+            Integer code,
+            String message,
+            T data
+    ) {
         return buildResult(code, message, data);
     }
 

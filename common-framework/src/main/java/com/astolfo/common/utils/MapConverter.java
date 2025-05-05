@@ -7,7 +7,11 @@ import java.util.stream.Collectors;
 
 public class MapConverter {
 
-    public static <K, V> Map<K, V> convertMap(Map<Object, Object> rawMap, Class<K> keyClass, Class<V> valueClass) {
+    public static <K, V> Map<K, V> convertMap(
+            Map<Object, Object> rawMap,
+            Class<K> keyClass,
+            Class<V> valueClass
+    ) {
         if (Objects.isNull(rawMap)) {
             return new HashMap<>();
         } else {

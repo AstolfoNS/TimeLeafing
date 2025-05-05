@@ -8,7 +8,9 @@ import org.springframework.data.redis.serializer.SerializationException;
 public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
 
     private final ObjectMapper objectMapper;
+
     private final Class<T> type;
+
 
     public JacksonRedisSerializer(Class<T> type, ObjectMapper objectMapper) {
         this.type = type;

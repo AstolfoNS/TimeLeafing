@@ -41,10 +41,9 @@ public class LoginServiceImpl implements LoginService {
             redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
 
             return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, Map.of("token", jwtUtil.generateToken(loginUser)));
-        } catch (Exception e) {
+        } catch (RuntimeException exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
         }
     }
-
 
 }

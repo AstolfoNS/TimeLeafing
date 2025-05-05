@@ -16,7 +16,7 @@ public class VOBeanMapperUtil {
 
             return entityVO;
         } catch (Exception exception) {
-            throw new RuntimeException("实体映射到VO时出现异常", exception);
+            throw new RuntimeException("Failed to map entity to VO.", exception);
         }
     }
 
