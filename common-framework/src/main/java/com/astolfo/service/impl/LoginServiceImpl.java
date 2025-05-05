@@ -31,15 +31,19 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseResult<Map<String, String>> login(UserDTO userDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
+            );
 
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
-        redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getId().toString()), loginUser);
+            redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
 
-        return ResponseResult.okResult(HttpCode.SUCCESS, Map.of("token", jwtUtil.generateToken(loginUser)));
+            return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, Map.of("token", jwtUtil.generateToken(loginUser)));
+        } catch (Exception e) {
+            return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
+        }
     }
 
 

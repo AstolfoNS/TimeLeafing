@@ -37,4 +37,8 @@ public class LoginUser implements UserDetails {
         return user.getId();
     }
 
+    public String getStringId() {
+        return user.getId().toString();
+    }
+
 }
