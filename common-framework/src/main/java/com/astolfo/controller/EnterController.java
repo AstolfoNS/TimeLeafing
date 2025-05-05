@@ -6,12 +6,14 @@ import com.astolfo.service.LoginService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@RequestMapping("/user")
 @RestController
-public class LoginController {
+public class EnterController {
 
     @Resource
     private LoginService loginService;
@@ -19,7 +21,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseResult<Map<String, String>> login(@RequestBody UserDTO userDTO) {
+
+        System.out.println(userDTO.getUsername());
+        System.out.println(userDTO.getPassword());
+
         return loginService.login(userDTO);
+    }
+
+    @PostMapping("/register")
+    public ResponseResult<Map<String, String>> register(@RequestBody UserDTO userDTO) {
+//        System.out.println(userDTO.getUsername());
+        return null;
     }
 
 }
