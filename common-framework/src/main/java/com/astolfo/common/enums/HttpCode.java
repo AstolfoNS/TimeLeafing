@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum HttpCode {
 
     SUCCESS(200, "操作成功"),
+    LOGIN_SUCCESS(200, "登录成功"),
 
     NO_OPERATOR_AUTH(301, "当前没有权限操作"),
 
