@@ -24,7 +24,6 @@ public class JwtUtil {
     @Resource
     private JwtDecoder jwtDecoder;
 
-
     @Value("${spring.security.jwt.expire}")
     private Long expire;
 
@@ -48,10 +47,10 @@ public class JwtUtil {
             Instant issuedAt,
             Long expiresInMillis
     ) {
-        JwtClaimsSet claims = JwtClaimsSet
+        JwtClaimsSet claim = JwtClaimsSet
                 .builder()
                 .subject(userDetails.getUsername())
-                .claim("authorities", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
+                .claim("roles", getAuthoritiesFromUserDetails(userDetails.getAuthorities()))
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
@@ -59,9 +58,7 @@ public class JwtUtil {
 
         JwsHeader jwsHeader = JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build();
 
-        JwtEncoderParameters parameters = JwtEncoderParameters.from(jwsHeader, claims);
-
-        return jwtEncoder.encode(parameters).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claim)).getTokenValue();
     }
 
     public String generateToken(UserDetails userDetails, Long expireInMillis) {
@@ -91,7 +88,7 @@ public class JwtUtil {
         }
 
         public List<String> getAuthorities() {
-            return jwt.getClaimAsStringList("authorities");
+            return jwt.getClaimAsStringList("roles");
         }
 
         public Boolean isValid() {

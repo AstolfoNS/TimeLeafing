@@ -64,7 +64,7 @@ public class RedisCacheUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> BoundSetOperations<String, T> boundSet(String key, Set<T> set) {
+    public <T> BoundSetOperations<String, T> boundSet(final String key, final Set<T> set) {
         BoundSetOperations<String, T> setOps = (BoundSetOperations<String, T>) redisTemplate.boundSetOps(key);
 
         setOps.add((T) set);
@@ -77,7 +77,7 @@ public class RedisCacheUtil {
         return (Set<T>) redisTemplate.opsForSet().members(key);
     }
 
-    public <T> Map<String, T> getMap(final String key, Class<T> clazz) {
+    public <T> Map<String, T> getMap(final String key, final Class<T> clazz) {
         return MapConverter.convertMap(redisTemplate.opsForHash().entries(key), String.class, clazz);
     }
 
@@ -108,10 +108,10 @@ public class RedisCacheUtil {
     }
 
     public RLock tryLock(
-            String lockKey,
-            long waitTime,
-            long leaseTime,
-            TimeUnit unit
+            final String lockKey,
+            final long waitTime,
+            final long leaseTime,
+            final TimeUnit unit
     ) throws InterruptedException {
         RLock lock = redissonClient.getLock(lockKey);
 
@@ -122,7 +122,7 @@ public class RedisCacheUtil {
         }
     }
 
-    public void unlock(RLock lock) {
+    public void unlock(final RLock lock) {
         if (Objects.nonNull(lock) && lock.isHeldByCurrentThread()) {
             lock.unlock();
         }
