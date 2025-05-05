@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-// 导入 JwsHeader 和 SignatureAlgorithm
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
@@ -78,8 +76,7 @@ public class JwtUtil {
         try {
             return new ParseToken(jwtDecoder.decode(token));
         } catch (JwtException e) {
-            log.warn("Invalid JWT token received: {}", e.getMessage());
-            throw new JwtException("无效的Token：" + e.getMessage(), e);
+            throw new JwtException("Invalid Jwt Token：" + e.getMessage(), e);
         }
     }
 
