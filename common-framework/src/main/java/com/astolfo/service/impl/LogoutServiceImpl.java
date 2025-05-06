@@ -6,10 +6,14 @@ import com.astolfo.common.result.ResponseResult;
 import com.astolfo.common.utils.RedisCacheUtil;
 import com.astolfo.security.entity.LoginUser;
 import com.astolfo.service.LogoutService;
+import jakarta.annotation.Resource;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LogoutServiceImpl implements LogoutService {
 
+    @Resource
     private RedisCacheUtil redisCacheUtil;
 
 
