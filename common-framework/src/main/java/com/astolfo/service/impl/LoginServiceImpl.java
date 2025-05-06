@@ -35,7 +35,6 @@ public class LoginServiceImpl implements LoginService {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
             );
-
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
             redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
