@@ -4,7 +4,6 @@ import com.astolfo.common.constants.JwtConstant;
 import com.astolfo.security.entity.LoginUser;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.*;
@@ -14,7 +13,6 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 public class JwtUtil {
 
@@ -31,7 +29,7 @@ public class JwtUtil {
     private String issuer;
 
 
-    public static String getUUID() {
+    public String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
@@ -72,8 +70,8 @@ public class JwtUtil {
     public ParseToken parseToken(String token) throws JwtException {
         try {
             return new ParseToken(jwtDecoder.decode(token));
-        } catch (JwtException e) {
-            throw new JwtException("Invalid Jwt Token：" + e.getMessage(), e);
+        } catch (JwtException exception) {
+            throw new JwtException("Invalid Jwt Token", exception);
         }
     }
 

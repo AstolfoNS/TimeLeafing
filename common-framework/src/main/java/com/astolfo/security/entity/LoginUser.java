@@ -1,6 +1,7 @@
 package com.astolfo.security.entity;
 
 import com.astolfo.model.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,8 +12,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginUser implements UserDetails {
 
     private User user;
@@ -31,10 +31,6 @@ public class LoginUser implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
-    }
-
-    public Long getId() {
-        return user.getId();
     }
 
     public String getStringId() {
