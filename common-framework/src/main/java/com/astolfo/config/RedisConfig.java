@@ -1,6 +1,5 @@
 package com.astolfo.config;
 
-import com.astolfo.common.utils.JacksonRedisSerializer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
@@ -15,8 +14,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 
 @EnableCaching
 @Configuration
@@ -65,36 +67,35 @@ public class RedisConfig {
         return new LettuceConnectionFactory(config);
     }
 
-    @Bean
-    public ObjectMapper redisObjectMapper(ObjectMapper globalObjectMapper) {
-        ObjectMapper mapper = globalObjectMapper.copy();
+    private static ObjectMapper customizeRedisObjectMapper(ObjectMapper objectMapper) {
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
 
-        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.addMixIn(GrantedAuthority.class, SimpleGrantedAuthorityMixin.class);
 
-        mapper.addMixIn(GrantedAuthority.class, SimpleGrantedAuthorityMixin.class);
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
-        return mapper;
+        return objectMapper;
     }
 
-
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory, ObjectMapper redisObjectMapper) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory, ObjectMapper objectMapper) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
 
-        JacksonRedisSerializer<Object> serializer = new JacksonRedisSerializer<>(Object.class, redisObjectMapper);
+        ObjectMapper redisObjectMapper = customizeRedisObjectMapper(objectMapper.copy());
+
+        RedisSerializer<Object> jsonSerializer = new GenericJackson2JsonRedisSerializer(redisObjectMapper);
 
         StringRedisSerializer stringSerializer = new StringRedisSerializer();
 
         template.setConnectionFactory(factory);
 
         template.setKeySerializer(stringSerializer);
-        template.setValueSerializer(serializer);
+        template.setValueSerializer(jsonSerializer);
         template.setHashKeySerializer(stringSerializer);
-        template.setHashValueSerializer(serializer);
+        template.setHashValueSerializer(jsonSerializer);
 
         template.afterPropertiesSet();
+
         return template;
     }
 

@@ -9,6 +9,7 @@ public enum HttpCode {
 
     SUCCESS(200, "操作成功"),
     LOGIN_SUCCESS(200, "登录成功"),
+    LOGOUT_SUCCESS(200, "退出成功"),
 
     NO_OPERATOR_AUTH(301, "当前没有权限操作"),
 
@@ -20,6 +21,7 @@ public enum HttpCode {
     REQUIRE_USERNAME(506, "必须填写用户名"),
     LOGIN_FAILED(507, "用户名或密码错误"),
     USER_NOT_EXIST(508, "该用户不存在"),
+    LOGOUT_FAILED(509, "退出失败"),
 
     ARTICLE_NOT_EXIST(601, "该文章不存在"),
     ARTICLE_PRIVATE(602, "该文章不公开"),

@@ -55,6 +55,10 @@ public class ResponseResult<T> implements Serializable {
         return buildResult(code.getCode(), code.getMessage(), data);
     }
 
+    public static ResponseResult<Void> okResult(HttpCode code) {
+        return buildResult(code.getCode(), code.getMessage(), null);
+    }
+
     public static <T> ResponseResult<T> errorResult(HttpCode httpCode) {
         if (Objects.isNull(httpCode)) {
             return errorResult(600, "Unknown error");
