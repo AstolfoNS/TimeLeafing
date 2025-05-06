@@ -23,8 +23,8 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
         }
         try {
             return objectMapper.writeValueAsBytes(t);
-        } catch (Exception e) {
-            throw new SerializationException("Error serializing object of type " + type.getName(), e);
+        } catch (Exception exception) {
+            throw new SerializationException("Error serializing object of type " + type.getName(), exception);
         }
     }
 
@@ -35,8 +35,8 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
         }
         try {
             return objectMapper.readValue(bytes, type);
-        } catch (Exception e) {
-            throw new SerializationException("Error deserializing to " + type.getName(), e);
+        } catch (Exception exception) {
+            throw new SerializationException("Error deserializing to " + type.getName(), exception);
         }
     }
 }

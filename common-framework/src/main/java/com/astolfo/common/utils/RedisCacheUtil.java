@@ -45,9 +45,8 @@ public class RedisCacheUtil {
         return (T) redisTemplate.opsForValue().get(key);
     }
 
-    public Boolean delete(final String key) {
-        return redisTemplate.delete(key);
-
+    public void delete(final String key) {
+        redisTemplate.delete(key);
     }
 
     public Long delete(final Collection<String> keys) {

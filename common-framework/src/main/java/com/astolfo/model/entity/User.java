@@ -43,4 +43,9 @@ public class User {
 
     private Boolean isDeleted;
 
+
+    public String getRoleName() {
+        return role.getRoleName();
+    }
+
 }

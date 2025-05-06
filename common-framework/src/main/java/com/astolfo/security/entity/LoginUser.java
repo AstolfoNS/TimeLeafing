@@ -1,6 +1,7 @@
 package com.astolfo.security.entity;
 
 import com.astolfo.model.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,17 +13,17 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginUser implements UserDetails {
 
     private User user;
 
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+       return List.of(new SimpleGrantedAuthority("ROLE_".concat(user.getRoleName().toUpperCase())));
     }
 
     @Override
@@ -33,6 +34,26 @@ public class LoginUser implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public String getStringId() {
