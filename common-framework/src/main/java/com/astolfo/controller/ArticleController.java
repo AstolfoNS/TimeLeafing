@@ -8,6 +8,7 @@ import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.vo.TagVO;
 import com.astolfo.service.ArticleService;
 import jakarta.annotation.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ArticleController {
         return articleService.getSummaryArticleVOs(page, size, ArticleSortField.toSortField(field));
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/details")
     public ResponseResult<PageResult<ArticleDetailsVO>> getDetailsArticleVOs(
             @RequestParam(value = "page", required = false) Integer page,

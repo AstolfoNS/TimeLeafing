@@ -19,8 +19,6 @@ public class UserVO {
 
     private Gender gender;
 
-    private UserRole role;
-
     private String introduction;
 
 }

@@ -33,8 +33,6 @@ public class User {
 
     private Boolean enabled;
 
-    private UserRole role;
-
     private Date createTime;
 
     private Date updateTime;
@@ -42,10 +40,5 @@ public class User {
     private Date lastLoginTime;
 
     private Boolean isDeleted;
-
-
-    public String getRoleName() {
-        return role.getRoleName();
-    }
 
 }

@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 @Getter
 public enum ArticleSortField {
 
-    LIKE_COUNTS("likeCounts", "article.like_counts"),
-    VIEW_COUNTS("viewCounts", "article.view_counts"),
-    CREATE_TIME("createTime", "article.create_time");
+    LIKE_COUNTS("likeCounts", "like_counts"),
+    VIEW_COUNTS("viewCounts", "view_counts"),
+    CREATE_TIME("createTime", "create_time");
 
 
     private final String fieldName;
