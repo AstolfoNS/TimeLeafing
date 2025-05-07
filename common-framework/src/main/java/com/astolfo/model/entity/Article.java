@@ -36,7 +36,7 @@ public class Article {
 
     private Long likeCounts;
 
-    private Boolean status;
+    private Boolean enabled;
 
     private Date createTime;
 

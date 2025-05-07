@@ -33,7 +33,7 @@ public class ArticleDetailsVO {
 
     private List<TagVO> tagVOs;
 
-    private Boolean status;
+    private Boolean enabled;
 
     private Date createTime;
 

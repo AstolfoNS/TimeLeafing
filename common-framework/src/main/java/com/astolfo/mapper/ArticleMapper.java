@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-    @SelectProvider(type = ArticleSqlProvider.class, method = "getTagsById")
+    @SelectProvider(type = ArticleSqlProvider.class, method = "getTagVOsById")
     List<TagVO> getTagVOsById(@Param("id") Long id);
 
     @SelectProvider(type = ArticleSqlProvider.class, method = "getArticles")

@@ -27,6 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid username or password");
         }
 
-        return new LoginUser(user);
+        return new LoginUser(user, userMapper.getRoleVOsById(user.getId()));
     }
 }

@@ -26,4 +26,19 @@ public class UserSqlProvider {
         """;
     }
 
+    public String getRoleVOsById(@Param("id") Long id) {
+        return """
+            SELECT
+                role.*
+            FROM
+                role
+            JOIN
+                user_role
+            ON
+                role.id = user_role.role_id
+            WHERE
+                user_role.user_id = #{id}
+        """;
+    }
+
 }

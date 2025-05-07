@@ -13,7 +13,9 @@ public class ArticleSqlProvider {
             WHERE
                 article.is_public = true
                 AND
-                article.status = 'ARTICLE'
+                article.stage = 'PUBLISHED'
+                AND
+                article.enabled = true
             ORDER BY
                 ${field}
             DESC
@@ -29,13 +31,15 @@ public class ArticleSqlProvider {
             WHERE
                 article.is_public = true
                 AND
-                article.status = 'ARTICLE'
+                article.stage = 'PUBLISHED'
+                AND
+                article.enabled = true
                 AND
                 article.id = #{id}
         """;
     }
 
-    public String getTagsById(@Param("id") Long id) {
+    public String getTagVOsById(@Param("id") Long id) {
         return """
             SELECT
                 tag.*

@@ -32,7 +32,7 @@ public class User {
 
     private Date lastLoginTime;
 
-    private Boolean status;
+    private Boolean enabled;
 
     private Date createTime;
 

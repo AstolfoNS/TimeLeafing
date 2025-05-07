@@ -23,7 +23,9 @@ public class TagSqlProvider {
                 AND
                 article.is_public = true
                 AND
-                article.status = 'ARTICLE'
+                article.status = 'PUBLISHED'
+                AND
+                article.enabled = true
             ORDER BY
                 ${field}
             DESC
@@ -45,7 +47,9 @@ public class TagSqlProvider {
                 AND
                 article.is_public = true
                 AND
-                article.status = 'ARTICLE'
+                article.status = 'PUBLISHED'
+                AND
+                article.enabled = true
             ORDER BY
                 ${field}
             DESC

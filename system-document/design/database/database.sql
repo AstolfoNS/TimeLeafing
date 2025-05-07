@@ -3,7 +3,7 @@
 # 使用RBAC权限模型。
 #
 # 如果表是实体表或实体表（存在关系），则默认具有以下属性：
-#     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+#     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
 #     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
 #     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `introduction`              TEXT,                                                                                   -- 用户简介
     `last_login_time`           DATETIME,                                                                               -- 最后在线时间
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `role` (
     `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 角色名（如 USER / ADMIN / SYSTEM）
     `description`               VARCHAR(256),                                                                           -- 角色描述
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
     `type`                      ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
     `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `article` (
     `view_counts`               BIGINT DEFAULT 0,                                                                       -- 浏览量
     `like_counts`               BIGINT DEFAULT 0,                                                                       -- 点赞量
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
 
     `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `parent_id`                 BIGINT NOT NULL,                                                                        -- 父评论ID
     `root_id`                   BIGINT NOT NULL,                                                                        -- 根评论ID
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
     `type`                      ENUM('OTHERS', 'SYSTEM') NOT NULL,                                                      -- 通知类型
     `content`                   TEXT,                                                                                   -- 通知内容
 
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
@@ -279,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `article_bookmark` (
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (`collector_id`, `article_id`),
+    PRIMARY KEY (`collector_id`,        `article_id`),
 
     FOREIGN KEY (collector_id) REFERENCES user(id),
     FOREIGN KEY (article_id) REFERENCES article(id)

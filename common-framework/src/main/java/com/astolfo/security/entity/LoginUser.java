@@ -1,6 +1,7 @@
 package com.astolfo.security.entity;
 
 import com.astolfo.model.entity.User;
+import com.astolfo.model.vo.RoleVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,11 +21,16 @@ public class LoginUser implements UserDetails {
 
     private User user;
 
+    private List<RoleVO> authorities;
+
 
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return List.of(new SimpleGrantedAuthority(user.getRoleName()));
+       return authorities
+               .stream()
+               .map(roleVO -> new SimpleGrantedAuthority(roleVO.getName()))
+               .collect(Collectors.toList());
     }
 
     @Override

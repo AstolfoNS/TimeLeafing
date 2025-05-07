@@ -19,7 +19,7 @@ public class Tag {
 
     private String name;
 
-    private Boolean status;
+    private Boolean enabled;
 
     private Date createTime;
 
