@@ -5,13 +5,11 @@ import com.astolfo.security.entity.LoginUser;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -33,13 +31,6 @@ public class JwtUtil {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
-    private static List<String> getAuthoritiesFromLoginUser(Collection<? extends GrantedAuthority> authorities) {
-        return authorities
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-    }
-
     public String generateToken(
             LoginUser loginUser,
             Instant issuedAt,
@@ -48,7 +39,6 @@ public class JwtUtil {
         JwtClaimsSet claim = JwtClaimsSet
                 .builder()
                 .subject(loginUser.getStringId())
-                .claim("roles", getAuthoritiesFromLoginUser(loginUser.getAuthorities()))
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
@@ -83,10 +73,6 @@ public class JwtUtil {
 
         public String getStringId() {
             return jwt.getSubject();
-        }
-
-        public List<String> getAuthorities() {
-            return jwt.getClaimAsStringList("roles");
         }
 
         public Boolean isValid() {

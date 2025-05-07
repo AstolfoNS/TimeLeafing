@@ -23,7 +23,7 @@ public class LoginUser implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return List.of(new SimpleGrantedAuthority("ROLE_".concat(user.getRoleName().toUpperCase())));
+       return List.of(new SimpleGrantedAuthority(user.getRoleName()));
     }
 
     @Override
