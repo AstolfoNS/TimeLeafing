@@ -77,7 +77,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult<List<TagVO>> getTagVOsById(Long id) {
         Article article = articleMapper.selectById(id);
 
-        if (Objects.isNull(article) || !article.getIsPublic() || article.getStatus() == ArticleStage.DRAFT) {
+        if (Objects.isNull(article) || !article.getIsPublic() || article.getStage() != ArticleStage.PUBLISHED) {
             return ResponseResult.errorResult(HttpCode.ARTICLE_NOT_FOUND);
         } else {
             return ResponseResult.okResult(articleMapper.getTagVOsById(id));
