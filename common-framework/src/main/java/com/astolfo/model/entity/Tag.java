@@ -15,11 +15,15 @@ import java.util.Date;
 public class Tag {
 
     @TableId
-    private Long tagId;
+    private Long id;
 
-    private String tagName;
+    private String name;
 
-    private Date tagDate;
+    private Boolean status;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     private Boolean isDeleted;
 

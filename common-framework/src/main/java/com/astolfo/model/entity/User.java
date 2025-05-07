@@ -1,7 +1,6 @@
 package com.astolfo.model.entity;
 
 import com.astolfo.common.enums.Gender;
-import com.astolfo.common.enums.UserRole;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -31,13 +30,13 @@ public class User {
 
     private String introduction;
 
-    private Boolean enabled;
+    private Date lastLoginTime;
+
+    private Boolean status;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private Date lastLoginTime;
 
     private Boolean isDeleted;
 

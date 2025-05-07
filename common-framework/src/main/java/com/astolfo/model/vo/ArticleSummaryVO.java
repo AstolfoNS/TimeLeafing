@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class ArticleSummaryVO {
-
-    private Long id;
 
     private UserVO author;
 
@@ -22,14 +19,10 @@ public class ArticleSummaryVO {
 
     private String coverImage;
 
-    private Date createTime;
-
-    private Date updateTime;
-
     private Long viewCounts;
 
     private Long likeCounts;
 
-    private List<TagVO> tags;
+    private List<TagVO> tagVOs;
 
 }

@@ -20,7 +20,7 @@ public interface TagMapper extends BaseMapper<Tag> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "com.astolfo.mapper.ArticleMapper.getTagVOsById")
             )
@@ -40,7 +40,7 @@ public interface TagMapper extends BaseMapper<Tag> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "com.astolfo.mapper.ArticleMapper.getTagVOsById")
             )
@@ -60,7 +60,7 @@ public interface TagMapper extends BaseMapper<Tag> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "com.astolfo.mapper.ArticleMapper.getTagVOsById")
             )
@@ -80,7 +80,7 @@ public interface TagMapper extends BaseMapper<Tag> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "com.astolfo.mapper.ArticleMapper.getTagVOsById")
             )

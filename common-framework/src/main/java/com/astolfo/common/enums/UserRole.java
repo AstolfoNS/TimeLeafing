@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 public enum UserRole {
 
-    USER("user"),
-    ADMIN("admin"),
-    SYSTEM("system");
+    USER("USER"),
+    ADMIN("ADMIN"),
+    SYSTEM("SYSTEM");
 
 
     private final String roleName;

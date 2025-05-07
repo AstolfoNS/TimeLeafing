@@ -1,6 +1,6 @@
 package com.astolfo.model.entity;
 
-import com.astolfo.common.enums.ArticleStatus;
+import com.astolfo.common.enums.ArticleStage;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,24 +22,26 @@ public class Article {
 
     private String title;
 
-    private String content;
-
     private String summary;
+
+    private String content;
 
     private String coverImage;
 
-    private ArticleStatus status;
-
-    private Boolean isDeleted;
+    private ArticleStage stage;
 
     private Boolean isPublic;
+
+    private Long viewCounts;
+
+    private Long likeCounts;
+
+    private Boolean status;
 
     private Date createTime;
 
     private Date updateTime;
 
-    private Long viewCounts;
-
-    private Long likeCounts;
+    private Boolean isDeleted;
 
 }

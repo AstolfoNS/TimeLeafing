@@ -26,7 +26,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "getTagVOsById")
             )
@@ -42,7 +42,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "getTagVOsById")
             )
@@ -57,7 +57,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     column = "author_id",
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
-            @Result(property = "tags",
+            @Result(property = "tagVOs",
                     column = "id",
                     many = @Many(select = "getTagVOsById")
             )
@@ -73,7 +73,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
                     one = @One(select = "com.astolfo.mapper.UserMapper.getUserVOById")
             ),
             @Result(
-                    property = "tags",
+                    property = "tagVOs",
                     column = "id",
                     many = @Many(select = "getTagVOsById")
             )

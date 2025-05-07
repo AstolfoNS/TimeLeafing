@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class UserVO {
-
-    private Long id;
 
     private String username;
 
@@ -20,5 +20,7 @@ public class UserVO {
     private Gender gender;
 
     private String introduction;
+
+    private Date lastLoginTime;
 
 }

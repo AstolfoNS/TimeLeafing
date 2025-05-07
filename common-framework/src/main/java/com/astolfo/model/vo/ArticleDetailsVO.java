@@ -1,6 +1,6 @@
 package com.astolfo.model.vo;
 
-import com.astolfo.common.enums.ArticleStatus;
+import com.astolfo.common.enums.ArticleStage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,32 +13,33 @@ import java.util.List;
 @Data
 public class ArticleDetailsVO {
 
-    private Long id;
-
     private UserVO author;
 
     private String title;
 
-    private String content;
-
     private String summary;
+
+    private String content;
 
     private String coverImage;
 
-    private ArticleStatus status;
-
-    private Boolean isDeleted;
+    private ArticleStage stage;
 
     private Boolean isPublic;
-
-    private Date createTime;
-
-    private Date updateTime;
 
     private Long viewCounts;
 
     private Long likeCounts;
 
-    private List<TagVO> tags;
+    private List<TagVO> tagVOs;
+
+    private Boolean status;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Boolean isDeleted;
+
 
 }
