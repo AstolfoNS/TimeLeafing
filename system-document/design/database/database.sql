@@ -2,7 +2,7 @@
 #
 # 使用RBAC权限模型。
 #
-# 如果表是实体表，则默认具有以下属性：
+# 如果表是实体表或实体表（存在关系），则默认具有以下属性：
 #     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
 #     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
@@ -13,6 +13,7 @@
 #    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 #
+
 
 
 DROP DATABASE IF EXISTS project3;
@@ -114,15 +115,17 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 
 
-# 实体表
+# 实体表（存在关系）
 CREATE TABLE IF NOT EXISTS `article` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 文章ID
+
+    `author_id`                 BIGINT NOT NULL,                                                                        -- 作者ID
 
     `title`                     VARCHAR(128),                                                                           -- 文章标题
     `summary`                   VARCHAR(512),                                                                           -- 文章摘要
     `content`                   LONGTEXT,                                                                               -- 文章内容
     `cover_image`               VARCHAR(256),                                                                           -- 文章封面
-    `condition`                 ENUM('DRAFT', 'PENDING', 'PUBLISHED') DEFAULT 'DRAFT',                                  -- 文章状态
+    `stage`                     ENUM('DRAFT', 'PENDING', 'PUBLISHED') DEFAULT 'DRAFT',                                  -- 文章状态
     `is_public`                 BOOLEAN DEFAULT true,                                                                   -- 是否公开
     `view_counts`               BIGINT DEFAULT 0,                                                                       -- 浏览量
     `like_counts`               BIGINT DEFAULT 0,                                                                       -- 点赞量
@@ -130,39 +133,9 @@ CREATE TABLE IF NOT EXISTS `article` (
     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-# 关系表
-CREATE TABLE IF NOT EXISTS `article_author` (
-    `article_id`                  BIGINT NOT NULL,                                                                      -- 文章ID
-    `author_id`                   BIGINT NOT NULL,                                                                      -- 作者ID
-
-    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (`author_id`, `article_id`),
-
-    FOREIGN KEY (article_id) REFERENCES article(id),
     FOREIGN KEY (author_id) REFERENCES user(id)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-# 实体表
-CREATE TABLE IF NOT EXISTS `tag` (
-    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 标签ID
-
-    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
-
-    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
-    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -185,28 +158,11 @@ CREATE TABLE IF NOT EXISTS `article_tag` (
 
 
 
-# 关系表
-CREATE TABLE IF NOT EXISTS `article_like` (
-    `article_id`                BIGINT NOT NULL,                                                                        -- 文章ID
-    `liker_id`                  BIGINT NOT NULL,                                                                        -- 点赞者ID
-
-    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
-
-    PRIMARY KEY (article_id, liker_id),
-
-    FOREIGN KEY (article_id) REFERENCES  article(id),
-    FOREIGN KEY (liker_id) REFERENCES user(id)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
 # 实体表
-CREATE TABLE IF NOT EXISTS `comment` (
-    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 评论ID
+CREATE TABLE IF NOT EXISTS `tag` (
+    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 标签ID
 
-    `content`                   TEXT,                                                                                   -- 评论内容
+    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
 
     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
@@ -218,24 +174,43 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 
 # 关系表
-CREATE TABLE IF NOT EXISTS `comment_tree` (
-    `comment_id`                BIGINT NOT NULL,                                                                        -- 当前评论ID
-    `root_id`                   BIGINT NOT NULL,                                                                        -- 根评论ID
-    `parent_id`                 BIGINT NOT NULL,                                                                        -- 父评论ID
-    `article_id`                BIGINT NOT NULL,                                                                        -- 所属文章ID
-    `reviewer_id`               BIGINT NOT NULL,                                                                        -- 评论者ID
+CREATE TABLE IF NOT EXISTS `article_like` (
+    `article_id`                BIGINT NOT NULL,                                                                        -- 文章ID
+    `liker_id`                  BIGINT NOT NULL,                                                                        -- 点赞者ID
 
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (comment_id, root_id, parent_id, article_id, reviewer_id),
+    PRIMARY KEY (article_id, liker_id),
 
-    FOREIGN KEY (comment_id) REFERENCES comment(id),
-    FOREIGN KEY (root_id) REFERENCES comment(id),
-    FOREIGN KEY (parent_id) REFERENCES comment(id),
     FOREIGN KEY (article_id) REFERENCES article(id),
-    FOREIGN KEY (reviewer_id) REFERENCES user(id)
+    FOREIGN KEY (liker_id) REFERENCES user(id)
 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# 实体表（存在关系）
+CREATE TABLE IF NOT EXISTS `comment` (
+    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 评论ID
+
+    `article_id`                BIGINT NOT NULL,                                                                        -- 所属文章ID
+    `reviewer_id`               BIGINT NOT NULL,                                                                        -- 评论者ID
+    `content`                   TEXT,                                                                                   -- 评论内容
+
+    `parent_id`                 BIGINT NULL,                                                                            -- 父评论ID (顶级评论为 NULL)
+    `root_id`                   BIGINT NULL,                                                                            -- 根评论ID (顶级评论为自己的ID或 NULL)
+
+    `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
+    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
+    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
+
+    FOREIGN KEY (article_id) REFERENCES article(id),
+    FOREIGN KEY (reviewer_id) REFERENCES user(id),
+
+    FOREIGN KEY (parent_id) REFERENCES comment(id),                                                                     -- 自引用外键：指向父评论
+    FOREIGN KEY (root_id) REFERENCES comment(id)                                                                        -- 自引用外键：指向根评论
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -258,38 +233,40 @@ CREATE TABLE IF NOT EXISTS `user_follow` (
 
 
 
-# 实体表
+# 实体表（存在关系）
 CREATE TABLE IF NOT EXISTS `notification` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 通知ID
 
+    `sender_id`                 BIGINT NOT NULL,                                                                        -- 触发者ID（有SYSTEM用户）
+
     `type`                      ENUM('OTHERS', 'SYSTEM') NOT NULL,                                                      -- 通知类型
-    `is_read`                   BOOLEAN DEFAULT false,                                                                  -- 是否已读
     `content`                   TEXT,                                                                                   -- 通知内容
 
     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
+    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
+
+    FOREIGN KEY (sender_id) REFERENCES user(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
 # 关系表
-CREATE TABLE IF NOT EXISTS `notification_user` (
+CREATE TABLE IF NOT EXISTS `notification_receiver` (
     `notification_id`           BIGINT NOT NULL,                                                                        -- 通知ID
-    `receiver_id`               BIGINT NOT NULL,                                                                        -- 接收者ID（不关联user）
-    `sender_id`                 BIGINT NOT NULL,                                                                        -- 触发者ID（不关联user）
+    `receiver_id`               BIGINT NOT NULL,                                                                        -- 接收者ID
+
+    `is_read`                   BOOLEAN DEFAULT false,                                                                  -- 是否已读
 
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (notification_id, receiver_id, sender_id),
+    PRIMARY KEY (notification_id, receiver_id),
 
     FOREIGN KEY (notification_id) REFERENCES notification(id),
-    FOREIGN KEY (receiver_id) REFERENCES user(id),
-    FOREIGN KEY (sender_id) REFERENCES user(id)
-
+    FOREIGN KEY (receiver_id) REFERENCES user(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
