@@ -12,7 +12,6 @@
 #
 #    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
-#
 
 
 
@@ -198,8 +197,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `reviewer_id`               BIGINT NOT NULL,                                                                        -- 评论者ID
     `content`                   TEXT,                                                                                   -- 评论内容
 
-    `parent_id`                 BIGINT NULL,                                                                            -- 父评论ID (顶级评论为 NULL)
-    `root_id`                   BIGINT NULL,                                                                            -- 根评论ID (顶级评论为自己的ID或 NULL)
+    `parent_id`                 BIGINT NOT NULL,                                                                        -- 父评论ID
+    `root_id`                   BIGINT NOT NULL,                                                                        -- 根评论ID
 
     `status`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
