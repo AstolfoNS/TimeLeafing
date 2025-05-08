@@ -1,7 +1,6 @@
 package com.astolfo.config;
 
 import com.astolfo.common.constants.JwtConstant;
-import com.astolfo.common.enums.JwtAlgorithm;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

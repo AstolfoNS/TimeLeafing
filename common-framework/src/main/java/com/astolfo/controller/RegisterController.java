@@ -1,6 +1,6 @@
 package com.astolfo.controller;
 
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.ResponseResult;
 import com.astolfo.model.dto.UserDTO;
 import com.astolfo.service.RegisterService;
 import jakarta.annotation.Resource;

@@ -1,6 +1,6 @@
 package com.astolfo.controller;
 
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.ResponseResult;
 import com.astolfo.service.LogoutService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;

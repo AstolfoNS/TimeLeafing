@@ -31,11 +31,11 @@ CREATE TABLE IF NOT EXISTS `user` (
     `password`                  VARCHAR(128) NOT NULL,                                                                  -- 用户密码
     `email`                     VARCHAR(256) UNIQUE NOT NULL,                                                           -- 用户邮箱
     `avatar`                    VARCHAR(256),                                                                           -- 用户头像
-    `gender`                    ENUM('MALE', 'FEMALE', 'UNKNOWN'),                                                      -- 用户性别
+    `gender`                    ENUM('MALE', 'FEMALE', 'UNKNOWN') DEFAULT 'UNKNOWN',                                    -- 用户性别
     `introduction`              TEXT,                                                                                   -- 用户简介
     `last_login_time`           DATETIME,                                                                               -- 最后在线时间
 
-    `enabled`                    BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `menu` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 菜单/权限ID
 
     `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
-    `description`               VARCHAR(256),                                                                           -- 菜单名（例如：文章管理）
-    `url`                       VARCHAR(256),                                                                           -- 接口地址或前端路径
+    `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
+    `url`                       VARCHAR(512),                                                                           -- 接口url或前端路径
     `method`                    ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
     `type`                      ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
     `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `article` (
     `title`                     VARCHAR(128),                                                                           -- 文章标题
     `summary`                   VARCHAR(512),                                                                           -- 文章摘要
     `content`                   LONGTEXT,                                                                               -- 文章内容
-    `cover_image`               VARCHAR(256),                                                                           -- 文章封面
+    `cover_image`               VARCHAR(512),                                                                           -- 文章封面
     `stage`                     ENUM('DRAFT', 'PENDING', 'PUBLISHED') DEFAULT 'DRAFT',                                  -- 文章状态
     `is_public`                 BOOLEAN DEFAULT true,                                                                   -- 是否公开
     `view_counts`               BIGINT DEFAULT 0,                                                                       -- 浏览量
@@ -193,23 +193,23 @@ CREATE TABLE IF NOT EXISTS `article_like` (
 CREATE TABLE IF NOT EXISTS `comment` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 评论ID
 
+    `parent_id`                 BIGINT NOT NULL,                                                                        -- 父评论ID
+    `root_id`                   BIGINT NOT NULL,                                                                        -- 根评论ID
+
     `article_id`                BIGINT NOT NULL,                                                                        -- 所属文章ID
     `reviewer_id`               BIGINT NOT NULL,                                                                        -- 评论者ID
     `content`                   TEXT,                                                                                   -- 评论内容
-
-    `parent_id`                 BIGINT NOT NULL,                                                                        -- 父评论ID
-    `root_id`                   BIGINT NOT NULL,                                                                        -- 根评论ID
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    FOREIGN KEY (article_id) REFERENCES article(id),
-    FOREIGN KEY (reviewer_id) REFERENCES user(id),
-
     FOREIGN KEY (parent_id) REFERENCES comment(id),                                                                     -- 自引用外键：指向父评论
-    FOREIGN KEY (root_id) REFERENCES comment(id)                                                                        -- 自引用外键：指向根评论
+    FOREIGN KEY (root_id) REFERENCES comment(id),                                                                       -- 自引用外键：指向根评论
+
+    FOREIGN KEY (article_id) REFERENCES article(id),
+    FOREIGN KEY (reviewer_id) REFERENCES user(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -279,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `article_bookmark` (
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (`collector_id`,        `article_id`),
+    PRIMARY KEY (`collector_id`, `article_id`),
 
     FOREIGN KEY (collector_id) REFERENCES user(id),
     FOREIGN KEY (article_id) REFERENCES article(id)

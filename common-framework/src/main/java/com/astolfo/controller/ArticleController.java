@@ -1,8 +1,8 @@
 package com.astolfo.controller;
 
 import com.astolfo.common.enums.ArticleSortField;
-import com.astolfo.common.result.PageResult;
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.PageResult;
+import com.astolfo.common.results.ResponseResult;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;
 import com.astolfo.model.vo.TagVO;

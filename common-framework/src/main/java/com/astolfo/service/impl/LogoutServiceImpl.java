@@ -2,8 +2,8 @@ package com.astolfo.service.impl;
 
 import com.astolfo.common.constants.RedisCacheConstant;
 import com.astolfo.common.enums.HttpCode;
-import com.astolfo.common.result.ResponseResult;
-import com.astolfo.common.utils.RedisCacheUtil;
+import com.astolfo.common.results.ResponseResult;
+import com.astolfo.common.utils.components.RedisCacheUtil;
 import com.astolfo.security.entity.LoginUser;
 import com.astolfo.service.LogoutService;
 import jakarta.annotation.Resource;

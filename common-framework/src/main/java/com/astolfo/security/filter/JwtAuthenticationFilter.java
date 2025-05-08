@@ -1,8 +1,8 @@
 package com.astolfo.security.filter;
 
 import com.astolfo.common.constants.RedisCacheConstant;
-import com.astolfo.common.utils.JwtUtil;
-import com.astolfo.common.utils.RedisCacheUtil;
+import com.astolfo.common.utils.components.JwtUtil;
+import com.astolfo.common.utils.components.RedisCacheUtil;
 import com.astolfo.security.entity.LoginUser;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;

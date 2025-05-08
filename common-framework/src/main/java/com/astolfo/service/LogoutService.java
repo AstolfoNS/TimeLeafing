@@ -1,6 +1,6 @@
 package com.astolfo.service;
 
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.ResponseResult;
 
 public interface LogoutService {
 

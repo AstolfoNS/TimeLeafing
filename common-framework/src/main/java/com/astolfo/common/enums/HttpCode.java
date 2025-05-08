@@ -13,7 +13,8 @@ public enum HttpCode {
 
     NO_OPERATOR_AUTH(301, "当前没有权限操作"),
 
-    SYSTEM_ERROR(401, "系统错误"),
+    UNAUTHORIZED(401, "用户认证失败"),
+    FORBIDDEN(403, "用户权限不足"),
 
     NEED_LOGIN(501, "需要登录后操作"),
     USERNAME_EXIST(504, "该用户名已被使用"),

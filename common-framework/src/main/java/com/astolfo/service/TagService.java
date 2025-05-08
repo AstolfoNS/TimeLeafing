@@ -1,7 +1,7 @@
 package com.astolfo.service;
 
-import com.astolfo.common.result.PageResult;
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.PageResult;
+import com.astolfo.common.results.ResponseResult;
 import com.astolfo.model.entity.Tag;
 import com.astolfo.model.vo.ArticleDetailsVO;
 import com.astolfo.model.vo.ArticleSummaryVO;

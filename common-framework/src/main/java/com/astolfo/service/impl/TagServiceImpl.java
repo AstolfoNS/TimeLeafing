@@ -1,8 +1,8 @@
 package com.astolfo.service.impl;
 
 import com.astolfo.common.constants.ArticleSearchPageConstant;
-import com.astolfo.common.result.PageResult;
-import com.astolfo.common.result.ResponseResult;
+import com.astolfo.common.results.PageResult;
+import com.astolfo.common.results.ResponseResult;
 import com.astolfo.mapper.TagMapper;
 import com.astolfo.model.entity.Tag;
 import com.astolfo.model.vo.ArticleDetailsVO;

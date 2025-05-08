@@ -1,4 +1,4 @@
-package com.astolfo.common.utils;
+package com.astolfo.common.utils.statics;
 
 import org.springframework.beans.BeanUtils;
 

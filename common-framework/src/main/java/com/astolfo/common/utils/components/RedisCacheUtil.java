@@ -1,5 +1,6 @@
-package com.astolfo.common.utils;
+package com.astolfo.common.utils.components;
 
+import com.astolfo.common.utils.statics.MapConverter;
 import jakarta.annotation.Resource;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;

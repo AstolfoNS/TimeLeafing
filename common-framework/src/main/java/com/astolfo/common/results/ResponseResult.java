@@ -1,4 +1,4 @@
-package com.astolfo.common.result;
+package com.astolfo.common.results;
 
 import com.astolfo.common.enums.HttpCode;
 import lombok.AllArgsConstructor;

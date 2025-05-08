@@ -1,4 +1,4 @@
-package com.astolfo.common.utils;
+package com.astolfo.common.utils.components;
 
 import com.astolfo.common.constants.JwtConstant;
 import com.astolfo.security.entity.LoginUser;

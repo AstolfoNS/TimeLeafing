@@ -1,7 +1,6 @@
 package com.astolfo.model.vo;
 
 import com.astolfo.common.enums.Gender;
-import com.astolfo.common.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
