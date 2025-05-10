@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Type {
+public enum AuthorityType {
     BUTTON("BUTTON"),
     MENU("MENU");
 
 
-    private final String typeName;
+    private final String authorityTypeName;
 
 }

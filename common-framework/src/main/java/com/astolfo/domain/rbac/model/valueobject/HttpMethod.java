@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum RequestMethod {
+public enum HttpMethod {
     GET("GET"),
     POST("POST"),
     PUT("PUT"),
     DELETE("DELETE");
 
 
-    private final String requestMethodName;
+    private final String httpMethodName;
 
 }

@@ -1,6 +1,7 @@
 package com.astolfo.domain.user.model.valueobject;
 
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 @Getter
 public class Email {
@@ -9,8 +10,8 @@ public class Email {
 
 
     private Email(String emailAddress) {
-        if (emailAddress == null || emailAddress.isEmpty()) {
-            throw new IllegalArgumentException("Email address cannot be null or empty");
+        if (StringUtils.hasText(emailAddress)) {
+            throw new IllegalArgumentException("Email address is illegal");
         }
 
         this.emailAddress = emailAddress;

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -22,10 +23,13 @@ public class User {
 
     private Email email;
 
+    @Setter
     private String avatar;
 
+    @Setter
     private String introduction;
 
+    @Setter
     private Gender gender;
 
     private LocalDateTime lastLoginTime;
@@ -44,18 +48,6 @@ public class User {
             String password,
             Email email
     ) {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Username is null or empty");
-        }
-
-        if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Password is null or empty");
-        }
-
-        if (email == null) {
-            throw new IllegalArgumentException("Email is null");
-        }
-
         this.id = null;
 
         this.username = username;
@@ -71,24 +63,6 @@ public class User {
         this.gender = Gender.UNKNOWN;
 
         this.lastLoginTime = null;
-
-        this.enabled = true;
-
-        this.createTime = LocalDateTime.now();
-
-        this.updateTime = LocalDateTime.now();
-
-        this.isDeleted = false;
-    }
-
-    public void changePassword(String newPassword) {
-        if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Password is null or empty");
-        }
-
-        // TODO: 更新密码为新密码加密后的密码
-
-        this.updateTime = LocalDateTime.now();
     }
 
     public void updateProfile(
@@ -96,23 +70,11 @@ public class User {
             Gender gender,
             String introduction
     ) {
-        changeAvatar(avatar);
+        setAvatar(avatar);
 
-        changeGender(gender);
+        setGender(gender);
 
-        changeIntroduction(introduction);
-    }
-
-    public void changeAvatar(String newAvatar) {
-        this.avatar = newAvatar;
-    }
-
-    public void changeIntroduction(String newIntroduction) {
-        this.introduction = newIntroduction;
-    }
-
-    public void changeGender(Gender newGender) {
-        this.gender = newGender;
+        setIntroduction(introduction);
     }
 
     public void markAsLoggedIn() {
@@ -136,4 +98,25 @@ public class User {
         this.isDeleted = false;
         enable();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? Objects.hash(id) : 0;
+    }
+
 }

@@ -19,7 +19,7 @@ public class LoginUserDetails implements UserDetails {
 
     private User user;
 
-    private List <Menu> authorities;
+    private List<Menu> authorities;
 
 
     @JsonIgnore

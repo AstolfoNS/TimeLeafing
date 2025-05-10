@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.persistence.entity;
 
-import com.astolfo.domain.rbac.model.valueobject.RequestMethod;
-import com.astolfo.domain.rbac.model.valueobject.Type;
+import com.astolfo.domain.rbac.model.valueobject.HttpMethod;
+import com.astolfo.domain.rbac.model.valueobject.AuthorityType;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +23,9 @@ public class MenuEntity {
 
     private String url;
 
-    private RequestMethod requestMethod;
+    private HttpMethod requestMethod;
 
-    private Type type;
+    private AuthorityType type;
 
     private Integer orderNum;
 

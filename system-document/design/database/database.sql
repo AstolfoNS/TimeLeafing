@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `menu` (
     `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
     `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
     `url`                       VARCHAR(512),                                                                           -- 接口url或前端路径
-    `request_method`            ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
-    `type`                      ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
+    `http_method`               ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
+    `authority_type`            ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
     `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
