@@ -1,10 +1,14 @@
 server:
   port: 8080
 
+<<<<<<< HEAD
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+=======
+spring:
+>>>>>>> main
   servlet:
     multipart:
       max-file-size: 2MB
@@ -14,7 +18,10 @@ spring:
   cache:
     type: redis
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
