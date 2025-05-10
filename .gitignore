@@ -1,25 +1,12 @@
-### configuration ###
-**/src/main/resources/application-secret.yml
-
-.idea
 
 
-### maven的build文件夹 ###
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+### ============ IDEA =============
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### Eclipse ###
+### ============ Eclipse ==========
 .apt_generated
 .classpath
 .factorypath
@@ -28,18 +15,31 @@ target/
 .springBeans
 .sts4-cache
 
-### NetBeans ###
+### ============ NetBeans =========
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### ============ VS Code ==========
+.vscode/
+
+### ============ Mac OS ===========
+.DS_Store
+
+### ============ Maven =============
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### ============ Gradle ============
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+### ============ Private Config ============
+**/src/main/resources/application-secret.yml
 
-### Mac OS ###
-.DS_Store
+### 保留空文件夹
+/*/
