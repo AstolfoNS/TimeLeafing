@@ -20,5 +20,4 @@ public class Email {
         return new Email(emailAddress);
     }
 
-
 }

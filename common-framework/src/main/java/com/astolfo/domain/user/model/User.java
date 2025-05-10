@@ -5,6 +5,7 @@ import com.astolfo.domain.user.model.valueobject.Gender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 public class User {
 
+    @Setter
     private Long id;
 
     private String username;
@@ -37,7 +39,7 @@ public class User {
     private Boolean isDeleted;
 
 
-    protected User(
+    public User(
             String username,
             String password,
             Email email

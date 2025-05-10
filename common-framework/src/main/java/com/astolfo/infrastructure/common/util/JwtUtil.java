@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.common.util;
 
 import com.astolfo.infrastructure.common.constant.JwtConstant;
-import com.astolfo.infrastructure.security.userdetails.LoginUser;
+import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,29 +32,27 @@ public class JwtUtil {
     }
 
     public String generateToken(
-            LoginUser loginUser,
+            LoginUserDetails loginUserDetails,
             Instant issuedAt,
             Long expiresInMillis
     ) {
         JwtClaimsSet claim = JwtClaimsSet
                 .builder()
-                .subject(loginUser.getStringId())
+                .subject(loginUserDetails.getStringId())
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
 
-        JwsHeader jwsHeader = JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build();
-
-        return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claim)).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build(), claim)).getTokenValue();
     }
 
-    public String generateToken(LoginUser loginUser, Long expireInMillis) {
-        return generateToken(loginUser, Instant.now(), expireInMillis);
+    public String generateToken(LoginUserDetails loginUserDetails, Long expireInMillis) {
+        return generateToken(loginUserDetails, Instant.now(), expireInMillis);
     }
 
-    public String generateToken(LoginUser loginUser) {
-        return generateToken(loginUser, Instant.now(), expire);
+    public String generateToken(LoginUserDetails loginUserDetails) {
+        return generateToken(loginUserDetails, Instant.now(), expire);
     }
 
     public ParseToken parseToken(String token) throws JwtException {

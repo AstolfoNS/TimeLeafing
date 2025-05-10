@@ -3,7 +3,7 @@ package com.astolfo.infrastructure.security.filter;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.util.JwtUtil;
 import com.astolfo.infrastructure.common.util.RedisCacheUtil;
-import com.astolfo.infrastructure.security.userdetails.LoginUser;
+import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -47,15 +47,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String userId = jwtUtil.parseToken(token).getStringId();
 
-        LoginUser loginUser = redisCacheUtil.getObject(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
+        LoginUserDetails loginUserDetails = redisCacheUtil.getObject(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
 
-        if (Objects.isNull(loginUser)) {
+        if (Objects.isNull(loginUserDetails)) {
             throw new RuntimeException("User is not logged in");
         }
 
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities())
-        );
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities()));
 
         filterChain.doFilter(request, response);
     }
