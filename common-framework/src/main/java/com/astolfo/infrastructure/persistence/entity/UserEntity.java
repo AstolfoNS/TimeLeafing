@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.entity;
 
-import com.astolfo.domain.domain.user.model.valueobject.Gender;
+import com.astolfo.domain.user.model.valueobject.Gender;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,4 +37,5 @@ public class UserEntity {
     private LocalDateTime updateTime;
 
     private Boolean isDeleted;
+
 }

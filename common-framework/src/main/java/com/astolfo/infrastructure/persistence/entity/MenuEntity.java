@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.persistence.entity;
 
-import com.astolfo.domain.domain.rbac.model.valueobject.RequestMethod;
-import com.astolfo.domain.domain.rbac.model.valueobject.Type;
+import com.astolfo.domain.rbac.model.valueobject.RequestMethod;
+import com.astolfo.domain.rbac.model.valueobject.Type;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;

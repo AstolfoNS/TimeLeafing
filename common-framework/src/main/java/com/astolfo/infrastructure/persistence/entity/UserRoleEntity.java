@@ -7,23 +7,17 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@TableName("role")
+@TableName("user_role")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RoleEntity {
+public class UserRoleEntity {
 
-    private Long id;
+    private Long userId;
 
-    private String name;
-
-    private String description;
-
-    private Boolean enabled;
+    private Long roleId;
 
     private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 
     private Boolean isDeleted;
 
