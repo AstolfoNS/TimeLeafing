@@ -1,10 +1,10 @@
-package com.astolfo.infrastructure.security.authentiation;
+package com.astolfo.security.authentiation;
 
 import com.astolfo.domain.rbac.model.Menu;
 import com.astolfo.domain.rbac.repository.MenuRepository;
-import com.astolfo.domain.user.model.User;
-import com.astolfo.domain.user.repository.UserRepository;
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.domain.rbac.model.User;
+import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

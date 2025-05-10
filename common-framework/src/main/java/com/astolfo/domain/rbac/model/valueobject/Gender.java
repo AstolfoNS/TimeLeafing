@@ -1,4 +1,4 @@
-package com.astolfo.domain.user.model.valueobject;
+package com.astolfo.domain.rbac.model.valueobject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

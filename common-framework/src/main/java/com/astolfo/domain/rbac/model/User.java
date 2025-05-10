@@ -1,7 +1,7 @@
-package com.astolfo.domain.user.model;
+package com.astolfo.domain.rbac.model;
 
-import com.astolfo.domain.user.model.valueobject.Email;
-import com.astolfo.domain.user.model.valueobject.Gender;
+import com.astolfo.domain.rbac.model.valueobject.Email;
+import com.astolfo.domain.rbac.model.valueobject.Gender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

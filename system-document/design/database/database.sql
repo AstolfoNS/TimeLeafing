@@ -44,6 +44,22 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 
 
+# 实体表
+CREATE TABLE IF NOT EXISTS `role` (
+    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 角色ID
+
+    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 角色名（如 USER / ADMIN / SYSTEM）
+    `description`               VARCHAR(256),                                                                           -- 角色描述
+
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
+    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
+    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 # 关系表
 CREATE TABLE IF NOT EXISTS `user_role` (
     `user_id`                   BIGINT NOT NULL,                                                                        -- 用户ID
@@ -62,11 +78,15 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 
 # 实体表
-CREATE TABLE IF NOT EXISTS `role` (
-    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 角色ID
+CREATE TABLE IF NOT EXISTS `menu` (
+    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 菜单/权限ID
 
-    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 角色名（如 USER / ADMIN / SYSTEM）
-    `description`               VARCHAR(256),                                                                           -- 角色描述
+    `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
+    `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
+    `url`                       VARCHAR(512),                                                                           -- 接口url或前端路径
+    `http_method`               ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
+    `authority_type`            ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
+    `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
@@ -89,26 +109,6 @@ CREATE TABLE IF NOT EXISTS `role_menu` (
 
     FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (menu_id) REFERENCES menu(id)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-# 实体表
-CREATE TABLE IF NOT EXISTS `menu` (
-    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 菜单/权限ID
-
-    `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
-    `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
-    `url`                       VARCHAR(512),                                                                           -- 接口url或前端路径
-    `http_method`               ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
-    `authority_type`            ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
-    `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
-
-    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
-    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -140,6 +140,21 @@ CREATE TABLE IF NOT EXISTS `article` (
 
 
 
+# 实体表
+CREATE TABLE IF NOT EXISTS `tag` (
+    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 标签ID
+
+    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
+
+    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
+    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
+    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
+    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 # 关系表
 CREATE TABLE IF NOT EXISTS `article_tag` (
     `article_id`                BIGINT NOT NULL,                                                                        -- 文章ID
@@ -152,21 +167,6 @@ CREATE TABLE IF NOT EXISTS `article_tag` (
 
     FOREIGN KEY (article_id) REFERENCES article(id),
     FOREIGN KEY (tag_id) REFERENCES tag(id)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-# 实体表
-CREATE TABLE IF NOT EXISTS `tag` (
-    `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 标签ID
-
-    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
-
-    `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
-    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-    `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
-    `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

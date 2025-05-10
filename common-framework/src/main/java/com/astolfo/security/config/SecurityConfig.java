@@ -1,6 +1,6 @@
-package com.astolfo.infrastructure.security.config;
+package com.astolfo.security.config;
 
-import com.astolfo.infrastructure.security.filter.JwtAuthenticationFilter;
+import com.astolfo.security.filter.JwtAuthenticationFilter;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
-package com.astolfo.domain.user.repository;
+package com.astolfo.domain.rbac.repository;
 
-import com.astolfo.domain.user.model.User;
-import com.astolfo.domain.user.model.valueobject.Email;
+import com.astolfo.domain.rbac.model.User;
+import com.astolfo.domain.rbac.model.valueobject.Email;
 
 import java.util.Optional;
 

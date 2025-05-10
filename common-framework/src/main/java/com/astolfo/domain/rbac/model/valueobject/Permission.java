@@ -1,7 +1,6 @@
 package com.astolfo.domain.rbac.model.valueobject;
 
 import lombok.Getter;
-import org.springframework.util.StringUtils;
 
 @Getter
 public class Permission {
@@ -10,10 +9,6 @@ public class Permission {
 
 
     private Permission(String permissionName) {
-        if (StringUtils.hasText(permissionName)) {
-            throw new IllegalArgumentException("Permission is illegal");
-        }
-
         this.permissionName = permissionName;
     }
 

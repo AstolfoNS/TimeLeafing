@@ -1,16 +1,18 @@
-package com.astolfo.infrastructure.security.userdetails;
+package com.astolfo.security.userdetails;
 
 import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.domain.user.model.User;
+import com.astolfo.domain.rbac.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +27,10 @@ public class LoginUserDetails implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return authorities
+                .stream()
+                .map(menu -> new SimpleGrantedAuthority(menu.getPermission().getPermissionName()))
+                .collect(Collectors.toList());
     }
 
     @Override

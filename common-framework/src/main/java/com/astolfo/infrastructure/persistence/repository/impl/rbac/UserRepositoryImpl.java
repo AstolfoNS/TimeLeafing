@@ -1,8 +1,8 @@
-package com.astolfo.infrastructure.persistence.repository.impl.user;
+package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.user.model.User;
-import com.astolfo.domain.user.model.valueobject.Email;
-import com.astolfo.domain.user.repository.UserRepository;
+import com.astolfo.domain.rbac.model.User;
+import com.astolfo.domain.rbac.model.valueobject.Email;
+import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
