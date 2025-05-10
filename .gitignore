@@ -40,6 +40,3 @@ build/
 
 ### ============ Private Config ============
 **/src/main/resources/application-secret.yml
-
-### 保留空文件夹
-/*/
