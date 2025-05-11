@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 public class UserSqlProvider {
 
-    public String findById(@Param("id") Long id) {
+    public String findUserEntityById(@Param("id") Long id) {
         return """
             SELECT
                 user.*
@@ -15,7 +15,7 @@ public class UserSqlProvider {
         """;
     }
 
-    public String findByUsername(@Param("username") String username) {
+    public String findUserEntityByUsername(@Param("username") String username) {
         return """
             SELECT
                 user.*

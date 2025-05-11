@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface RoleRepository {
 
-    List<Role> getRoleByUserId(Long userId);
+    List<Role> findRoleByUserId(Long userId);
 
-    List<Role> getRoleByUsername(String username);
-
-    Role toRole(RoleEntity roleEntity);
+    List<Role> findRoleByUsername(String username);
 
 }

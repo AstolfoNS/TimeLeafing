@@ -1,20 +1,17 @@
 package com.astolfo.domain.rbac.repository;
 
 import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.infrastructure.persistence.entity.MenuEntity;
 
 import java.util.List;
 
 public interface MenuRepository {
 
-    List<Menu> getMenuByUserId(Long userId);
+    List<Menu> findMenuListByUserId(Long userId);
 
-    List<Menu> getMenuByUsername(String username);
+    List<Menu> findMenuListByUsername(String username);
 
-    List<Menu> getMenuByRoleId(Long roleId);
+    List<Menu> findMenuListByRoleId(Long roleId);
 
-    List<Menu> getMenuByRoleName(String roleName);
-
-    Menu toMenu(MenuEntity menuEntity);
+    List<Menu> findMenuListByRoleName(String roleName);
 
 }

@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.SelectProvider;
 
 @Mapper
 public interface UserMapper extends BaseMapper<UserEntity> {
-    
+
     @SelectProvider(type = UserSqlProvider.class, method = "findByUsername")
-    UserEntity findByUsername(@Param("username") String username);
+    UserEntity findUserEntityByUsername(@Param("username") String username);
 
 }
