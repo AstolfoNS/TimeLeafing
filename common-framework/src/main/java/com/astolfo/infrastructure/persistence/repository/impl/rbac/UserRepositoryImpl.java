@@ -1,5 +1,6 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
+import com.astolfo.converter.UserConverter;
 import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.model.valueobject.entity.Email;
 import com.astolfo.domain.rbac.repository.UserRepository;
@@ -16,10 +17,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private UserConverter userConverter;
+
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return userConverter.toDomain(userMapper.findByUsername(username));
     }
 
     @Override
@@ -37,8 +41,4 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
-    @Override
-    public User toUser(UserEntity userEntity) {
-        return null;
-    }
 }
