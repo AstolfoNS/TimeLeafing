@@ -1,4 +1,4 @@
-package com.astolfo.domain.rbac.model.valueobject;
+package com.astolfo.domain.rbac.model.valueobject.entity;
 
 import lombok.Getter;
 

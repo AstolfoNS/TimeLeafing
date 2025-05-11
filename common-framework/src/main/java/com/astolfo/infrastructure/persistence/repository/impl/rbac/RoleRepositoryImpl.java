@@ -2,6 +2,7 @@ package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
 import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.domain.rbac.repository.RoleRepository;
+import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,5 +18,10 @@ public class RoleRepositoryImpl implements RoleRepository {
     @Override
     public List<Role> getRoleByUsername(String username) {
         return List.of();
+    }
+
+    @Override
+    public Role toRole(RoleEntity roleEntity) {
+        return null;
     }
 }

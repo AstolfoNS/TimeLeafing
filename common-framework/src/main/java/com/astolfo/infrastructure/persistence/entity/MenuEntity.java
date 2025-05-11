@@ -1,7 +1,6 @@
 package com.astolfo.infrastructure.persistence.entity;
 
-import com.astolfo.domain.rbac.model.valueobject.HttpMethod;
-import com.astolfo.domain.rbac.model.valueobject.AuthorityType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 public class MenuEntity {
 
+    @TableId
     private Long id;
 
     private String permission;
@@ -23,9 +23,9 @@ public class MenuEntity {
 
     private String url;
 
-    private HttpMethod requestMethod;
+    private String requestMethod;
 
-    private AuthorityType type;
+    private String authorityType;
 
     private Integer orderNum;
 

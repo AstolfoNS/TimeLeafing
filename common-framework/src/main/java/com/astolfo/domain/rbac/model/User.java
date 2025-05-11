@@ -1,36 +1,31 @@
 package com.astolfo.domain.rbac.model;
 
-import com.astolfo.domain.rbac.model.valueobject.Email;
-import com.astolfo.domain.rbac.model.valueobject.Gender;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.astolfo.domain.rbac.model.valueobject.entity.Email;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.Gender;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Setter(AccessLevel.PRIVATE)
 @Getter
 public class User {
 
-    @Setter
     private Long id;
+
+    private Email email;
 
     private String username;
 
     private String password;
 
-    private Email email;
-
-    @Setter
     private String avatar;
 
-    @Setter
-    private String introduction;
-
-    @Setter
     private Gender gender;
+
+    private String introduction;
 
     private LocalDateTime lastLoginTime;
 
@@ -44,25 +39,37 @@ public class User {
 
 
     public User(
+            Email email,
             String username,
-            String password,
-            Email email
+            String password
     ) {
-        this.id = null;
+        setEmail(email);
 
-        this.username = username;
+        setUsername(username);
 
-        this.password = password;
+        setPassword(password);
 
-        this.email = email;
+        setGender(Gender.UNKNOWN);
 
-        this.avatar = null;
+        setEnabled(true);
 
-        this.introduction = null;
+        setCreateTime(LocalDateTime.now());
 
-        this.gender = Gender.UNKNOWN;
+        setUpdateTime(LocalDateTime.now());
 
-        this.lastLoginTime = null;
+        setIsDeleted(false);
+    }
+
+    public void updateEmail(Email email) {
+        // TODO 修改邮箱
+    }
+
+    public void updateUsername(String username) {
+        // TODO 修改用户名
+    }
+
+    public void updatePassword(String password) {
+        // TODO 修改密码
     }
 
     public void updateProfile(
@@ -78,45 +85,24 @@ public class User {
     }
 
     public void markAsLoggedIn() {
-        this.lastLoginTime = LocalDateTime.now();
+        setLastLoginTime(LocalDateTime.now());
     }
 
     public void disable() {
-        this.enabled = false;
+        setEnabled(false);
     }
 
     public void enable() {
-        this.enabled = true;
+        setEnabled(true);
     }
 
     public void softDelete() {
-        this.isDeleted = true;
+        setIsDeleted(true);
         disable();
     }
 
     public void restore() {
-        this.isDeleted = false;
+        setIsDeleted(false);
         enable();
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        User user = (User) o;
-
-        return id != null && Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? Objects.hash(id) : 0;
-    }
-
 }

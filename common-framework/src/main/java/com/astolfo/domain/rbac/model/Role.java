@@ -1,83 +1,66 @@
 package com.astolfo.domain.rbac.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.util.StringUtils;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Setter(AccessLevel.PRIVATE)
 @Getter
 public class Role {
 
-    @Setter
     private Long id;
 
     private String name;
 
-    @Setter
     private String description;
 
-    private boolean enabled;
+    private Boolean enabled;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
 
-    public Role(String name, String description) {
-        this.id = null;
+    public Role(String name) {
+        setName(name);
 
-        this.name = name;
+        setEnabled(true);
 
-        this.description = description;
+        setCreateTime(LocalDateTime.now());
+
+        setUpdateTime(LocalDateTime.now());
+
+        setIsDeleted(false);
     }
-    
+
+    public void updateName(String name) {
+        // TODO 修改角色名称
+    }
+
     public void updateDescription(String description) {
         setDescription(description);
     }
 
     public void disable() {
-        this.enabled = false;
+        setEnabled(false);
     }
 
     public void enable() {
-        this.enabled = true;
+        setEnabled(true);
     }
 
     public void softDelete() {
-        this.isDeleted = true;
+        setIsDeleted(true);
         disable();
     }
 
     public void restore() {
-        this.isDeleted = false;
+        setIsDeleted(false);
         enable();
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Role role = (Role) o;
-
-        return id != null && Objects.equals(id, role.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? Objects.hash(id) : 0;
-    }
-
 }

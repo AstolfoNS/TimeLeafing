@@ -1,126 +1,93 @@
 package com.astolfo.domain.rbac.model;
 
-import com.astolfo.domain.rbac.model.valueobject.AuthorityType;
-import com.astolfo.domain.rbac.model.valueobject.HttpMethod;
-import com.astolfo.domain.rbac.model.valueobject.Permission;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.AuthorityType;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
+import com.astolfo.domain.rbac.model.valueobject.entity.Permission;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Setter(AccessLevel.PRIVATE)
 @Getter
 public class Menu {
 
-    @Setter
     private Long id;
 
     private Permission permission;
 
-    @Setter
     private String description;
 
-    @Setter
     private String url;
 
-    @Setter
     private HttpMethod httpMethod;
 
-    @Setter
-    private AuthorityType type;
+    private AuthorityType authorityType;
 
-    @Setter
-    private int orderNum;
+    private Integer orderNum;
 
-    private boolean enabled;
+    private Boolean enabled;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
 
     public Menu(
             Permission permission,
-            String description,
             String url,
-            HttpMethod httpMethod,
-            AuthorityType type,
-            int orderNum
+            HttpMethod httpMethod
     ) {
-        this.id = null;
-
-        this.permission = permission;
-
-        this.description = description;
-
-        this.url = url;
-
-        this.httpMethod = httpMethod;
-
-        this.type = type;
-
-        this.orderNum = orderNum;
-    }
-
-    public void updateDetails(
-            String description,
-            String url,
-            HttpMethod httpMethod,
-            AuthorityType type,
-            int orderNum
-    ) {
-        setDescription(description);
+        setPermission(permission);
 
         setUrl(url);
 
         setHttpMethod(httpMethod);
 
-        setType(type);
+        setAuthorityType(AuthorityType.MENU);
+
+        setOrderNum(0);
+
+        setEnabled(Boolean.TRUE);
+
+        setCreateTime(LocalDateTime.now());
+
+        setUpdateTime(LocalDateTime.now());
+
+        setIsDeleted(Boolean.FALSE);
+    }
+
+    public void updateDetails(
+            String description,
+            AuthorityType authorityType,
+            Integer orderNum
+    ) {
+        setDescription(description);
+
+        setAuthorityType(authorityType);
 
         setOrderNum(orderNum);
     }
 
     public void disable() {
-        this.enabled = false;
+        setEnabled(false);
     }
 
     public void enable() {
-        this.enabled = true;
+        setEnabled(true);
     }
 
     public void softDelete() {
-        this.isDeleted = true;
+        setIsDeleted(true);
         disable();
     }
 
     public void restore() {
-        this.isDeleted = false;
+        setIsDeleted(false);
         enable();
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Menu menu = (Menu) o;
-
-        return id != null && Objects.equals(id, menu.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? Objects.hash(id) : 0;
-    }
-
 }
