@@ -19,7 +19,7 @@ public enum AuthorityType {
     private static final Map<String, AuthorityType> MAP = EnumStringMappingUtil.buildMapping(AuthorityType.class, "getAuthorityTypeName");
 
 
-    public AuthorityType get(String authorityTypeName) {
+    public static AuthorityType get(String authorityTypeName) {
         return MAP.get(authorityTypeName);
     }
 

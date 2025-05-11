@@ -32,9 +32,9 @@ public class UserConverter {
     public Optional<UserEntity> toEntity(User user) {
         return Optional.of(new UserEntity(
                         user.getId(),
+                        user.getEmail().getEmailAddress(),
                         user.getUsername(),
                         user.getPassword(),
-                        user.getEmail().getEmailAddress(),
                         user.getAvatar(),
                         user.getGender().getGenderName(),
                         user.getIntroduction(),

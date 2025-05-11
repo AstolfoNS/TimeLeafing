@@ -23,7 +23,7 @@ public class MenuEntity {
 
     private String url;
 
-    private String requestMethod;
+    private String httpMethod;
 
     private String authorityType;
 

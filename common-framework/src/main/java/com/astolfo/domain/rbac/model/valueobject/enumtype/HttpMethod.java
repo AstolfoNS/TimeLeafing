@@ -21,7 +21,7 @@ public enum HttpMethod {
     private static final Map<String, HttpMethod> MAP = EnumStringMappingUtil.buildMapping(HttpMethod.class, "getHttpMethodName");
 
 
-    public HttpMethod get(String httpMethodName) {
+    public static HttpMethod get(String httpMethodName) {
         return MAP.get(httpMethodName);
     }
 

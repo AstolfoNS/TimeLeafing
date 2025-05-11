@@ -2,9 +2,7 @@ package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
 import com.astolfo.converter.UserConverter;
 import com.astolfo.domain.rbac.model.User;
-import com.astolfo.domain.rbac.model.valueobject.entity.Email;
 import com.astolfo.domain.rbac.repository.UserRepository;
-import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
@@ -24,11 +22,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByUsername(String username) {
         return userConverter.toDomain(userMapper.findByUsername(username));
-    }
-
-    @Override
-    public Optional<User> findByEmail(Email email) {
-        return Optional.empty();
     }
 
     @Override
