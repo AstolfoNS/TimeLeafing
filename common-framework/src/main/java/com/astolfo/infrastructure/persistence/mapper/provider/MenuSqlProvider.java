@@ -7,29 +7,29 @@ public class MenuSqlProvider {
     String findMenuEntityListByUserUsername(@Param("username") String username) {
         return """
             SELECT
-                DISTINCT m.id, m.name, m.url, m.permission_string, m.parent_id, m.order_num
+                DISTINCT menu.*
             FROM
-                users u
+                user
             JOIN
-                user_role ur
+                user_role
             ON
-                u.id = ur.user_id
-            JOIN 
-                role r 
-            ON 
-                ur.role_id = r.id
-            JOIN 
-                role_menu rm 
-            ON 
-                r.id = rm.role_id
-            JOIN 
-                menu m 
-            ON 
-                rm.menu_id = m.id
-            WHERE 
-                u.username = #{username}
-            ORDER BY 
-                m.order_num ASC
+                user.id = user_role.user_id
+            JOIN
+                role
+            ON
+                user_role.role_id = role.id
+            JOIN
+                role_menu
+            ON
+                role.id = role_menu.role_id
+            JOIN
+                menu
+            ON
+                role_menu.menu_id = menu.id
+            WHERE
+                user.username = #{username}
+            ORDER BY
+                menu.order_num ASC
         """;
     }
 
