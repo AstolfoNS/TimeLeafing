@@ -1,7 +1,7 @@
 package com.astolfo.security.userdetails;
 
-import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.domain.rbac.model.User;
+import com.astolfo.infrastructure.persistence.entity.MenuEntity;
+import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Data
 public class LoginUserDetails implements UserDetails {
 
-    private User user;
+    private UserEntity userEntity;
 
-    private List<Menu> authorities;
+    private List<MenuEntity> authorities;
 
 
     @JsonIgnore
@@ -29,21 +29,21 @@ public class LoginUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities
                 .stream()
-                .map(menu -> new SimpleGrantedAuthority(menu.getPermission().getPermissionName()))
+                .map(menuEntity -> new SimpleGrantedAuthority(menuEntity.getPermission()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return userEntity.getUsername();
     }
 
     public String getStringId() {
-        return user.getId().toString();
+        return userEntity.getId().toString();
     }
 }

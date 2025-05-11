@@ -4,6 +4,10 @@ import com.astolfo.domain.rbac.model.Menu;
 import com.astolfo.domain.rbac.repository.MenuRepository;
 import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.infrastructure.persistence.entity.MenuEntity;
+import com.astolfo.infrastructure.persistence.entity.UserEntity;
+import com.astolfo.infrastructure.persistence.mapper.MenuMapper;
+import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import com.astolfo.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,18 +21,22 @@ import java.util.List;
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
 
     @Resource
-    UserRepository userRepository;
+    UserMapper userMapper;
 
     @Resource
-    MenuRepository menuRepository;
+    MenuMapper menuMapper;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        UserEntity userEntity = userMapper.findUserEntityByUsername(username);
 
-        List<Menu> userAuthorities = menuRepository.getMenuByUserId(user.getId());
+        if (userEntity == null) {
+            throw new UsernameNotFoundException(username + " not found");
+        }
 
-        return new LoginUserDetails(user, userAuthorities);
+        List<MenuEntity> authorities = menuMapper.findMenuEntityListByUserUsername(username);
+
+        return new LoginUserDetails(userEntity, authorities);
     }
 }
