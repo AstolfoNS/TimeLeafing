@@ -8,7 +8,7 @@ public interface MenuRepository {
 
     List<Menu> findMenuListByUserId(Long userId);
 
-    List<Menu> findMenuListByUsername(String username);
+    List<Menu> findMenuListByUserUsername(String username);
 
     List<Menu> findMenuListByRoleId(Long roleId);
 

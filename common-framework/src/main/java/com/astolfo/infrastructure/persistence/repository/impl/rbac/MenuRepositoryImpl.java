@@ -28,7 +28,7 @@ public class MenuRepositoryImpl implements MenuRepository {
     }
 
     @Override
-    public List<Menu> findMenuListByUsername(String username) {
+    public List<Menu> findMenuListByUserUsername(String username) {
         return menuConverter.toDomain(menuMapper.findMenuEntityListByUserUsername(username));
     }
 
