@@ -59,13 +59,11 @@ public class AuthServiceImpl implements AuthService {
 
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(UsernameOrEmailAddress, password));
 
-
             LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
             Long userId = loginUserDetails.getId();
 
             redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(userId.toString()), loginUserDetails);
-
 
             String token = jwtUtil.generateToken(loginUserDetails);
 
@@ -78,7 +76,6 @@ public class AuthServiceImpl implements AuthService {
             List<MenuInfo> menuInfoList = menuInfoConverter.toVo(menuList);
 
             List<RoleInfo> roleInfoList = roleInfoConverter.toVo(roleList);
-
 
             LoginResponse loginResponse = new LoginResponse(token, username, roleInfoList, menuInfoList);
 
