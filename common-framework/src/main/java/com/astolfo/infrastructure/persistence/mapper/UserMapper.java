@@ -13,7 +13,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     @SelectProvider(type = UserSqlProvider.class, method = "findUserEntityByUsername")
     UserEntity findUserEntityByUsername(@Param("username") String username);
 
-    @SelectProvider(type = UserSqlProvider.class, method = "findUserEntityByEmail")
-    UserEntity findUserEntityByEmail(String emailAddress);
+    @SelectProvider(type = UserSqlProvider.class, method = "findUserEntityByEmailAddress")
+    UserEntity findUserEntityByEmailAddress(@Param("emailAddress") String emailAddress);
 
 }

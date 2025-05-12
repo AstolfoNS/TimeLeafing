@@ -25,6 +25,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findUserByEmail(String emailAddress) {
+        return Optional.of(userConverter.toDomain(userMapper.findUserEntityByEmailAddress(emailAddress)));
+    }
+
+    @Override
+    public Optional<User> findUserByUsernameOrEmail(String usernameOrEmail) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<User> findUserById(Long id) {
         return Optional.empty();
     }
