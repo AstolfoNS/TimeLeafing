@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface MenuRepository {
 
-    List<Menu> findUserMenuListById(Long userId);
+    List<Menu> findUserMenuListById(Long id);
 
     List<Menu> findUserMenuListByUsername(String username);
 
-    List<Menu> findRoleMenuListById(Long roleId);
+    List<Menu> findRoleMenuListById(Long id);
 
-    List<Menu> findRoleMenuListByName(String roleName);
+    List<Menu> findRoleMenuListByName(String name);
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RoleRepository {
 
-    List<Role> findUserRoleListById(Long userId);
+    List<Role> findUserRoleListById(Long id);
 
     List<Role> findUserRoleListByUsername(String username);
 

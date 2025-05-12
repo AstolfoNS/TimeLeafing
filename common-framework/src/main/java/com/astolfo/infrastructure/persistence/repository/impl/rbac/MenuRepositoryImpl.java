@@ -23,8 +23,8 @@ public class MenuRepositoryImpl implements MenuRepository {
     MenuConverter menuConverter;
 
     @Override
-    public List<Menu> findUserMenuListById(Long userId) {
-        return List.of();
+    public List<Menu> findUserMenuListById(Long id) {
+        return menuConverter.toDomain(menuMapper.findUserMenuEntityListById(id));
     }
 
     @Override
@@ -33,12 +33,12 @@ public class MenuRepositoryImpl implements MenuRepository {
     }
 
     @Override
-    public List<Menu> findRoleMenuListById(Long roleId) {
+    public List<Menu> findRoleMenuListById(Long id) {
         return List.of();
     }
 
     @Override
-    public List<Menu> findRoleMenuListByName(String roleName) {
+    public List<Menu> findRoleMenuListByName(String name) {
         return List.of();
     }
 }
