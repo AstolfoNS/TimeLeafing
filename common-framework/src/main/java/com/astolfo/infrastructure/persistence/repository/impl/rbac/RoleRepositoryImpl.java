@@ -21,12 +21,12 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
     public List<Role> findUserRoleListById(Long id) {
-        return roleConverter.;
+        return roleConverter.toDomain(roleMapper.findUserMenuEntityListById(id));
     }
 
     @Override
     public List<Role> findUserRoleListByUsername(String username) {
-        return List.of();
+        return roleConverter.toDomain(roleMapper.findUserRoleEntityListByUsername(username));
     }
 
 }
