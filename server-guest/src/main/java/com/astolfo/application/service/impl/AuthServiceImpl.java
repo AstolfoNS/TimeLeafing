@@ -14,6 +14,8 @@ import com.astolfo.presentation.dto.LoginRequest;
 import com.astolfo.presentation.vo.LoginResponse;
 import com.astolfo.presentation.vo.MenuInfo;
 import com.astolfo.presentation.vo.RoleInfo;
+import com.astolfo.presentation.vo.common.converter.MenuInfoConverter;
+import com.astolfo.presentation.vo.common.converter.RoleInfoConverter;
 import com.astolfo.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +43,12 @@ public class AuthServiceImpl implements AuthService {
     @Resource
     private MenuRepository menuRepository;
 
+    @Resource
+    private MenuInfoConverter menuInfoConverter;
+
+    @Resource
+    private RoleInfoConverter roleInfoConverter;
+
 
     @Override
     public ResponseResult<LoginResponse> login(LoginRequest loginRequest) {
@@ -67,15 +75,10 @@ public class AuthServiceImpl implements AuthService {
 
             List<Role> roleList = roleRepository.findUserRoleListById(userId);
 
-            List<MenuInfo> menuInfoList = menuList
-                    .stream()
-                    .map(menu -> new MenuInfo(menu.getPermission().getPermissionName(), menu.getDescription()))
-                    .toList();
+            List<MenuInfo> menuInfoList = menuInfoConverter.toVo(menuList);
 
-            List<RoleInfo> roleInfoList = roleList
-                    .stream()
-                    .map(role -> new RoleInfo(role.getName(), role.getDescription()))
-                    .toList();
+            List<RoleInfo> roleInfoList = roleInfoConverter.toVo(roleList);
+
 
             LoginResponse loginResponse = new LoginResponse(token, username, roleInfoList, menuInfoList);
 
