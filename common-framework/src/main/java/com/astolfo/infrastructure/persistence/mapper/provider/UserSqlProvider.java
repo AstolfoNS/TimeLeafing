@@ -26,7 +26,7 @@ public class UserSqlProvider {
         """;
     }
 
-    public String findUserEntityByEmail(@Param("emailAddress") String emailAddress) {
+    public String findUserEntityByEmailAddress(@Param("emailAddress") String emailAddress) {
         return """
             SELECT
                 user.*
