@@ -38,7 +38,7 @@ public class JwtUtil {
     ) {
         JwtClaimsSet claim = JwtClaimsSet
                 .builder()
-                .subject(loginUserDetails.getStringId())
+                .subject(loginUserDetails.getId().toString())
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))

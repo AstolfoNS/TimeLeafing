@@ -1,5 +1,7 @@
 package com.astolfo.security.authentiation;
 
+import com.astolfo.domain.rbac.model.Menu;
+import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.repository.MenuRepository;
 import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.security.userdetails.LoginUserDetails;
@@ -8,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
@@ -21,11 +25,14 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       User user = userRepository.findUserByUsernameOrEmail(username).orElseThrow(() -> new UsernameNotFoundException("Username or email is not found"));
 
-        if (userEntity == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(username + " not found");
         }
 
-        return new LoginUserDetails(userEntity, authorities);
+        List<Menu> authorities = menuRepository.findRoleMenuListById(user.getId());
+
+        return new LoginUserDetails(user, authorities);
     }
 }
