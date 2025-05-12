@@ -1,9 +1,9 @@
-package com.astolfo.presentation.dto;
+package com.astolfo.presentation.vo;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class MenuDetail {
+public class PermissionDetail {
 
     private String permission;
 

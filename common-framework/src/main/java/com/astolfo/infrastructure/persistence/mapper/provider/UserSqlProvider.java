@@ -25,4 +25,15 @@ public class UserSqlProvider {
                 user.username = #{username}
         """;
     }
+
+    public String findUserEntityByEmail(@Param("email") String email) {
+        return """
+            SELECT
+                user.*
+            FROM
+                user
+            WHERE
+                user.email = #{email}
+        """;
+    }
 }
