@@ -1,16 +1,16 @@
 package com.astolfo.domain.rbac.model.valueobject.entity;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Email {
 
-    private final String emailAddress;
+    private String emailAddress;
 
-
-    private Email(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
 
     public static Email of(String emailAddress) {
         return new Email(emailAddress);

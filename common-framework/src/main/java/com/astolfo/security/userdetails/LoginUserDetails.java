@@ -21,7 +21,7 @@ public class LoginUserDetails implements UserDetails {
 
     private User user;
 
-    private List<Menu> authorities;
+    private List<Menu> menuList;
 
 
     public Long getId() {
@@ -31,7 +31,7 @@ public class LoginUserDetails implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities
+        return menuList
                 .stream()
                 .map(menu -> new SimpleGrantedAuthority(menu.getPermission().getPermissionName()))
                 .collect(Collectors.toList());

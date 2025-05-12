@@ -2,7 +2,6 @@ package com.astolfo.presentation.vo.common.converter;
 
 import com.astolfo.domain.rbac.model.Menu;
 import com.astolfo.presentation.vo.MenuInfo;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -31,7 +31,7 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(username + " not found");
         }
 
-        List<Menu> authorities = menuRepository.findRoleMenuListById(user.getId());
+        List<Menu> authorities = menuRepository.findUserMenuListById(user.getId());
 
         return new LoginUserDetails(user, authorities);
     }

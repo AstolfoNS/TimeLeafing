@@ -1,8 +1,6 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.service.AuthService;
-import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.domain.rbac.repository.MenuRepository;
 import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
@@ -12,6 +10,7 @@ import com.astolfo.infrastructure.common.util.JwtUtil;
 import com.astolfo.infrastructure.common.util.RedisCacheUtil;
 import com.astolfo.presentation.dto.LoginRequest;
 import com.astolfo.presentation.vo.LoginResponse;
+import com.astolfo.presentation.vo.LogoutResponse;
 import com.astolfo.presentation.vo.MenuInfo;
 import com.astolfo.presentation.vo.RoleInfo;
 import com.astolfo.presentation.vo.common.converter.MenuInfoConverter;
@@ -21,6 +20,7 @@ import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,19 +69,29 @@ public class AuthServiceImpl implements AuthService {
 
             String username = loginUserDetails.getUsername();
 
-            List<Menu> menuList = menuRepository.findUserMenuListById(userId);
+            List<MenuInfo> menuInfoList = menuInfoConverter.toVo(menuRepository.findUserMenuListById(userId));
 
-            List<Role> roleList = roleRepository.findUserRoleListById(userId);
+            List<RoleInfo> roleInfoList = roleInfoConverter.toVo(roleRepository.findUserRoleListById(userId));
 
-            List<MenuInfo> menuInfoList = menuInfoConverter.toVo(menuList);
-
-            List<RoleInfo> roleInfoList = roleInfoConverter.toVo(roleList);
-
-            LoginResponse loginResponse = new LoginResponse(token, username, roleInfoList, menuInfoList);
-
-            return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, loginResponse);
+            return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, new LoginResponse(token, username, roleInfoList, menuInfoList));
         } catch (RuntimeException exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
+        }
+    }
+
+    @Override
+    public ResponseResult<LogoutResponse> logout() {
+        try {
+            LoginUserDetails loginUserDetails = (LoginUserDetails) SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            redisCacheUtil.delete(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getId().toString()));
+
+            return ResponseResult.okResult(HttpCode.LOGOUT_SUCCESS, new LogoutResponse(loginUserDetails.getUsername()));
+        } catch (RuntimeException exception) {
+            return ResponseResult.errorResult(HttpCode.LOGOUT_FAILED);
         }
     }
 }

@@ -29,5 +29,4 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         servletUtil.renderJson(response, ResponseResult.errorResult(HttpCode.UNAUTHORIZED));
     }
 
-
 }
