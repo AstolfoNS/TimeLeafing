@@ -13,6 +13,6 @@ public class LoginResponse {
 
     private List<RoleInfo> roles;
 
-    private List<PermissionInfo> permissions;
+    private List<MenuInfo> permissions;
 
 }
