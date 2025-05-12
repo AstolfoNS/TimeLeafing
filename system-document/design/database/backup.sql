@@ -298,12 +298,14 @@ INSERT INTO user (
 ) VALUES (
     'Astolfo@ganil.com',
     'Astolfo',
-    '123456'
+    '$2a$10$HKi4IndCnEKigfbpV9d0Le3ryzy2vjX0TY.NQ0QGuGFCKixsqYuO6' -- 123456
 ), (
     'Alice@gamil.com',
     'Alice',
-    '456123'
+    '$2a$10$6dCjcUX//aiSYcYFMfsKruLqnxEY3u6.wYPF/3jAhJbwReV2N/xaK' -- 456123
 );
+
+
 
 SELECT
     *
@@ -375,3 +377,5 @@ SELECT
     *
 FROM
     role_menu;
+
+

@@ -1,10 +1,12 @@
 package com.astolfo.presentation.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 public class LoginRequest {
 
     private String usernameOrEmailAddress;

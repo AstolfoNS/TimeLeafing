@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `user_role` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `user_id`                   BIGINT NOT NULL,                                                                        -- 用户ID
     `role_id`                   BIGINT NOT NULL,                                                                        -- 角色ID
 
@@ -99,6 +101,8 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `role_menu` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `role_id`                   BIGINT NOT NULL,                                                                        -- 角色ID
     `menu_id`                   BIGINT NOT NULL,                                                                        -- 权限ID
 
@@ -157,6 +161,8 @@ CREATE TABLE IF NOT EXISTS `tag` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `article_tag` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `article_id`                BIGINT NOT NULL,                                                                        -- 文章ID
     `tag_id`                    BIGINT NOT NULL,                                                                        -- 标签ID
 
@@ -174,6 +180,8 @@ CREATE TABLE IF NOT EXISTS `article_tag` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `article_like` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `article_id`                BIGINT NOT NULL,                                                                        -- 文章ID
     `liker_id`                  BIGINT NOT NULL,                                                                        -- 点赞者ID
 
@@ -217,6 +225,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `user_follow` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `follower_id`               BIGINT NOT NULL,                                                                        -- 关注者ID
     `followee_id`               BIGINT NOT NULL,                                                                        -- 被关注者ID
 
@@ -254,6 +264,8 @@ CREATE TABLE IF NOT EXISTS `notification` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `notification_receiver` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `notification_id`           BIGINT NOT NULL,                                                                        -- 通知ID
     `receiver_id`               BIGINT NOT NULL,                                                                        -- 接收者ID
 
@@ -273,6 +285,8 @@ CREATE TABLE IF NOT EXISTS `notification_receiver` (
 
 # 关系表
 CREATE TABLE IF NOT EXISTS `article_bookmark` (
+    `id`                        BIGINT AUTO_INCREMENT UNIQUE,
+
     `collector_id`              BIGINT NOT NULL,                                                                        -- 收藏者ID
     `article_id`                BIGINT NOT NULL,                                                                        -- 收藏的文章ID
 

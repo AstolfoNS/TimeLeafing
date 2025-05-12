@@ -1,5 +1,7 @@
 package com.astolfo.infrastructure.persistence.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class UserRoleEntity {
+
+    @TableId
+    private Long id;
 
     private Long userId;
 
