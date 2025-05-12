@@ -8,9 +8,9 @@ public interface UserRepository {
 
     Optional<User> findUserByUsername(String username);
 
-    Optional<User> findUserByEmail(String emailAddress);
+    Optional<User> findUserByEmailAddress(String emailAddress);
 
-    Optional<User> findUserByUsernameOrEmail(String usernameOrEmail);
+    Optional<User> findUserByUsernameOrEmailAddress(String usernameOrEmail);
 
     Optional<User> findUserById(Long id);
 

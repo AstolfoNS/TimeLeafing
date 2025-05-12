@@ -5,6 +5,7 @@ import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import jakarta.annotation.Resource;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -25,13 +26,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String emailAddress) {
+    public Optional<User> findUserByEmailAddress(String emailAddress) {
         return Optional.of(userConverter.toDomain(userMapper.findUserEntityByEmailAddress(emailAddress)));
     }
 
     @Override
-    public Optional<User> findUserByUsernameOrEmail(String usernameOrEmail) {
-        return Optional.empty();
+    public Optional<User> findUserByUsernameOrEmailAddress(String usernameOrEmail) {
+        Optional<User> userOptional = findUserByUsername(usernameOrEmail);
+
+        if (userOptional.isPresent()) {
+            return userOptional;
+        } else {
+            return findUserByEmailAddress(usernameOrEmail);
+        }
     }
 
     @Override
