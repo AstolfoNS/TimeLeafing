@@ -1,9 +1,5 @@
 package com.astolfo.security.authentiation;
 
-import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.domain.rbac.repository.MenuRepository;
-import com.astolfo.domain.rbac.model.User;
-import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.entity.MenuEntity;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.MenuMapper;
@@ -35,7 +31,7 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(username + " not found");
         }
 
-        List<MenuEntity> authorities = menuMapper.findMenuEntityListByUserUsername(username);
+        List<MenuEntity> authorities = menuMapper.findUserMenuEntityListByUsername(username);
 
         return new LoginUserDetails(userEntity, authorities);
     }

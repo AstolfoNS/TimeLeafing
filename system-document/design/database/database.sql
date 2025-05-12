@@ -25,7 +25,6 @@ USE project3;
 
 # 实体表
 CREATE TABLE IF NOT EXISTS `user` (
-
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 用户ID
 
     `email`                     VARCHAR(256) UNIQUE NOT NULL,                                                           -- 用户邮箱

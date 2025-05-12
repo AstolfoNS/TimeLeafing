@@ -12,6 +12,9 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseMapper<MenuEntity> {
 
-    @SelectProvider(type = MenuSqlProvider.class, method = "")
-    List<MenuEntity> findMenuEntityListByUserUsername(@Param("username") String Username);
+    @SelectProvider(type = MenuSqlProvider.class, method = "findUserMenuEntityListByUsername")
+    List<MenuEntity> findUserMenuEntityListByUsername(@Param("username") String Username);
+
+    @SelectProvider(type = MenuSqlProvider.class, method = "findUserMenuEntityListById")
+    List<MenuEntity> findUserMenuEntityListById(@Param("id") Long id);
 }

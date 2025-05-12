@@ -20,12 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public Optional<User> findUserByUserUsername(String username) {
+    public Optional<User> findUserByUsername(String username) {
         return Optional.of(userConverter.toDomain(userMapper.findUserEntityByUsername(username)));
     }
 
     @Override
-    public Optional<User> findUserByUserId(Long id) {
+    public Optional<User> findUserById(Long id) {
         return Optional.empty();
     }
 

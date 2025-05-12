@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class MenuConverter {
@@ -58,14 +59,14 @@ public class MenuConverter {
         return menuEntityList
                 .stream()
                 .map(menuEntity -> Optional.of(toDomain(menuEntity)).orElseThrow(() -> new NoSuchElementException("Can not convert null menuEntity")))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public List<MenuEntity> toEntity(List<Menu> menuList) {
         return menuList
                 .stream()
                 .map(menu -> Optional.of(toEntity(menu)).orElseThrow(() -> new NoSuchElementException("Can not convert null menu")))
-                .toList();
+                .collect(Collectors.toList());
     }
 
 }

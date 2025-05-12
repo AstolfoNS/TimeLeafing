@@ -10,12 +10,12 @@ import java.util.List;
 public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
-    public List<Role> findRoleListByUserId(Long userId) {
+    public List<Role> findUserRoleListById(Long userId) {
         return List.of();
     }
 
     @Override
-    public List<Role> findRoleListByUserUsername(String username) {
+    public List<Role> findUserRoleListByUsername(String username) {
         return List.of();
     }
 

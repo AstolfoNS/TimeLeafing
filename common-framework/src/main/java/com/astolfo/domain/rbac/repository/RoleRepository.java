@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface RoleRepository {
 
-    List<Role> findRoleListByUserId(Long userId);
+    List<Role> findUserRoleListById(Long userId);
 
-    List<Role> findRoleListByUserUsername(String username);
+    List<Role> findUserRoleListByUsername(String username);
 
 }
