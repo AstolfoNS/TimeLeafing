@@ -21,7 +21,7 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
     public List<Role> findUserRoleListById(Long id) {
-        return roleConverter.toDomain(roleMapper.findUserMenuEntityListById(id));
+        return roleConverter.toDomain(roleMapper.findUserRoleEntityListById(id));
     }
 
     @Override

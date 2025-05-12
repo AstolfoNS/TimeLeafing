@@ -22,6 +22,7 @@ public class MenuRepositoryImpl implements MenuRepository {
     @Resource
     MenuConverter menuConverter;
 
+
     @Override
     public List<Menu> findUserMenuListById(Long id) {
         return menuConverter.toDomain(menuMapper.findUserMenuEntityListById(id));

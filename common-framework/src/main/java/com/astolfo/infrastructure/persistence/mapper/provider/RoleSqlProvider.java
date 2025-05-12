@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 public class RoleSqlProvider {
 
-    public String findUserRoleEntityById(@Param("id") Long id) {
+    public String findUserRoleEntityListById(@Param("id") Long id) {
         return """
             SELECT
                 role.*
@@ -19,7 +19,7 @@ public class RoleSqlProvider {
         """;
     }
 
-    public String findUserRoleEntityByUsername(@Param("username") String username) {
+    public String findUserRoleEntityListByUsername(@Param("username") String username) {
         return """
             SELECT
                 role.*

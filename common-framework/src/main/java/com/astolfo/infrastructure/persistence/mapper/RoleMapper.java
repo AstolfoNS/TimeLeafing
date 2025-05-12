@@ -15,7 +15,7 @@ public interface RoleMapper extends BaseMapper<RoleEntity> {
     @SelectProvider(type = RoleSqlProvider.class, method = "findUserRoleEntityListByUsername")
     List<RoleEntity> findUserRoleEntityListByUsername(@Param("username") String username);
 
-    @SelectProvider(type = RoleSqlProvider.class, method = "findUserMenuEntityListById")
-    List<RoleEntity> findUserMenuEntityListById(@Param("id") Long id);
+    @SelectProvider(type = RoleSqlProvider.class, method = "findUserRoleEntityListById")
+    List<RoleEntity> findUserRoleEntityListById(@Param("id") Long id);
 
 }
