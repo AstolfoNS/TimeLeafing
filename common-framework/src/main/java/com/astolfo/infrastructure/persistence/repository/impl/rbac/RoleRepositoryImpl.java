@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.converter.RoleConverter;
+import com.astolfo.infrastructure.converter.RoleConverter;
 import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;

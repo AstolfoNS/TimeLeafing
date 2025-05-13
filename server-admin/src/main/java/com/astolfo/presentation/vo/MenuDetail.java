@@ -3,7 +3,7 @@ package com.astolfo.presentation.vo;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class PermissionDetail {
+public class MenuDetail {
 
     private String permission;
 

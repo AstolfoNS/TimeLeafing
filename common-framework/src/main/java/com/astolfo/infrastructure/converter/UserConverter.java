@@ -1,4 +1,4 @@
-package com.astolfo.converter;
+package com.astolfo.infrastructure.converter;
 
 import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.model.valueobject.entity.Email;
@@ -6,6 +6,11 @@ import com.astolfo.domain.rbac.model.valueobject.enumtype.Gender;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * 实现 domain层的model <-> infra层的entity
+ *
+ *
+ */
 @Component
 public class UserConverter {
 

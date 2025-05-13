@@ -1,13 +1,19 @@
-package com.astolfo.presentation.vo.common.converter;
+package com.astolfo.presentation.vo.converter;
 
 import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.presentation.vo.RoleInfo;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 用于将domain层中的model -> vo
+ *
+ *
+ */
 @Component
 public class RoleInfoConverter {
 
@@ -25,7 +31,7 @@ public class RoleInfoConverter {
         } else {
             return roleList
                     .stream()
-                    .map(this::toVo)
+                    .map(role -> Optional.of(toVo(role)).orElseThrow(() -> new NoSuchElementException("Can not convert null role")))
                     .collect(Collectors.toList());
         }
     }

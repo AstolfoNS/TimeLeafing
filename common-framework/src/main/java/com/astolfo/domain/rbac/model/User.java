@@ -60,6 +60,24 @@ public class User {
         setIsDeleted(false);
     }
 
+    public User(
+            Email email,
+            String password
+    ) {
+        setEmail(email);
+
+        setPassword(password);
+    }
+    
+    public User(
+             String username,
+             String password
+    ) {
+        setUsername(username);
+
+        setPassword(password);
+    }
+
     public void updateEmail(Email email) {
         // TODO 修改邮箱
     }

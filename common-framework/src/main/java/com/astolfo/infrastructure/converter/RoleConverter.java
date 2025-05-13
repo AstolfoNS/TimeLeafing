@@ -1,4 +1,4 @@
-package com.astolfo.converter;
+package com.astolfo.infrastructure.converter;
 
 import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
@@ -9,6 +9,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 实现 domain层的model <-> infra层的entity
+ *
+ *
+ */
 @Component
 public class RoleConverter {
 

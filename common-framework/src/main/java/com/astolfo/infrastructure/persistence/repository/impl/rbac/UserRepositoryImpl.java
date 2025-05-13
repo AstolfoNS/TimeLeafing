@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.converter.UserConverter;
+import com.astolfo.infrastructure.converter.UserConverter;
 import com.astolfo.domain.rbac.model.User;
 import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;

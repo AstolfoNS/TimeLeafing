@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.converter.MenuConverter;
+import com.astolfo.infrastructure.converter.MenuConverter;
 import com.astolfo.domain.rbac.model.Menu;
 import com.astolfo.domain.rbac.repository.MenuRepository;
 import com.astolfo.infrastructure.persistence.mapper.MenuMapper;

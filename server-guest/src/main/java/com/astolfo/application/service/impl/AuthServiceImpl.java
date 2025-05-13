@@ -1,20 +1,14 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.service.AuthService;
-import com.astolfo.domain.rbac.repository.MenuRepository;
-import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.infrastructure.common.util.JwtUtil;
 import com.astolfo.infrastructure.common.util.RedisCacheUtil;
 import com.astolfo.presentation.dto.LoginRequest;
 import com.astolfo.presentation.vo.LoginResponse;
 import com.astolfo.presentation.vo.LogoutResponse;
-import com.astolfo.presentation.vo.MenuInfo;
-import com.astolfo.presentation.vo.RoleInfo;
-import com.astolfo.presentation.vo.common.converter.MenuInfoConverter;
-import com.astolfo.presentation.vo.common.converter.RoleInfoConverter;
+import com.astolfo.presentation.vo.converter.LoginResponseConverter;
 import com.astolfo.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -32,22 +24,10 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Resource
-    private JwtUtil jwtUtil;
-
-    @Resource
     private RedisCacheUtil redisCacheUtil;
 
     @Resource
-    private RoleRepository roleRepository;
-
-    @Resource
-    private MenuRepository menuRepository;
-
-    @Resource
-    private MenuInfoConverter menuInfoConverter;
-
-    @Resource
-    private RoleInfoConverter roleInfoConverter;
+    private LoginResponseConverter loginResponseConverter;
 
 
     @Override
@@ -61,19 +41,9 @@ public class AuthServiceImpl implements AuthService {
 
             LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
-            Long userId = loginUserDetails.getId();
+            redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getId().toString()), loginUserDetails);
 
-            redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(userId.toString()), loginUserDetails);
-
-            String token = jwtUtil.generateToken(loginUserDetails);
-
-            String username = loginUserDetails.getUsername();
-
-            List<MenuInfo> menuInfoList = menuInfoConverter.toVo(menuRepository.findUserMenuListById(userId));
-
-            List<RoleInfo> roleInfoList = roleInfoConverter.toVo(roleRepository.findUserRoleListById(userId));
-
-            return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, new LoginResponse(token, username, roleInfoList, menuInfoList));
+            return ResponseResult.okResult(HttpCode.LOGIN_SUCCESS, loginResponseConverter.toVo(loginUserDetails));
         } catch (RuntimeException exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
         }
