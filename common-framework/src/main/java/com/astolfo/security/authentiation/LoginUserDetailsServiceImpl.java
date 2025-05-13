@@ -1,6 +1,6 @@
 package com.astolfo.security.authentiation;
 
-import com.astolfo.domain.rbac.repository.MenuRepository;
+import com.astolfo.domain.rbac.repository.PermissionRepository;
 import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
@@ -17,7 +17,7 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
     UserRepository userRepository;
 
     @Resource
-    MenuRepository menuRepository;
+    PermissionRepository menuRepository;
 
 
     @Override

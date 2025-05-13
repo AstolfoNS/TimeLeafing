@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class Email {
 
-    private String emailAddress;
+    private String email;
 
 
-    public static Email of(String emailAddress) {
-        return new Email(emailAddress);
+    public static Email of(String email) {
+        return new Email(email);
     }
 
 }

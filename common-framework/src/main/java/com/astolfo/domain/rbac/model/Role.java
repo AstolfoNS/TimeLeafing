@@ -3,20 +3,24 @@ package com.astolfo.domain.rbac.model;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@Setter(AccessLevel.PRIVATE)
-@Getter
+@Data
 public class Role {
 
+    // 唯一标识
     private Long id;
 
+    // 基础属性
     private String name;
 
     private String description;
 
+    private List<Long> permissionIdList;
+
+    // 生命周期属性
     private Boolean enabled;
 
     private LocalDateTime createTime;
@@ -25,26 +29,6 @@ public class Role {
 
     private Boolean isDeleted;
 
-
-    public Role(String name) {
-        setName(name);
-
-        setEnabled(true);
-
-        setCreateTime(LocalDateTime.now());
-
-        setUpdateTime(LocalDateTime.now());
-
-        setIsDeleted(false);
-    }
-
-    public void updateName(String name) {
-        // TODO 修改角色名称
-    }
-
-    public void updateDescription(String description) {
-        setDescription(description);
-    }
 
     public void disable() {
         setEnabled(false);

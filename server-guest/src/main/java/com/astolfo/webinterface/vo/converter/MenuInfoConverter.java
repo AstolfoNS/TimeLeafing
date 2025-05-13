@@ -1,6 +1,6 @@
 package com.astolfo.webinterface.vo.converter;
 
-import com.astolfo.domain.rbac.model.Menu;
+import com.astolfo.domain.rbac.model.Permission;
 import com.astolfo.webinterface.vo.MenuInfo;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 public class MenuInfoConverter {
 
-    public MenuInfo toVo(Menu menu) {
+    public MenuInfo toVo(Permission menu) {
         if (menu == null) {
             return null;
         } else {
@@ -25,7 +25,7 @@ public class MenuInfoConverter {
         }
     }
 
-    public List<MenuInfo> toVo(List<Menu> menuList) {
+    public List<MenuInfo> toVo(List<Permission> menuList) {
         if (menuList == null) {
             return null;
         } else {

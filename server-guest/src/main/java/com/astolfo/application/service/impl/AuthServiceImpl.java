@@ -1,7 +1,7 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.service.AuthService;
-import com.astolfo.domain.rbac.repository.MenuRepository;
+import com.astolfo.domain.rbac.repository.PermissionRepository;
 import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Resource
-    private MenuRepository menuRepository;
+    private PermissionRepository menuRepository;
 
     @Resource
     private RoleRepository roleRepository;

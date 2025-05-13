@@ -80,14 +80,14 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 
 # 实体表
-CREATE TABLE IF NOT EXISTS `menu` (
+CREATE TABLE IF NOT EXISTS `permission` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 菜单/权限ID
 
-    `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
+    `symbol`                    VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
     `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
     `url`                       VARCHAR(512) NOT NULL,                                                                  -- 接口url或前端路径
     `http_method`               ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
-    `authority_type`            ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
+    `point`                     ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
     `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
@@ -104,15 +104,15 @@ CREATE TABLE IF NOT EXISTS `role_menu` (
     `id`                        BIGINT AUTO_INCREMENT UNIQUE,
 
     `role_id`                   BIGINT NOT NULL,                                                                        -- 角色ID
-    `menu_id`                   BIGINT NOT NULL,                                                                        -- 权限ID
+    `permission_id`                   BIGINT NOT NULL,                                                                        -- 权限ID
 
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (`role_id`, `menu_id`),
+    PRIMARY KEY (`role_id`, `permission_id`),
 
     FOREIGN KEY (role_id) REFERENCES role(id),
-    FOREIGN KEY (menu_id) REFERENCES menu(id)
+    FOREIGN KEY (permission_id) REFERENCES permission(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

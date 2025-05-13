@@ -1,8 +1,7 @@
 package com.astolfo.infrastructure.converter;
 
-import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.domain.rbac.model.valueobject.entity.Permission;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.AuthorityType;
+import com.astolfo.domain.rbac.model.Permission;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.PermissionPoint;
 import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
 import com.astolfo.infrastructure.persistence.entity.MenuEntity;
 import org.springframework.stereotype.Component;
@@ -20,17 +19,17 @@ import java.util.stream.Collectors;
 @Component
 public class MenuConverter {
 
-    public Menu toDomain(MenuEntity menuEntity) {
+    public Permission toDomain(MenuEntity menuEntity) {
         if (menuEntity == null) {
             return null;
         } else {
-            return new Menu(
+            return new Permission(
                     menuEntity.getId(),
                     Permission.of(menuEntity.getPermission()),
                     menuEntity.getDescription(),
                     menuEntity.getUrl(),
                     HttpMethod.get(menuEntity.getPermission()),
-                    AuthorityType.get(menuEntity.getAuthorityType()),
+                    PermissionPoint.get(menuEntity.getAuthorityType()),
                     menuEntity.getOrderNum(),
                     menuEntity.getEnabled(),
                     menuEntity.getCreateTime(),
@@ -40,7 +39,7 @@ public class MenuConverter {
         }
     }
 
-    public MenuEntity toEntity(Menu menu) {
+    public MenuEntity toEntity(Permission menu) {
         if (menu == null) {
             return null;
         } else {
@@ -60,14 +59,14 @@ public class MenuConverter {
         }
     }
 
-    public List<Menu> toDomain(List<MenuEntity> menuEntityList) {
+    public List<Permission> toDomain(List<MenuEntity> menuEntityList) {
         return menuEntityList
                 .stream()
                 .map(menuEntity -> Optional.of(toDomain(menuEntity)).orElseThrow(() -> new NoSuchElementException("Can not convert null menuEntity")))
                 .collect(Collectors.toList());
     }
 
-    public List<MenuEntity> toEntity(List<Menu> menuList) {
+    public List<MenuEntity> toEntity(List<Permission> menuList) {
         return menuList
                 .stream()
                 .map(menu -> Optional.of(toEntity(menu)).orElseThrow(() -> new NoSuchElementException("Can not convert null menu")))

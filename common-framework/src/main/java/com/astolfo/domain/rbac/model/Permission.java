@@ -1,38 +1,34 @@
 package com.astolfo.domain.rbac.model;
 
-import com.astolfo.domain.rbac.model.valueobject.entity.Email;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.Gender;
+import com.astolfo.domain.rbac.model.valueobject.entity.Symbol;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.PermissionPoint;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class Permission {
 
     // 唯一标识
     private Long id;
 
     // 基础属性
-    private Email email;
+    private Symbol symbol;
 
-    private String username;
+    private String description;
 
-    private String password;
+    private String url;
 
-    private String avatar;
+    private HttpMethod httpMethod;
 
-    private Gender gender;
+    private PermissionPoint point;
 
-    private String introduction;
-
-    private LocalDateTime lastLoginTime;
+    private Integer orderNum;
 
     // 生命周期属性
-    private List<Long> roleIdList;
-
     private Boolean enabled;
 
     private LocalDateTime createTime;
@@ -41,10 +37,6 @@ public class User {
 
     private Boolean isDeleted;
 
-
-    public void markAsLoggedIn() {
-        setLastLoginTime(LocalDateTime.now());
-    }
 
     public void disable() {
         setEnabled(false);

@@ -8,7 +8,7 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Getter
-public enum AuthorityType {
+public enum PermissionPoint {
 
     BUTTON("BUTTON"),
     MENU("MENU");
@@ -16,10 +16,10 @@ public enum AuthorityType {
 
     private final String authorityTypeName;
 
-    private static final Map<String, AuthorityType> MAP = EnumStringMappingUtil.buildMapping(AuthorityType.class, "getAuthorityTypeName");
+    private static final Map<String, PermissionPoint> MAP = EnumStringMappingUtil.buildMapping(PermissionPoint.class, "getAuthorityTypeName");
 
 
-    public static AuthorityType get(String authorityTypeName) {
+    public static PermissionPoint get(String authorityTypeName) {
         return MAP.get(authorityTypeName);
     }
 
