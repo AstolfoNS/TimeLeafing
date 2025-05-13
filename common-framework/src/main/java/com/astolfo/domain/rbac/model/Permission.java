@@ -1,7 +1,7 @@
 package com.astolfo.domain.rbac.model;
 
 import com.astolfo.domain.rbac.model.valueobject.entity.Symbol;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.PermissionPoint;
+import com.astolfo.domain.rbac.model.valueobject.enumtype.Point;
 import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
 import lombok.*;
 
@@ -24,7 +24,7 @@ public class Permission {
 
     private HttpMethod httpMethod;
 
-    private PermissionPoint point;
+    private Point point;
 
     private Integer orderNum;
 

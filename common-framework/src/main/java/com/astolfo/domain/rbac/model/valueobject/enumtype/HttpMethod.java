@@ -16,13 +16,13 @@ public enum HttpMethod {
     DELETE("DELETE");
 
 
-    private final String httpMethodName;
+    private final String httpMethod;
 
-    private static final Map<String, HttpMethod> MAP = EnumStringMappingUtil.buildMapping(HttpMethod.class, "getHttpMethodName");
+    private static final Map<String, HttpMethod> MAP = EnumStringMappingUtil.buildMapping(HttpMethod.class, "getHttpMethod");
 
 
-    public static HttpMethod get(String httpMethodName) {
-        return MAP.get(httpMethodName);
+    public static HttpMethod of(String httpMethod) {
+        return MAP.get(httpMethod);
     }
 
 }

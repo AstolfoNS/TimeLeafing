@@ -10,7 +10,6 @@ import java.util.Optional;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-
     @Override
     public Optional<User> findUserByUsername(String username) {
         return Optional.empty();

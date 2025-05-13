@@ -15,12 +15,12 @@ public enum Gender {
     UNKNOWN("UNKNOWN");
 
 
-    private final String genderName;
+    private final String gender;
 
-    private static final Map<String, Gender> MAP = EnumStringMappingUtil.buildMapping(Gender.class, "getGenderName");
+    private static final Map<String, Gender> MAP = EnumStringMappingUtil.buildMapping(Gender.class, "getGender");
 
 
-    public static Gender get(String genderName) {
-        return MAP.get(genderName);
+    public static Gender of(String gender) {
+        return MAP.get(gender);
     }
 }
