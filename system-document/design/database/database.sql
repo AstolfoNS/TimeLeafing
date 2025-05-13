@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
 
 
 # 关系表
-CREATE TABLE IF NOT EXISTS `role_menu` (
+CREATE TABLE IF NOT EXISTS `role_permission` (
     `id`                        BIGINT AUTO_INCREMENT UNIQUE,
 
     `role_id`                   BIGINT NOT NULL,                                                                        -- 角色ID

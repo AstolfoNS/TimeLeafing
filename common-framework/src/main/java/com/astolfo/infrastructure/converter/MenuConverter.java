@@ -3,7 +3,7 @@ package com.astolfo.infrastructure.converter;
 import com.astolfo.domain.rbac.model.Permission;
 import com.astolfo.domain.rbac.model.valueobject.enumtype.PermissionPoint;
 import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
-import com.astolfo.infrastructure.persistence.entity.MenuEntity;
+import com.astolfo.infrastructure.persistence.entity.PermissionEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class MenuConverter {
 
-    public Permission toDomain(MenuEntity menuEntity) {
+    public Permission toDomain(PermissionEntity menuEntity) {
         if (menuEntity == null) {
             return null;
         } else {
@@ -39,11 +39,11 @@ public class MenuConverter {
         }
     }
 
-    public MenuEntity toEntity(Permission menu) {
+    public PermissionEntity toEntity(Permission menu) {
         if (menu == null) {
             return null;
         } else {
-            return new MenuEntity(
+            return new PermissionEntity(
                     menu.getId(),
                     menu.getPermission().getPermissionName(),
                     menu.getDescription(),
@@ -59,14 +59,14 @@ public class MenuConverter {
         }
     }
 
-    public List<Permission> toDomain(List<MenuEntity> menuEntityList) {
+    public List<Permission> toDomain(List<PermissionEntity> menuEntityList) {
         return menuEntityList
                 .stream()
                 .map(menuEntity -> Optional.of(toDomain(menuEntity)).orElseThrow(() -> new NoSuchElementException("Can not convert null menuEntity")))
                 .collect(Collectors.toList());
     }
 
-    public List<MenuEntity> toEntity(List<Permission> menuList) {
+    public List<PermissionEntity> toEntity(List<Permission> menuList) {
         return menuList
                 .stream()
                 .map(menu -> Optional.of(toEntity(menu)).orElseThrow(() -> new NoSuchElementException("Can not convert null menu")))

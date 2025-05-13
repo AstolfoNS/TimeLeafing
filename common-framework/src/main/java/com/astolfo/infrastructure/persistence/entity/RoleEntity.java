@@ -14,13 +14,16 @@ import java.time.LocalDateTime;
 @Data
 public class RoleEntity {
 
+    // 唯一标识
     @TableId
     private Long id;
 
+    // 基础属性
     private String name;
 
     private String description;
 
+    // 生命周期
     private Boolean enabled;
 
     private LocalDateTime createTime;

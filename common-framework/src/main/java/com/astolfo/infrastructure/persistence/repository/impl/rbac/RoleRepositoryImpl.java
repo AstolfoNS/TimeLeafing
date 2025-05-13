@@ -1,32 +1,32 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.infrastructure.converter.RoleConverter;
 import com.astolfo.domain.rbac.model.Role;
 import com.astolfo.domain.rbac.repository.RoleRepository;
-import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
 
-    @Resource
-    RoleMapper roleMapper;
-
-    @Resource
-    RoleConverter roleConverter;
-
-
     @Override
-    public List<Role> findUserRoleListById(Long id) {
-        return roleConverter.toDomain(roleMapper.findUserRoleEntityListById(id));
+    public Optional<Role> findRoleById(Long id) {
+        return Optional.empty();
     }
 
     @Override
-    public List<Role> findUserRoleListByUsername(String username) {
-        return roleConverter.toDomain(roleMapper.findUserRoleEntityListByUsername(username));
+    public Optional<Role> findRoleByName(String name) {
+        return Optional.empty();
     }
 
+    @Override
+    public List<Optional<Role>> findRoleListByIdList(List<Long> idList) {
+        return List.of();
+    }
+
+    @Override
+    public Role save(Role role) {
+        return null;
+    }
 }

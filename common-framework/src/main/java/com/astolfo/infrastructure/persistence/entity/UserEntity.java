@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 @Data
 public class UserEntity {
 
+    // 唯一标识
     @TableId
     private Long id;
 
+    // 基础属性
     private String email;
 
     private String username;
@@ -31,6 +33,7 @@ public class UserEntity {
 
     private LocalDateTime lastLoginTime;
 
+    // 生命周期
     private Boolean enabled;
 
     private LocalDateTime createTime;

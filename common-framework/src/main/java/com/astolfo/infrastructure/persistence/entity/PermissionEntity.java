@@ -8,16 +8,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@TableName("enum")
+@TableName("permission")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MenuEntity {
+public class PermissionEntity {
 
+    // 唯一标识
     @TableId
     private Long id;
 
-    private String permission;
+    // 基础属性
+    private String symbol;
 
     private String description;
 
@@ -25,10 +27,11 @@ public class MenuEntity {
 
     private String httpMethod;
 
-    private String authorityType;
+    private String point;
 
     private Integer orderNum;
 
+    // 生命周期
     private Boolean enabled;
 
     private LocalDateTime createTime;

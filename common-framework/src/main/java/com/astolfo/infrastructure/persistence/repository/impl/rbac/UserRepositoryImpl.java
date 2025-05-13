@@ -1,10 +1,8 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.infrastructure.converter.UserConverter;
 import com.astolfo.domain.rbac.model.User;
+import com.astolfo.domain.rbac.model.valueobject.entity.Email;
 import com.astolfo.domain.rbac.repository.UserRepository;
-import com.astolfo.infrastructure.persistence.mapper.UserMapper;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,32 +10,15 @@ import java.util.Optional;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    @Resource
-    private UserMapper userMapper;
-
-    @Resource
-    private UserConverter userConverter;
-
 
     @Override
     public Optional<User> findUserByUsername(String username) {
-        return Optional.of(userConverter.toDomain(userMapper.findUserEntityByUsername(username)));
+        return Optional.empty();
     }
 
     @Override
-    public Optional<User> findUserByEmailAddress(String emailAddress) {
-        return Optional.of(userConverter.toDomain(userMapper.findUserEntityByEmailAddress(emailAddress)));
-    }
-
-    @Override
-    public Optional<User> findUserByUsernameOrEmailAddress(String usernameOrEmailAddress) {
-        Optional<User> userOptional = findUserByUsername(usernameOrEmailAddress);
-
-        if (userOptional.isPresent()) {
-            return userOptional;
-        } else {
-            return findUserByEmailAddress(usernameOrEmailAddress);
-        }
+    public Optional<User> findUserByEmail(Email email) {
+        return Optional.empty();
     }
 
     @Override
@@ -49,5 +30,4 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         return null;
     }
-
 }
