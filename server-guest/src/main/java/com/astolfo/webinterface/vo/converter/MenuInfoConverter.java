@@ -1,7 +1,7 @@
-package com.astolfo.presentation.vo.converter;
+package com.astolfo.webinterface.vo.converter;
 
 import com.astolfo.domain.rbac.model.Menu;
-import com.astolfo.presentation.vo.MenuInfo;
+import com.astolfo.webinterface.vo.MenuInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

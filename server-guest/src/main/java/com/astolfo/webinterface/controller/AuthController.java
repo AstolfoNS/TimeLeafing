@@ -1,10 +1,10 @@
-package com.astolfo.presentation.controller;
+package com.astolfo.webinterface.controller;
 
 import com.astolfo.application.service.AuthService;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.presentation.dto.LoginRequest;
-import com.astolfo.presentation.vo.LoginResponse;
-import com.astolfo.presentation.vo.LogoutResponse;
+import com.astolfo.webinterface.dto.LoginRequest;
+import com.astolfo.webinterface.vo.LoginResponse;
+import com.astolfo.webinterface.vo.LogoutResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.astolfo.presentation.vo;
+package com.astolfo.webinterface.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RoleInfo {
+public class LoginRequest {
 
-    private String name;
+    private String usernameOrEmailAddress;
 
-    private String description;
+    private String password;
 
 }

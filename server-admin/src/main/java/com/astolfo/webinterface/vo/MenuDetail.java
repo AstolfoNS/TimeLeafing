@@ -1,4 +1,4 @@
-package com.astolfo.presentation.vo;
+package com.astolfo.webinterface.vo;
 
 import lombok.AllArgsConstructor;
 

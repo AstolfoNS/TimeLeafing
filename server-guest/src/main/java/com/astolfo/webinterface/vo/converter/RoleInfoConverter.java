@@ -1,7 +1,7 @@
-package com.astolfo.presentation.vo.converter;
+package com.astolfo.webinterface.vo.converter;
 
 import com.astolfo.domain.rbac.model.Role;
-import com.astolfo.presentation.vo.RoleInfo;
+import com.astolfo.webinterface.vo.RoleInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
