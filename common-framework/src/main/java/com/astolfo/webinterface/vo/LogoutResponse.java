@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MenuInfo {
+public class LogoutResponse {
 
-    private String permission;
-
-    private String description;
+    private String username;
 
 }
