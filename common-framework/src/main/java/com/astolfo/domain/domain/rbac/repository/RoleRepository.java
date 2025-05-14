@@ -1,18 +1,19 @@
 package com.astolfo.domain.domain.rbac.repository;
 
 import com.astolfo.domain.domain.rbac.model.Role;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface RoleRepository {
 
-    Optional<Role> findRoleById(Long id);
+    Optional<Role> findRoleById(@Nonnull Long id);
 
-    Optional<Role> findRoleByName(String name);
+    Optional<Role> findRoleByName(@Nonnull String name);
 
-    List<Role> findRoleListByIdList(List<Long> idList);
+    List<Role> findRoleListByIdList(@Nonnull List<Long> idList);
 
-    Role save(Role role);
+    Role save(@Nonnull Role role);
 
 }
