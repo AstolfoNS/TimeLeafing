@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserMapper extends BaseMapper<UserEntity> {
 
-    UserEntity selectUserEntityById(@Param("id") Long id);
-
     UserEntity selectUserEntityByUsername(@Param("username") String username);
+
+    UserEntity selectUserEntityByEmail(@Param("email") String email);
+
+    UserEntity selectUserEntityById(@Param("id") Long id);
 
 }

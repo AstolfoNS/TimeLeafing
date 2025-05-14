@@ -24,15 +24,15 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     private UserEntity findUserEntityByUsername(String username) {
-        return userMapper.selectOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getUsername, username));
+        return userMapper.selectUserEntityByUsername(username);
     }
 
     private UserEntity findUserEntityByEmail(Email email) {
-        return userMapper.selectOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getEmail, email.getEmail()));
+        return userMapper.selectUserEntityByEmail(email.getEmail());
     }
 
     private UserEntity findUserEntityById(Long id) {
-        return userMapper.selectById(id);
+        return userMapper.selectUserEntityById(id);
     }
 
     @Override

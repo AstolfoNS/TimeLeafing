@@ -20,7 +20,7 @@ public class LoginUserDetails implements UserDetails {
 
     private User user;
 
-    private Set<Permission> permissionSet;
+    private Collection<Permission> permissionCollection;
 
 
     public String getStringId() {
@@ -30,7 +30,7 @@ public class LoginUserDetails implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissionSet
+        return permissionCollection
                 .stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getSymbol().getSymbol()))
                 .collect(Collectors.toList());

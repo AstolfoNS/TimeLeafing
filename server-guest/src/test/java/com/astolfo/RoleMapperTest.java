@@ -1,7 +1,9 @@
 package com.astolfo;
 
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
+import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
+import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +16,16 @@ public class RoleMapperTest {
     @Resource
     RoleMapper roleMapper;
 
+
     @Test
     public void testRoleMapper() {
         List<RoleEntity> roleEntityList = roleMapper.selectRoleEntityListByIdList(List.of(1L, 2L));
 
+        RoleEntity roleEntity = roleMapper.selectRoleEntityById(1L);
+
         System.out.println(roleEntityList);
+
+        System.out.println(roleEntity);
     }
 
 }

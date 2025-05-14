@@ -4,11 +4,13 @@ import com.astolfo.domain.domain.rbac.model.User;
 import com.astolfo.domain.domain.rbac.model.valueobject.entity.Email;
 import com.astolfo.domain.domain.rbac.model.valueobject.enumtype.Gender;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Component
 public class UserConverter {
 

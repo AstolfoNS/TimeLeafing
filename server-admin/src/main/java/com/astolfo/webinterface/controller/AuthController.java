@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @Resource(type = AdminAuthServiceImpl.class)
+    @Resource(name = "AdminAuthService")
     private AuthService authService;
 
 

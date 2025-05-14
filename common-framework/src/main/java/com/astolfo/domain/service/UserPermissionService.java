@@ -2,16 +2,19 @@ package com.astolfo.domain.service;
 
 import com.astolfo.domain.domain.rbac.model.Permission;
 import com.astolfo.domain.domain.rbac.model.User;
+import com.astolfo.domain.domain.rbac.model.valueobject.entity.Email;
 import jakarta.annotation.Nonnull;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UserPermissionService {
 
-    Set<Permission> findPermissionSetByUser(User user);
+    List<Permission> findPermissionListByUser(User user);
 
-    Set<Permission> findUserPermissionSetById(@Nonnull Long id);
+    List<Permission> findUserPermissionListByUsername(@Nonnull String username);
 
-    Set<Permission> findUserPermissionSetByUsername(@Nonnull String username);
+    List<Permission> findUserPermissionListByEmail(@Nonnull Email email);
+
+    List<Permission> findUserPermissionListById(@Nonnull Long id);
 
 }

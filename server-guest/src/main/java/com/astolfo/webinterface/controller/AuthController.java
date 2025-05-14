@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AuthController {
 
-    @Resource(type = GuestAuthServiceImpl.class)
+    @Resource(name = "GuestAuthService")
     private AuthService authService;
 
     
@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ResponseResult<LogoutResponse> login() {
+    public ResponseResult<LogoutResponse> logout() {
         return authService.logout();
     }
 
