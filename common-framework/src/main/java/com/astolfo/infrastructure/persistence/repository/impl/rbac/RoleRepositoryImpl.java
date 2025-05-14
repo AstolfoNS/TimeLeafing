@@ -27,7 +27,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     private List<RoleEntity> findRoleEntityListByIdList(List<Long> idList) {
-        return roleMapper.findRoleEntityListByIdList(idList);
+        return roleMapper.selectRoleEntityListByIdList(idList);
     }
 
     @Override

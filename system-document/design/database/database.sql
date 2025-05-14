@@ -300,3 +300,93 @@ CREATE TABLE IF NOT EXISTS `article_bookmark` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
+# 测试数据
+
+INSERT INTO user (
+    email,
+    username,
+    password
+) VALUES (
+    'Astolfo@ganil.com',
+    'Astolfo',
+    '$2a$10$HKi4IndCnEKigfbpV9d0Le3ryzy2vjX0TY.NQ0QGuGFCKixsqYuO6' -- 123456
+), (
+    'Alice@gamil.com',
+    'Alice',
+    '$2a$10$6dCjcUX//aiSYcYFMfsKruLqnxEY3u6.wYPF/3jAhJbwReV2N/xaK' -- 456123
+);
+
+SELECT
+    *
+FROM
+    user;
+
+INSERT INTO role (
+    name
+) VALUES (
+    'USER'
+), (
+    'ADMIN'
+), (
+    'SYSTEM'
+);
+
+SELECT
+    *
+FROM
+    role;
+
+INSERT INTO permission (
+    symbol,
+    url,
+    http_method
+) VALUES (
+    'article:read',
+    'article/read',
+    'GET'
+), (
+    'user:update',
+    'user/update',
+    'POST'
+);
+
+SELECT
+    *
+FROM
+    permission;
+
+INSERT INTO user_role (
+    user_id,
+    role_id
+) VALUES (
+    1, 2
+), (
+    1, 1
+), (
+    2, 1
+);
+
+SELECT
+    *
+FROM
+    user_role;
+
+INSERT INTO role_permission (
+    role_id,
+    permission_id
+) VALUES (
+    1, 1
+), (
+    2, 1
+), (
+    2, 2
+);
+
+SELECT
+    *
+FROM
+    role_permission;
+
+
