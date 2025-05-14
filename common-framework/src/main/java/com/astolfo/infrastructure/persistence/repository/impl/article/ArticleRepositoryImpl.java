@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.repository.impl.article;
 
-import com.astolfo.domain.article.repository.ArticleRepository;
+import com.astolfo.domain.domain.article.repository.ArticleRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

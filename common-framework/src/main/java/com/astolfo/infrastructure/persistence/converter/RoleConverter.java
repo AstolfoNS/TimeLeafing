@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.persistence.converter;
 
-import com.astolfo.domain.rbac.model.Role;
+import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import com.astolfo.infrastructure.persistence.mapper.RolePermissionMapper;
 import jakarta.annotation.Resource;
@@ -28,6 +28,8 @@ public class RoleConverter {
 
             role.setDescription(roleEntity.getDescription());
 
+            role.setPermissionIdList(roleEntity.getPermissionIdList());
+
             role.setEnabled(roleEntity.getEnabled());
 
             role.setCreateTime(roleEntity.getCreateTime());
@@ -51,6 +53,8 @@ public class RoleConverter {
             roleEntity.setName(role.getName());
 
             roleEntity.setDescription(role.getDescription());
+
+            roleEntity.setPermissionIdList(role.getPermissionIdList());
 
             roleEntity.setEnabled(role.getEnabled());
 

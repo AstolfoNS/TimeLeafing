@@ -1,8 +1,8 @@
 package com.astolfo.infrastructure.persistence.converter;
 
-import com.astolfo.domain.rbac.model.User;
-import com.astolfo.domain.rbac.model.valueobject.entity.Email;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.Gender;
+import com.astolfo.domain.domain.rbac.model.User;
+import com.astolfo.domain.domain.rbac.model.valueobject.entity.Email;
+import com.astolfo.domain.domain.rbac.model.valueobject.enumtype.Gender;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +36,8 @@ public class UserConverter {
 
             user.setLastLoginTime(userEntity.getLastLoginTime());
 
+            user.setRoleIdList(userEntity.getRoleIdList());
+
             user.setEnabled(userEntity.getEnabled());
 
             user.setCreateTime(userEntity.getCreateTime());
@@ -66,6 +68,8 @@ public class UserConverter {
         userEntity.setIntroduction(user.getIntroduction());
 
         userEntity.setLastLoginTime(user.getLastLoginTime());
+
+        userEntity.setRoleIdList(user.getRoleIdList());
 
         userEntity.setEnabled(user.getEnabled());
 

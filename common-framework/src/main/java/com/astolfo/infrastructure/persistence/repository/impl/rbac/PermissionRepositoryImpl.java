@@ -1,8 +1,8 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.rbac.model.valueobject.entity.Symbol;
-import com.astolfo.domain.rbac.model.Permission;
-import com.astolfo.domain.rbac.repository.PermissionRepository;
+import com.astolfo.domain.domain.rbac.model.valueobject.entity.Symbol;
+import com.astolfo.domain.domain.rbac.model.Permission;
+import com.astolfo.domain.domain.rbac.repository.PermissionRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

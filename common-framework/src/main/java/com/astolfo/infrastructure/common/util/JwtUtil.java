@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.common.util;
 
 import com.astolfo.infrastructure.common.constant.JwtConstant;
-import com.astolfo.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

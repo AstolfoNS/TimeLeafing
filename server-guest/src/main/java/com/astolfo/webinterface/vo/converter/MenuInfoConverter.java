@@ -1,6 +1,6 @@
 package com.astolfo.webinterface.vo.converter;
 
-import com.astolfo.domain.rbac.model.Permission;
+import com.astolfo.domain.domain.rbac.model.Permission;
 import com.astolfo.webinterface.vo.MenuInfo;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.rbac.model.User;
-import com.astolfo.domain.rbac.model.valueobject.entity.Email;
-import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.domain.rbac.model.User;
+import com.astolfo.domain.domain.rbac.model.valueobject.entity.Email;
+import com.astolfo.domain.domain.rbac.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

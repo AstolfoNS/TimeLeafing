@@ -3,6 +3,7 @@ package com.astolfo.infrastructure.persistence.mapper;
 import com.astolfo.infrastructure.persistence.entity.RolePermissionEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public interface RolePermissionMapper extends BaseMapper<RolePermissionEntity> {
         FROM
             role_permission
         WHERE
-            role_permission.role_id = #{roleId}
+            role_permission.role_id = #{id}
     """)
-    List<RolePermissionEntity> selectByRoleId(Long roleId);
+    List<Long> selectPermissionIdByRoleId(@Param("id") Long id);
 
     @Select("""
         SELECT
@@ -26,7 +27,7 @@ public interface RolePermissionMapper extends BaseMapper<RolePermissionEntity> {
         FROM
             role_permission
         WHERE
-            role_permission.permission_id = #{permissionId}
+            role_permission.permission_id = #{id}
     """)
-    List<RolePermissionEntity> SelectByPermissionId(Long permissionId);
+    List<Long> SelectRoleIdByPermissionId(@Param("id") Long id);
 }

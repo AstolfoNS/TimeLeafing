@@ -13,21 +13,21 @@ public interface UserRoleMapper extends BaseMapper<UserRoleEntity> {
 
     @Select("""
         SELECT
-            user_role.*
+            user_role.role_id
         FROM
             user_role
         WHERE
             user_role.user_id = #{userId}
     """)
-    List<UserRoleEntity> selectByUserId(@Param("userId") Long userId);
+    List<Long> selectRoleIdByUserId(@Param("userId") Long userId);
 
     @Select("""
         SELECT
-            user_role.*
+            user_role.user_id
         FROM
             user_role
         WHERE
             user_role.role_id = #{roleId}
     """)
-    List<UserRoleEntity> selectByRoleId(@Param("roleId") Long roleId);
+    List<Long> selectUserIdByRoleId(@Param("roleId") Long roleId);
 }

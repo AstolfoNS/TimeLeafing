@@ -1,5 +1,6 @@
 package com.astolfo.infrastructure.persistence.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @TableName("user")
 @NoArgsConstructor
@@ -32,6 +34,9 @@ public class UserEntity {
     private String introduction;
 
     private LocalDateTime lastLoginTime;
+
+    @TableField(exist = false)
+    private List<Long> roleIdList;
 
     // 生命周期
     private Boolean enabled;

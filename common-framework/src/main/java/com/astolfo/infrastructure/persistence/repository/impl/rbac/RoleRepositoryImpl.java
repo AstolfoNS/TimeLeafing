@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.rbac.model.Role;
-import com.astolfo.domain.rbac.repository.RoleRepository;
+import com.astolfo.domain.domain.rbac.model.Role;
+import com.astolfo.domain.domain.rbac.repository.RoleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

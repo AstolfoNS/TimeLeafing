@@ -1,9 +1,9 @@
 package com.astolfo.infrastructure.persistence.converter;
 
-import com.astolfo.domain.rbac.model.Permission;
-import com.astolfo.domain.rbac.model.valueobject.entity.Symbol;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.HttpMethod;
-import com.astolfo.domain.rbac.model.valueobject.enumtype.Point;
+import com.astolfo.domain.domain.rbac.model.Permission;
+import com.astolfo.domain.domain.rbac.model.valueobject.entity.Symbol;
+import com.astolfo.domain.domain.rbac.model.valueobject.enumtype.HttpMethod;
+import com.astolfo.domain.domain.rbac.model.valueobject.enumtype.Point;
 import com.astolfo.infrastructure.persistence.entity.PermissionEntity;
 import org.springframework.stereotype.Component;
 

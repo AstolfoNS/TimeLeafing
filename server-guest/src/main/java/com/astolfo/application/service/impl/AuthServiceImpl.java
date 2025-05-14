@@ -1,8 +1,8 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.service.AuthService;
-import com.astolfo.domain.rbac.repository.PermissionRepository;
-import com.astolfo.domain.rbac.repository.RoleRepository;
+import com.astolfo.domain.domain.rbac.repository.PermissionRepository;
+import com.astolfo.domain.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
@@ -15,7 +15,7 @@ import com.astolfo.webinterface.vo.MenuInfo;
 import com.astolfo.webinterface.vo.RoleInfo;
 import com.astolfo.webinterface.vo.converter.MenuInfoConverter;
 import com.astolfo.webinterface.vo.converter.RoleInfoConverter;
-import com.astolfo.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

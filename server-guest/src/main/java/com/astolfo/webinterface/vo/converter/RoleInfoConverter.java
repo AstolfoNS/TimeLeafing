@@ -1,6 +1,6 @@
 package com.astolfo.webinterface.vo.converter;
 
-import com.astolfo.domain.rbac.model.Role;
+import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.webinterface.vo.RoleInfo;
 import org.springframework.stereotype.Component;
 
