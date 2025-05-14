@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.common.util;
 
 import com.astolfo.infrastructure.common.constant.JwtConstant;
-import com.astolfo.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class JwtUtil {
     ) {
         JwtClaimsSet claim = JwtClaimsSet
                 .builder()
-                .subject(loginUserDetails.getId().toString())
+                .subject(loginUserDetails.getStringId())
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
@@ -52,7 +52,7 @@ public class JwtUtil {
     }
 
     public String generateToken(LoginUserDetails loginUserDetails) {
-        return generateToken(loginUserDetails, Instant.now(), expire);
+        return generateToken(loginUserDetails, expire);
     }
 
     public ParseToken parseToken(String token) throws JwtException {

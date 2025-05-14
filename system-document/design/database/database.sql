@@ -80,14 +80,14 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 
 # 实体表
-CREATE TABLE IF NOT EXISTS `menu` (
+CREATE TABLE IF NOT EXISTS `permission` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 菜单/权限ID
 
-    `permission`                VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
+    `symbol`                    VARCHAR(128) UNIQUE NOT NULL,                                                           -- 权限标识（如 article:read、user:update）
     `description`               VARCHAR(256),                                                                           -- 菜单描述（例如：文章管理）
     `url`                       VARCHAR(512) NOT NULL,                                                                  -- 接口url或前端路径
     `http_method`               ENUM('GET', 'POST', 'PUT', 'DELETE') NOT NULL,                                          -- HTTP方法（GET、POST、PUT、DELETE）
-    `authority_type`            ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
+    `point`                     ENUM('MENU', 'BUTTON') DEFAULT 'MENU',                                                  -- 类型：菜单 or 按钮（权限点）
     `order_num`                 INT DEFAULT 0,                                                                          -- 排序值
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
@@ -100,19 +100,19 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 
 # 关系表
-CREATE TABLE IF NOT EXISTS `role_menu` (
+CREATE TABLE IF NOT EXISTS `role_permission` (
     `id`                        BIGINT AUTO_INCREMENT UNIQUE,
 
     `role_id`                   BIGINT NOT NULL,                                                                        -- 角色ID
-    `menu_id`                   BIGINT NOT NULL,                                                                        -- 权限ID
+    `permission_id`                   BIGINT NOT NULL,                                                                        -- 权限ID
 
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    PRIMARY KEY (`role_id`, `menu_id`),
+    PRIMARY KEY (`role_id`, `permission_id`),
 
     FOREIGN KEY (role_id) REFERENCES role(id),
-    FOREIGN KEY (menu_id) REFERENCES menu(id)
+    FOREIGN KEY (permission_id) REFERENCES permission(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -299,4 +299,94 @@ CREATE TABLE IF NOT EXISTS `article_bookmark` (
     FOREIGN KEY (article_id) REFERENCES article(id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# 测试数据
+
+INSERT INTO user (
+    email,
+    username,
+    password
+) VALUES (
+    'Astolfo@ganil.com',
+    'Astolfo',
+    '$2a$10$HKi4IndCnEKigfbpV9d0Le3ryzy2vjX0TY.NQ0QGuGFCKixsqYuO6' -- 123456
+), (
+    'Alice@gamil.com',
+    'Alice',
+    '$2a$10$6dCjcUX//aiSYcYFMfsKruLqnxEY3u6.wYPF/3jAhJbwReV2N/xaK' -- 456123
+);
+
+SELECT
+    *
+FROM
+    user;
+
+INSERT INTO role (
+    name
+) VALUES (
+    'USER'
+), (
+    'ADMIN'
+), (
+    'SYSTEM'
+);
+
+SELECT
+    *
+FROM
+    role;
+
+INSERT INTO permission (
+    symbol,
+    url,
+    http_method
+) VALUES (
+    'article:read',
+    'article/read',
+    'GET'
+), (
+    'user:update',
+    'user/update',
+    'POST'
+);
+
+SELECT
+    *
+FROM
+    permission;
+
+INSERT INTO user_role (
+    user_id,
+    role_id
+) VALUES (
+    1, 2
+), (
+    1, 1
+), (
+    2, 1
+);
+
+SELECT
+    *
+FROM
+    user_role;
+
+INSERT INTO role_permission (
+    role_id,
+    permission_id
+) VALUES (
+    1, 1
+), (
+    2, 1
+), (
+    2, 2
+);
+
+SELECT
+    *
+FROM
+    role_permission;
+
 

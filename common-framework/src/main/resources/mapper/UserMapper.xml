@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.astolfo.infrastructure.persistence.mapper.UserMapper">
+
+    <resultMap id="UserEntityRoleIdListMap" type="com.astolfo.infrastructure.persistence.entity.UserEntity">
+        <id property="id" column="id"/>
+
+        <collection property="roleIdList"
+                    ofType="java.lang.Long"
+                    select="com.astolfo.infrastructure.persistence.mapper.UserRoleMapper.selectRoleIdByUserId"
+                    column="id"/>
+    </resultMap>
+
+    <select id="selectUserEntityById" parameterType="java.lang.Long" resultMap="UserEntityRoleIdListMap">
+        SELECT
+            user.*
+        FROM
+            user
+        WHERE
+            user.id = #{id}
+    </select>
+
+    <select id="selectUserEntityByUsername" parameterType="java.lang.String" resultMap="UserEntityRoleIdListMap">
+        SELECT
+            user.*
+        FROM
+            user
+        WHERE
+            user.username = #{username}
+    </select>
+
+</mapper>

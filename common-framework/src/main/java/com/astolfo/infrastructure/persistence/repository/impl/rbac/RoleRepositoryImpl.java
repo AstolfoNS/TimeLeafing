@@ -1,13 +1,16 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.converter.RoleConverter;
-import com.astolfo.domain.rbac.model.Role;
-import com.astolfo.domain.rbac.repository.RoleRepository;
+import com.astolfo.domain.domain.rbac.model.Role;
+import com.astolfo.domain.domain.rbac.repository.RoleRepository;
+import com.astolfo.infrastructure.persistence.converter.RoleConverter;
+import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
@@ -19,14 +22,35 @@ public class RoleRepositoryImpl implements RoleRepository {
     RoleConverter roleConverter;
 
 
-    @Override
-    public List<Role> findUserRoleListById(Long id) {
-        return roleConverter.toDomain(roleMapper.findUserRoleEntityListById(id));
+    private RoleEntity findRoleEntityById(Long id) {
+        return roleMapper.selectRoleEntityById(id);
+    }
+
+    private RoleEntity findRoleEntityByName(String name) {
+        return roleMapper.selectRoleEntityByName(name);
+    }
+
+    private List<RoleEntity> findRoleEntityListByIdList(List<Long> idList) {
+        return roleMapper.selectRoleEntityListByIdList(idList);
     }
 
     @Override
-    public List<Role> findUserRoleListByUsername(String username) {
-        return roleConverter.toDomain(roleMapper.findUserRoleEntityListByUsername(username));
+    public Optional<Role> findRoleByName(@Nonnull String name) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityByName(name)));
     }
 
+    @Override
+    public Optional<Role> findRoleById(@Nonnull Long id) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityById(id)));
+    }
+
+    @Override
+    public List<Role> findRoleListByIdList(@Nonnull List<Long> idList) {
+        return roleConverter.toDomain(findRoleEntityListByIdList(idList));
+    }
+
+    @Override
+    public Role save(@Nonnull Role role) {
+        return null;
+    }
 }
