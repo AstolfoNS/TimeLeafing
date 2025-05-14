@@ -1,6 +1,5 @@
 package com.astolfo.infrastructure.common.util;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
