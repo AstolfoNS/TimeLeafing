@@ -16,7 +16,7 @@ public class RoleMapperTest {
 
     @Test
     public void testRoleMapper() {
-        List<RoleEntity> roleEntityList = roleMapper.findRoleEntityListByIdList(List.of(1L, 2L));
+        List<RoleEntity> roleEntityList = roleMapper.selectRoleEntityListByIdList(List.of(1L, 2L));
 
         System.out.println(roleEntityList);
     }
