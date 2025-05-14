@@ -1,13 +1,17 @@
 package com.astolfo.domain.service;
 
 import com.astolfo.domain.domain.rbac.model.Permission;
+import com.astolfo.domain.domain.rbac.model.User;
+import jakarta.annotation.Nonnull;
 
-import java.util.List;
+import java.util.Set;
 
 public interface UserPermissionService {
 
-    List<Permission> findUserPermissionListById(Long id);
+    Set<Permission> findPermissionSetByUser(User user);
 
-    List<Permission> findUserPermissionListByUsername(String username);
+    Set<Permission> findUserPermissionSetById(@Nonnull Long id);
+
+    Set<Permission> findUserPermissionSetByUsername(@Nonnull String username);
 
 }

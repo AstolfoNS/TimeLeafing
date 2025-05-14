@@ -1,11 +1,9 @@
 package com.astolfo.infrastructure.security.authentiation;
 
 import com.astolfo.domain.domain.rbac.model.Permission;
-import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.domain.domain.rbac.model.User;
-import com.astolfo.domain.domain.rbac.repository.PermissionRepository;
-import com.astolfo.domain.domain.rbac.repository.RoleRepository;
 import com.astolfo.domain.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.service.UserPermissionService;
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-
+import java.util.Set;
 
 @Service
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
@@ -24,30 +20,15 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
     UserRepository userRepository;
 
     @Resource
-    RoleRepository roleRepository;
-
-    @Resource
-    PermissionRepository permissionRepository;
+    UserPermissionService userPermissionService;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        List<Long> roleIdList = user.getRoleIdList();
+        Set<Permission> permissionSet = userPermissionService.findPermissionSetByUser(user);
 
-        List<Role> roleList = roleRepository.findRoleListByIdList(roleIdList);
-
-        List<Long> permissionIdList = roleList
-                .stream()
-                .map(Role::getPermissionIdList)
-                .filter(Objects::nonNull)
-                .flatMap(List::stream)
-                .distinct()
-                .toList();
-
-        List<Permission> permissionList = permissionRepository.findPermissionListByIdList(permissionIdList);
-
-        return new LoginUserDetails(user, roleList, permissionList);
+        return new LoginUserDetails(user, permissionSet);
     }
 }

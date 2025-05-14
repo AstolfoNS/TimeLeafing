@@ -1,7 +1,6 @@
 package com.astolfo.infrastructure.security.userdetails;
 
 import com.astolfo.domain.domain.rbac.model.Permission;
-import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.domain.domain.rbac.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -21,9 +20,7 @@ public class LoginUserDetails implements UserDetails {
 
     private User user;
 
-    private List<Role> roleList;
-
-    private List<Permission> permissionList;
+    private Set<Permission> permissionSet;
 
 
     public String getStringId() {
@@ -33,7 +30,7 @@ public class LoginUserDetails implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissionList
+        return permissionSet
                 .stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getSymbol().getSymbol()))
                 .collect(Collectors.toList());
