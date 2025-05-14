@@ -6,7 +6,6 @@ import com.astolfo.domain.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.converter.UserConverter;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;

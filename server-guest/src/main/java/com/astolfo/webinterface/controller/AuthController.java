@@ -3,7 +3,6 @@ package com.astolfo.webinterface.controller;
 import com.astolfo.application.dto.LoginRequest;
 import com.astolfo.webinterface.vo.LogoutResponse;
 import com.astolfo.application.service.AuthService;
-import com.astolfo.application.service.impl.GuestAuthServiceImpl;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.webinterface.vo.TokenResponse;
 import jakarta.annotation.Resource;
