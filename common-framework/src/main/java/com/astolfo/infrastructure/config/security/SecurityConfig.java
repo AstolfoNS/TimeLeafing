@@ -1,6 +1,8 @@
 package com.astolfo.infrastructure.config.security;
 
 import com.astolfo.infrastructure.security.filter.JwtAuthenticationFilter;
+import com.astolfo.infrastructure.security.handler.AccessDeniedHandlerImpl;
+import com.astolfo.infrastructure.security.handler.AuthenticationEntryPointImpl;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,12 @@ public class SecurityConfig {
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Resource
+    private AccessDeniedHandlerImpl accessDeniedHandler;
+
+    @Resource
+    private AuthenticationEntryPointImpl authenticationEntryPoint;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -39,15 +47,22 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(
+                        exceptionHandling -> {
+                                exceptionHandling.accessDeniedHandler(accessDeniedHandler);
+                                exceptionHandling.authenticationEntryPoint(authenticationEntryPoint);
+                        }
+                )
                 .sessionManagement(
-                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session -> {
+                                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                        }
                 )
                 .authorizeHttpRequests(
-                        auth -> auth
-                                .requestMatchers("/guest-auth/*", "/admin-auth/*")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
+                        auth -> {
+                            auth.requestMatchers("/guest-auth/*", "/admin-auth/*").permitAll();
+                            auth.anyRequest().authenticated();
+                        }
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
