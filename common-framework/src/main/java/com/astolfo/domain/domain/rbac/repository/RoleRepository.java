@@ -11,7 +11,7 @@ public interface RoleRepository {
 
     Optional<Role> findRoleByName(String name);
 
-    List<Optional<Role>> findRoleListByIdList(List<Long> idList);
+    List<Role> findRoleListByIdList(List<Long> idList);
 
     Role save(Role role);
 

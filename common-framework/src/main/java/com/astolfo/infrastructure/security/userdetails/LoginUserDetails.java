@@ -1,33 +1,33 @@
 package com.astolfo.infrastructure.security.userdetails;
 
 import com.astolfo.domain.domain.rbac.model.Permission;
+import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.domain.domain.rbac.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class LoginUserDetails implements UserDetails {
 
     private User user;
 
+    private List<Role> roleList;
+
     private List<Permission> permissionList;
 
 
-    public LoginUserDetails(User user) {
-        setUser(user);
-
-        permissionList =
-    }
-
-    public Long getId() {
-        return user.getId();
+    public String getStringId() {
+        return user.getId().toString();
     }
 
     @JsonIgnore

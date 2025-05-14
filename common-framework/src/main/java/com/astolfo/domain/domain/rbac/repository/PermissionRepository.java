@@ -12,7 +12,7 @@ public interface PermissionRepository {
 
     Optional<Permission> findPermissionBySymbol(Symbol symbol);
 
-    List<Optional<Permission>> findPermissionListByIdList(List<Long> idList);
+    List<Permission> findPermissionListByIdList(List<Long> idList);
 
     Permission save(Permission permission);
 

@@ -38,7 +38,7 @@ public class JwtUtil {
     ) {
         JwtClaimsSet claim = JwtClaimsSet
                 .builder()
-                .subject(loginUserDetails.getId().toString())
+                .subject(loginUserDetails.getStringId())
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
@@ -52,7 +52,7 @@ public class JwtUtil {
     }
 
     public String generateToken(LoginUserDetails loginUserDetails) {
-        return generateToken(loginUserDetails, Instant.now(), expire);
+        return generateToken(loginUserDetails, expire);
     }
 
     public ParseToken parseToken(String token) throws JwtException {

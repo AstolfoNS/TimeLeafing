@@ -21,7 +21,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public List<Optional<Role>> findRoleListByIdList(List<Long> idList) {
+    public List<Role> findRoleListByIdList(List<Long> idList) {
         return List.of();
     }
 

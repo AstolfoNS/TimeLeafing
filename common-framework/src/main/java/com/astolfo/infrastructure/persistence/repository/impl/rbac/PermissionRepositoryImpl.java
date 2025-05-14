@@ -22,7 +22,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public List<Optional<Permission>> findPermissionListByIdList(List<Long> idList) {
+    public List<Permission> findPermissionListByIdList(List<Long> idList) {
         return List.of();
     }
 
