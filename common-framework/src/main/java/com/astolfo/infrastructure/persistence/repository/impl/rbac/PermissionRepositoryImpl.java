@@ -37,13 +37,13 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public Optional<Permission> findPermissionById(@Nonnull Long id) {
-        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityById(id)));
+    public Optional<Permission> findPermissionBySymbol(@Nonnull Symbol symbol) {
+        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityBySymbol(symbol)));
     }
 
     @Override
-    public Optional<Permission> findPermissionBySymbol(@Nonnull Symbol symbol) {
-        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityBySymbol(symbol)));
+    public Optional<Permission> findPermissionById(@Nonnull Long id) {
+        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityById(id)));
     }
 
     @Override

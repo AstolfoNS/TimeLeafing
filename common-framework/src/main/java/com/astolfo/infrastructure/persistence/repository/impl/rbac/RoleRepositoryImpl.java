@@ -2,6 +2,7 @@ package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
 import com.astolfo.domain.domain.rbac.model.Role;
 import com.astolfo.domain.domain.rbac.repository.RoleRepository;
+import com.astolfo.infrastructure.persistence.converter.RoleConverter;
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
 import jakarta.annotation.Nonnull;
@@ -17,6 +18,9 @@ public class RoleRepositoryImpl implements RoleRepository {
     @Resource
     RoleMapper roleMapper;
 
+    @Resource
+    RoleConverter roleConverter;
+
 
     private RoleEntity findRoleEntityById(Long id) {
         return roleMapper.selectRoleEntityById(id);
@@ -31,18 +35,18 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Optional<Role> findRoleById(@Nonnull Long id) {
-        return Optional.empty();
+    public Optional<Role> findRoleByName(@Nonnull String name) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityByName(name)));
     }
 
     @Override
-    public Optional<Role> findRoleByName(@Nonnull String name) {
-        return Optional.empty();
+    public Optional<Role> findRoleById(@Nonnull Long id) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityById(id)));
     }
 
     @Override
     public List<Role> findRoleListByIdList(@Nonnull List<Long> idList) {
-        return List.of();
+        return roleConverter.toDomain(findRoleEntityListByIdList(idList));
     }
 
     @Override
