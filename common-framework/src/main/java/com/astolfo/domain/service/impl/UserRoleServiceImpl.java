@@ -7,10 +7,12 @@ import com.astolfo.domain.domain.rbac.repository.UserRepository;
 import com.astolfo.domain.service.UserRoleService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class UserRoleServiceImpl implements UserRoleService {
 
     @Resource

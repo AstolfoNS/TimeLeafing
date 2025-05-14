@@ -7,10 +7,12 @@ import com.astolfo.domain.domain.rbac.repository.RoleRepository;
 import com.astolfo.domain.service.RolePermissionService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Resource

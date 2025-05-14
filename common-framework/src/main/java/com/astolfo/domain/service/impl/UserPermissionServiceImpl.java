@@ -8,11 +8,13 @@ import com.astolfo.domain.service.UserPermissionService;
 import com.astolfo.domain.service.UserRoleService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class UserPermissionServiceImpl implements UserPermissionService {
 
     @Resource
