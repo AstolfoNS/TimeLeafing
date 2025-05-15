@@ -27,7 +27,8 @@ public class MinioUtil {
      */
     public String uploadFile(MultipartFile file, String objectName) {
         try (InputStream inputStream = file.getInputStream()) {
-            PutObjectArgs args = PutObjectArgs.builder()
+            PutObjectArgs args = PutObjectArgs
+                    .builder()
                     .bucket(minioProperties.getBucketName())
                     .object(objectName)
                     .stream(inputStream, file.getSize(), -1)
@@ -36,18 +37,24 @@ public class MinioUtil {
 
             minioClient.putObject(args);
             return objectName;
-        } catch (Exception e) {
-            log.error("MinIO: 文件上传失败", e);
-            throw new RuntimeException("上传失败: " + e.getMessage());
+        } catch (Exception exception) {
+            log.error("MinIO: 文件上传失败", exception);
+            throw new RuntimeException("上传失败: " + exception.getMessage());
         }
     }
 
     /**
      * 上传文件（支持 InputStream）
      */
-    public String uploadFile(InputStream inputStream, long size, String contentType, String objectName) {
+    public String uploadFile(
+            InputStream inputStream,
+            long size,
+            String contentType,
+            String objectName
+    ) {
         try {
-            PutObjectArgs args = PutObjectArgs.builder()
+            PutObjectArgs args = PutObjectArgs
+                    .builder()
                     .bucket(minioProperties.getBucketName())
                     .object(objectName)
                     .stream(inputStream, size, -1)
@@ -56,9 +63,9 @@ public class MinioUtil {
 
             minioClient.putObject(args);
             return objectName;
-        } catch (Exception e) {
-            log.error("MinIO: 文件流上传失败", e);
-            throw new RuntimeException("上传失败: " + e.getMessage());
+        } catch (Exception exception) {
+            log.error("MinIO: 文件流上传失败", exception);
+            throw new RuntimeException("上传失败: " + exception.getMessage());
         }
     }
 
@@ -67,7 +74,8 @@ public class MinioUtil {
      */
     public String getPreSignedUrl(String objectName, int expireMinutes) {
         try {
-            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs
+                    .builder()
                     .bucket(minioProperties.getBucketName())
                     .object(objectName)
                     .method(Method.GET)
@@ -75,9 +83,9 @@ public class MinioUtil {
                     .build();
 
             return minioClient.getPresignedObjectUrl(args);
-        } catch (Exception e) {
-            log.error("MinIO: 获取文件访问链接失败", e);
-            throw new RuntimeException("获取访问链接失败: " + e.getMessage());
+        } catch (Exception exception) {
+            log.error("MinIO: 获取文件访问链接失败", exception);
+            throw new RuntimeException("获取访问链接失败: " + exception.getMessage());
         }
     }
 
@@ -87,14 +95,15 @@ public class MinioUtil {
     public void deleteFile(String objectName) {
         try {
             minioClient.removeObject(
-                    RemoveObjectArgs.builder()
+                    RemoveObjectArgs
+                            .builder()
                             .bucket(minioProperties.getBucketName())
                             .object(objectName)
                             .build()
             );
-        } catch (Exception e) {
-            log.error("MinIO: 删除文件失败", e);
-            throw new RuntimeException("删除失败: " + e.getMessage());
+        } catch (Exception exception) {
+            log.error("MinIO: 删除文件失败", exception);
+            throw new RuntimeException("删除失败: " + exception.getMessage());
         }
     }
 
@@ -103,15 +112,15 @@ public class MinioUtil {
      */
     public InputStream getObject(String objectName) {
         try {
-            return minioClient.getObject(
-                    GetObjectArgs.builder()
-                            .bucket(minioProperties.getBucketName())
-                            .object(objectName)
-                            .build()
+            return minioClient.getObject(GetObjectArgs
+                    .builder()
+                    .bucket(minioProperties.getBucketName())
+                    .object(objectName)
+                    .build()
             );
-        } catch (Exception e) {
-            log.error("MinIO: 获取文件流失败", e);
-            throw new RuntimeException("获取文件失败: " + e.getMessage());
+        } catch (Exception exception) {
+            log.error("MinIO: 获取文件流失败", exception);
+            throw new RuntimeException("获取文件失败: " + exception.getMessage());
         }
     }
 }
