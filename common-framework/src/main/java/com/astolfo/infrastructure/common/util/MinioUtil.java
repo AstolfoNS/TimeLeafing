@@ -1,31 +1,26 @@
 package com.astolfo.infrastructure.common.util;
 
+import com.astolfo.infrastructure.config.minio.MinioProperties;
+import io.minio.*;
+import io.minio.http.Method;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
+
+@Slf4j
+@Component
 public class MinioUtil {
 
-    private final MinioClient minioClient;
-    private final MinioProperties minioProperties;
+    @Resource
+    private MinioClient minioClient;
 
-    @PostConstruct
-    public void init() {
-        try {
-            boolean found = minioClient.bucketExists(
-                    BucketExistsArgs.builder().bucket(minioProperties.getBucketName()).build()
-            );
-            if (!found) {
-                minioClient.makeBucket(
-                        MakeBucketArgs.builder().bucket(minioProperties.getBucketName()).build()
-                );
-                log.info("MinIO: 创建 Bucket -> {}", minioProperties.getBucketName());
-            } else {
-                log.info("MinIO: Bucket 已存在 -> {}", minioProperties.getBucketName());
-            }
-        } catch (Exception e) {
-            log.error("MinIO: 初始化 Bucket 失败", e);
-            throw new RuntimeException("MinIO Bucket 初始化失败: " + e.getMessage());
-        }
-    }
+    @Resource
+    private MinioProperties minioProperties;
+
 
     /**
      * 上传文件（支持 MultipartFile）
@@ -70,7 +65,7 @@ public class MinioUtil {
     /**
      * 获取预签名访问 URL（有效期单位：分钟）
      */
-    public String getPresignedUrl(String objectName, int expireMinutes) {
+    public String getPreSignedUrl(String objectName, int expireMinutes) {
         try {
             GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
                     .bucket(minioProperties.getBucketName())

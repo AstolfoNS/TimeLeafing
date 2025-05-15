@@ -9,16 +9,16 @@ import org.springframework.stereotype.Component;
 public class MinioProperties {
 
     @Value("${custom.minio.bucket-name}")
-    public String bucketName;
+    private String bucketName;
 
     @Value("${custom.minio.endpoint}")
-    public String endpoint;
+    private String endpoint;
 
     @Value("${custom.minio.access-key}")
-    public String accessKey;
+    private String accessKey;
 
     @Value("${custom.minio.secret-key}")
-    public String secretKey;
+    private String secretKey;
 
 }
 
