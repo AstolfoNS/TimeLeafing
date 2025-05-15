@@ -60,7 +60,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         auth -> {
-                            auth.requestMatchers("/guest-auth/*", "/admin-auth/*").permitAll();
+                            auth.requestMatchers("/guest-auth/login", "/guest-auth/register").permitAll();
+                            auth.requestMatchers("/admin-auth/login", "/admin-auth/register").permitAll();
                             auth.anyRequest().authenticated();
                         }
                 )

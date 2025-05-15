@@ -1,10 +1,10 @@
 package com.astolfo.infrastructure.common.util;
 
-import com.astolfo.infrastructure.common.constant.JwtConstant;
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +20,14 @@ public class JwtUtil {
     @Resource
     private JwtDecoder jwtDecoder;
 
-    @Value("${spring.security.jwt.expire}")
+    @Value("#{jwtProperties.expire}")
     private Long expire;
 
-    @Value("${spring.security.jwt.issuer}")
+    @Value("#{jwtProperties.issuer}")
     private String issuer;
+
+    @Value("#{jwtProperties.algorithm}")
+    private String algorithm;
 
 
     public String getUUID() {
@@ -44,7 +47,7 @@ public class JwtUtil {
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build(), claim)).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(SignatureAlgorithm.from(algorithm)).build(), claim)).getTokenValue();
     }
 
     public String generateToken(LoginUserDetails loginUserDetails, Long expireInMillis) {
