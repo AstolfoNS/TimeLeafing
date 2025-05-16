@@ -20,5 +20,8 @@ public class MinioProperties {
     @Value("${custom.minio.secret-key}")
     private String secretKey;
 
+    @Value("${custom.minio.presigned-url-expiry}")
+    private Integer presignedUrlExpiry;
+
 }
 

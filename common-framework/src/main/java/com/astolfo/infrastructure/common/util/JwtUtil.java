@@ -32,10 +32,6 @@ public class JwtUtil {
     private String algorithm;
 
 
-    public String getUUID() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-
     public String generateToken(
             LoginUserDetails loginUserDetails,
             Instant issuedAt,
