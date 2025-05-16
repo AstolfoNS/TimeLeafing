@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MinioProperties {
 
-    @Value("${custom.minio.bucket-name}")
-    private String bucketName;
-
     @Value("${custom.minio.endpoint}")
     private String endpoint;
 
