@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MinioProperties {
 
-    @Value("${custom.minio.bucket-name}")
-    private String bucketName;
-
     @Value("${custom.minio.endpoint}")
     private String endpoint;
 
@@ -19,6 +16,9 @@ public class MinioProperties {
 
     @Value("${custom.minio.secret-key}")
     private String secretKey;
+
+    @Value("${custom.minio.presigned-url-expiry}")
+    private Integer presignedUrlExpiry;
 
 }
 

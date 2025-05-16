@@ -5,7 +5,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
@@ -28,13 +28,9 @@ public class JwtUtil {
     @Value("#{jwtProperties.issuer}")
     private String issuer;
 
-    @Value("#{jwtProperties.algorithm}")
-    private String algorithm;
+    @Value("#{jwtProperties.jwtAlgorithm}")
+    private String jwtAlgorithm;
 
-
-    public String getUUID() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
 
     public String generateToken(
             LoginUserDetails loginUserDetails,
@@ -49,7 +45,7 @@ public class JwtUtil {
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(SignatureAlgorithm.from(algorithm)).build(), claim)).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.valueOf(jwtAlgorithm)).build(), claim)).getTokenValue();
     }
 
     public String generateToken(LoginUserDetails loginUserDetails, Long expireInMillis) {

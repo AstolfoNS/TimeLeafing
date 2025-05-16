@@ -1,14 +1,19 @@
 package com.astolfo.infrastructure.common.util;
 
+import com.astolfo.webinterface.vo.PresignedUrl;
 import io.minio.*;
 import io.minio.http.Method;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -18,102 +23,337 @@ public class MinioUtil {
     @Resource
     private MinioClient minioClient;
 
-    @Value("#{minioProperties.bucketName}")
-    private String bucketName;
+    @Value("#{minioProperties.presignedUrlExpiry}")
+    private Integer presignedUrlExpiry;
 
 
-    public String uploadFile(MultipartFile file, String objectName) {
-        try (InputStream inputStream = file.getInputStream()) {
-            PutObjectArgs args = PutObjectArgs
-                    .builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .stream(inputStream, file.getSize(), -1)
-                    .contentType(file.getContentType())
-                    .build();
+    public Bucket openBucket(String bucketName) {
+        if (bucketExists(bucketName)) {
+            return new Bucket(minioClient, presignedUrlExpiry, bucketName);
+        } else {
+            log.error("存储桶不存在");
 
-            minioClient.putObject(args);
-
-            return objectName;
-        } catch (Exception exception) {
-            log.error("MinIO: 文件上传失败", exception);
-
-            throw new RuntimeException("上传失败: " + exception.getMessage());
+            throw new RuntimeException("存储桶不存在" + bucketName);
         }
     }
 
-    public String uploadFile(
-            InputStream inputStream,
-            long size,
-            String contentType,
-            String objectName
-    ) {
+    public boolean bucketExists(String bucketName) {
         try {
-            PutObjectArgs args = PutObjectArgs
-                    .builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .stream(inputStream, size, -1)
-                    .contentType(contentType)
-                    .build();
-
-            minioClient.putObject(args);
-
-            return objectName;
+            return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
         } catch (Exception exception) {
-            log.error("MinIO: 文件流上传失败", exception);
+             log.error("无法确认存储桶是否存在：{}", bucketName, exception);
 
-            throw new RuntimeException("上传失败: " + exception.getMessage());
+            throw new RuntimeException("无法确认存储同是否存在：" + bucketName, exception);
         }
     }
 
-    public String getPreSignedUrl(String objectName, int expireMinutes) {
-        try {
-            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs
-                    .builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .method(Method.GET)
-                    .expiry(expireMinutes, TimeUnit.MINUTES)
-                    .build();
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class Bucket {
 
-            return minioClient.getPresignedObjectUrl(args);
-        } catch (Exception exception) {
-            log.error("MinIO: 获取文件访问链接失败", exception);
+        private MinioClient minioClient;
 
-            throw new RuntimeException("获取访问链接失败: " + exception.getMessage());
+        private Integer presignedUrlExpiry;
+
+        private String bucketName;
+
+
+        public String uniqueFileName(Long id, String fileName) {
+            return bucketName + "/" + id.toString() + "/" + UUID.randomUUID().toString().replace("-", "") + "_" + fileName;
+        }
+
+        public String generatePresignedPutUrl(String objectName, Integer expiry) {
+            try {
+                GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs
+                        .builder()
+                        .method(Method.PUT)
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .expiry(expiry, TimeUnit.SECONDS)
+                        .build();
+
+                return minioClient.getPresignedObjectUrl(args);
+            } catch (Exception exception) {
+                log.error("获取PUT预签名url失败：{}", objectName, exception);
+
+                throw new RuntimeException("获取PUT预签名url失败：" + objectName, exception);
+            }
+        }
+
+        public String generatePresignedPutUrl(String objectName) {
+            return generatePresignedPutUrl(objectName, presignedUrlExpiry);
+        }
+
+        public PresignedUrl getPresignedUrlToPut(String objectName) {
+            return new PresignedUrl(generatePresignedPutUrl(objectName), objectName);
+        }
+
+        public PresignedUrl getPresignedUrlToPut(Long id, String fileName) {
+            return getPresignedUrlToPut(uniqueFileName(id, fileName));
+        }
+
+        public String generatePresignedGetUrl(String objectName, Integer expiry) {
+            try {
+                GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                        .method(Method.GET)
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .expiry(expiry, TimeUnit.SECONDS)
+                        .build();
+
+                return minioClient.getPresignedObjectUrl(args);
+            } catch (Exception exception) {
+                log.error("获取GET预签名URL失败：{}", objectName, exception);
+
+                throw new RuntimeException("获取GET预签名URL失败：" + objectName, exception);
+            }
+        }
+
+        public String generatePresignedGetUrl(String objectName) {
+            return generatePresignedGetUrl(objectName, presignedUrlExpiry);
+        }
+
+        public PresignedUrl getPresignedUrlToGet(String objectName) {
+            return new PresignedUrl(generatePresignedGetUrl(objectName), objectName);
+        }
+
+        public PresignedUrl getPresignedUrlToGet(Long id, String fileName) {
+            return getPresignedUrlToGet(uniqueFileName(id, fileName));
+        }
+
+        public void uploadFile(
+                String objectName,
+                InputStream inputStream,
+                String contentType
+        ) {
+            try {
+                PutObjectArgs args = PutObjectArgs
+                        .builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .stream(inputStream, inputStream.available(), -1)
+                        .contentType(contentType)
+                        .build();
+
+                minioClient.putObject(args);
+            } catch (Exception exception) {
+                log.error("上传文件失败：{}", objectName, exception);
+
+                throw new RuntimeException("上传文件失败：" + objectName, exception);
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException exception) {
+                        log.error("InputStream关闭失败：{}", objectName, exception);
+                    }
+                }
+            }
+        }
+
+        public void uploadFile(
+                String objectName,
+                InputStream inputStream,
+                long size,
+                String contentType
+        ) {
+            try {
+                PutObjectArgs args = PutObjectArgs
+                        .builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .stream(inputStream, size, -1)
+                        .contentType(contentType)
+                        .build();
+
+                minioClient.putObject(args);
+            } catch (Exception exception) {
+                log.error("上传文件失败：{}", objectName, exception);
+
+                throw new RuntimeException("上传文件失败：" + objectName, exception);
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException exception) {
+                        log.error("InputStream关闭失败: {}", objectName, exception);
+                    }
+                }
+            }
         }
     }
 
-    public void deleteFile(String objectName) {
-        try {
-            RemoveObjectArgs args = RemoveObjectArgs
-                    .builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .build();
+//        public InputStream downloadFile(String objectName) {
+//            try {
+//                GetObjectArgs args = GetObjectArgs
+//                        .builder()
+//                        .bucket(bucketName)
+//                        .object(objectName)
+//                        .build();
+//
+//                return minioClient.getObject(args);
+//            } catch (Exception exception) {
+//                log.error("下载文件失败：{}", objectName, exception);
+//
+//                throw new RuntimeException("下载文件失败：" + objectName, exception);
+//            }
+//        }
+//
+//        public void deleteFile(String objectName) {
+//            try {
+//                RemoveObjectArgs args = RemoveObjectArgs
+//                        .builder()
+//                        .bucket(bucketName)
+//                        .object(objectName)
+//                        .build();
+//
+//                minioClient.removeObject(args);
+//            } catch (Exception exception) {
+//                log.error("删除文件失败：{}", objectName, exception);
+//
+//                throw new RuntimeException("删除文件失败：" + objectName, exception);
+//            }
+//        }
+//    }
+//
+//    public String uniqueFileName(Long id, String fileName) {
+//        return id.toString() + "/" + UUID.randomUUID().toString().replace("-", "") + "_" + fileName;
+//    }
+//
+//    public String generatePresignedPutUrl(String objectName, Integer expiry) {
+//        try {
+//            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs
+//                    .builder()
+//                    .method(Method.PUT)
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .expiry(expiry, TimeUnit.SECONDS)
+//                    .build();
+//
+//            return minioClient.getPresignedObjectUrl(args);
+//        } catch (Exception exception) {
+//             log.error("获取PUT预签名url失败：{}", objectName, exception);
+//
+//             throw new RuntimeException("获取PUT预签名url失败：" + objectName, exception);
+//        }
+//    }
+//
+//    public String generatePresignedPutUrl(String objectName) {
+//        return generatePresignedPutUrl(objectName, presignedUrlExpiry);
+//    }
+//
+//    public String generatePresignedGetUrl(String objectName, Integer expiry) {
+//        try {
+//            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+//                    .method(Method.GET)
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .expiry(expiry, TimeUnit.SECONDS)
+//                    .build();
+//            return minioClient.getPresignedObjectUrl(args);
+//        } catch (Exception exception) {
+//            log.error("获取GET预签名URL失败：{}", objectName, exception);
+//
+//            throw new RuntimeException("获取GET预签名URL失败：" + objectName, exception);
+//        }
+//    }
+//
+//    public String generatePresignedGetUrl(String objectName) {
+//        return generatePresignedGetUrl(objectName, presignedUrlExpiry);
+//    }
+//
+//    public void uploadFile(
+//            String objectName,
+//            InputStream inputStream,
+//            String contentType
+//    ) {
+//        try {
+//            PutObjectArgs args = PutObjectArgs
+//                    .builder()
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .stream(inputStream, inputStream.available(), -1)
+//                    .contentType(contentType)
+//                    .build();
+//
+//            minioClient.putObject(args);
+//        } catch (Exception exception) {
+//             log.error("上传文件失败：{}", objectName, exception);
+//
+//            throw new RuntimeException("上传文件失败：" + objectName, exception);
+//        } finally {
+//            if (inputStream != null) {
+//                try {
+//                    inputStream.close();
+//                } catch (IOException exception) {
+//                     log.error("InputStream关闭失败：{}", objectName, exception);
+//                }
+//            }
+//        }
+//    }
+//
+//    public void uploadFile(
+//            String objectName,
+//            InputStream inputStream,
+//            long size,
+//            String contentType
+//    ) {
+//        try {
+//            PutObjectArgs args = PutObjectArgs
+//                    .builder()
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .stream(inputStream, size, -1)
+//                    .contentType(contentType)
+//                    .build();
+//
+//            minioClient.putObject(args);
+//        } catch (Exception exception) {
+//             log.error("上传文件失败：{}", objectName, exception);
+//
+//            throw new RuntimeException("上传文件失败：" + objectName, exception);
+//        } finally {
+//            if (inputStream != null) {
+//                try {
+//                    inputStream.close();
+//                } catch (IOException exception) {
+//                     log.error("InputStream关闭失败: {}", objectName, exception);
+//                }
+//            }
+//        }
+//    }
+//
+//    public InputStream downloadFile(String objectName) {
+//        try {
+//            GetObjectArgs args = GetObjectArgs
+//                    .builder()
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .build();
+//
+//            return minioClient.getObject(args);
+//        } catch (Exception exception) {
+//             log.error("下载文件失败：{}", objectName, exception);
+//
+//            throw new RuntimeException("下载文件失败：" + objectName, exception);
+//        }
+//    }
+//
+//    public void deleteFile(String objectName) {
+//        try {
+//            RemoveObjectArgs args = RemoveObjectArgs
+//                    .builder()
+//                    .bucket(bucketName)
+//                    .object(objectName)
+//                    .build();
+//
+//            minioClient.removeObject(args);
+//        } catch (Exception exception) {
+//             log.error("删除文件失败：{}", objectName, exception);
+//
+//             throw new RuntimeException("删除文件失败：" + objectName, exception);
+//        }
+//    }
 
-            minioClient.removeObject(args);
-        } catch (Exception exception) {
-            log.error("MinIO: 删除文件失败", exception);
-
-            throw new RuntimeException("删除失败: " + exception.getMessage());
-        }
-    }
-
-    public InputStream getObject(String objectName) {
-        try {
-            GetObjectArgs args = GetObjectArgs
-                    .builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .build();
-
-            return minioClient.getObject(args);
-        } catch (Exception exception) {
-            log.error("MinIO: 获取文件流失败", exception);
-
-            throw new RuntimeException("获取文件失败: " + exception.getMessage());
-        }
-    }
 }
