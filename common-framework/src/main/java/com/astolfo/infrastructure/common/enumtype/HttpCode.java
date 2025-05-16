@@ -1,5 +1,6 @@
 package com.astolfo.infrastructure.common.enumtype;
 
+import com.astolfo.webinterface.vo.PresignedUrl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,7 +27,9 @@ public enum HttpCode {
 
     ARTICLE_NOT_EXIST(601, "该文章不存在"),
     ARTICLE_PRIVATE(602, "该文章不公开"),
-    ARTICLE_NOT_FOUND(603, "没有查找到文章");
+    ARTICLE_NOT_FOUND(603, "没有查找到文章"),
+
+    GET_PRESIGNED_URL_FAILED(701, "获取预签名URL失败");
 
 
     private final Integer code;
