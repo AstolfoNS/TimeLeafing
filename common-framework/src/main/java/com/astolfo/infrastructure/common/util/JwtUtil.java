@@ -1,16 +1,18 @@
 package com.astolfo.infrastructure.common.util;
 
-import com.astolfo.infrastructure.common.constant.JwtConstant;
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.*;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -20,11 +22,14 @@ public class JwtUtil {
     @Resource
     private JwtDecoder jwtDecoder;
 
-    @Value("${spring.security.jwt.expire}")
+    @Value("#{jwtProperties.expire}")
     private Long expire;
 
-    @Value("${spring.security.jwt.issuer}")
+    @Value("#{jwtProperties.issuer}")
     private String issuer;
+
+    @Value("#{jwtProperties.algorithm}")
+    private String algorithm;
 
 
     public String getUUID() {
@@ -44,7 +49,7 @@ public class JwtUtil {
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(JwtConstant.algorithm.getMacAlgorithm()).build(), claim)).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(SignatureAlgorithm.from(algorithm)).build(), claim)).getTokenValue();
     }
 
     public String generateToken(LoginUserDetails loginUserDetails, Long expireInMillis) {
@@ -59,7 +64,9 @@ public class JwtUtil {
         try {
             return new ParseToken(jwtDecoder.decode(token));
         } catch (JwtException exception) {
-            throw new JwtException("Invalid Jwt Token", exception);
+            log.error("无效的JWT token");
+
+            throw new JwtException("无效的JWT token", exception);
         }
     }
 

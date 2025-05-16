@@ -17,7 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("GuestAuthService")
 public class GuestAuthServiceImpl implements AuthService {
 
     @Resource
@@ -41,10 +41,10 @@ public class GuestAuthServiceImpl implements AuthService {
 
             LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
-            redisCacheUtil.setObject(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getStringId()), loginUserDetails);
+            redisCacheUtil.set(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getStringId()), loginUserDetails);
 
             return ResponseResult.okResult(new TokenResponse(loginUserDetails.getUsername(), jwtUtil.generateToken(loginUserDetails)));
-        } catch (RuntimeException exception) {
+        } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
         }
     }
@@ -59,7 +59,7 @@ public class GuestAuthServiceImpl implements AuthService {
             redisCacheUtil.delete(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getStringId()));
 
             return ResponseResult.okResult(new LogoutResponse(loginUserDetails.getUsername()));
-        } catch (RuntimeException exception) {
+        } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.LOGOUT_FAILED);
         }
     }

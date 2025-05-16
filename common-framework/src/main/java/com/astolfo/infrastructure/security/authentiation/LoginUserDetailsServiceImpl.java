@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
@@ -25,10 +25,10 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("该用户名不存在"));
 
-        Set<Permission> permissionSet = userPermissionService.findPermissionSetByUser(user);
+        List<Permission> permissionList = userPermissionService.findPermissionListByUser(user);
 
-        return new LoginUserDetails(user, permissionSet);
+        return new LoginUserDetails(user, permissionList);
     }
 }

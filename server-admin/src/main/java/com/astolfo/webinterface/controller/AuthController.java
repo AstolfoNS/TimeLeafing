@@ -2,7 +2,6 @@ package com.astolfo.webinterface.controller;
 
 import com.astolfo.application.dto.LoginRequest;
 import com.astolfo.application.service.AuthService;
-import com.astolfo.application.service.impl.AdminAuthServiceImpl;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.webinterface.vo.LogoutResponse;
 import com.astolfo.webinterface.vo.TokenResponse;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @Resource(type = AdminAuthServiceImpl.class)
+    @Resource(name = "AdminAuthService")
     private AuthService authService;
 
 

@@ -1,7 +1,7 @@
 package com.astolfo.infrastructure.config.security;
 
-import com.astolfo.infrastructure.common.constant.JwtConstant;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +18,16 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 public class JwtConfig {
 
-    @Value("${spring.security.jwt.key}")
+    @Value("#{jwtProperties.jwtSecret}")
     private String jwtSecret;
+
+    @Value("#{jwtProperties.algorithm}")
+    private String algorithm;
 
 
     @Bean
     public SecretKeySpec secretKeySpec() {
-        return new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), JwtConstant.algorithm.getAlgorithm());
+        return new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), algorithm);
     }
 
     @Bean

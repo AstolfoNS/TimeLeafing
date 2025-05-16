@@ -6,7 +6,6 @@ import com.astolfo.domain.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.converter.UserConverter;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
@@ -24,15 +23,15 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     private UserEntity findUserEntityByUsername(String username) {
-        return userMapper.selectOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getUsername, username));
+        return userMapper.selectUserEntityByUsername(username);
     }
 
     private UserEntity findUserEntityByEmail(Email email) {
-        return userMapper.selectOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getEmail, email.getEmail()));
+        return userMapper.selectUserEntityByEmail(email.getEmail());
     }
 
     private UserEntity findUserEntityById(Long id) {
-        return userMapper.selectById(id);
+        return userMapper.selectUserEntityById(id);
     }
 
     @Override

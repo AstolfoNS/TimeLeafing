@@ -1,10 +1,10 @@
 package com.astolfo.domain.domain.rbac.model.valueobject.entity;
 
-import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Nonnull
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Symbol {

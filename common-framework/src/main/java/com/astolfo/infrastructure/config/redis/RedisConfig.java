@@ -3,6 +3,8 @@ package com.astolfo.infrastructure.config.redis;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -24,20 +26,21 @@ import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 @Configuration
 public class RedisConfig {
 
-    @Value("${spring.data.redis.host}")
+    @Value("#{redisProperties.redisHost}")
     private String redisHost;
 
-    @Value("${spring.data.redis.port}")
+    @Value("#{redisProperties.redisPort}")
     private Integer redisPort;
 
-    @Value("${spring.data.redis.password}")
+    @Value("#{redisProperties.redisPassword}")
     private String redisPassword;
 
-    @Value("${custom.redis.redisson-address}")
+    @Value("#{redisProperties.redissonAddress}")
     private String redissonAddress;
 
-    @Value("${custom.redis.redisson-database}")
+    @Value("#{redisProperties.redissonDatabase}")
     private Integer redissonDatabase;
+
 
     @Bean
     public RedissonClient redissonClient() {

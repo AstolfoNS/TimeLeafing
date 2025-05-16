@@ -30,4 +30,13 @@
             user.username = #{username}
     </select>
 
+    <select id="selectUserEntityByEmail" parameterType="java.lang.String" resultMap="UserEntityRoleIdListMap">
+        SELECT
+            user.*
+        FROM
+            user
+        WHERE
+            user.email = #{email}
+    </select>
+
 </mapper>

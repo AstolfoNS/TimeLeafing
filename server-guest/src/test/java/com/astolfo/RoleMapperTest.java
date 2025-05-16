@@ -14,11 +14,16 @@ public class RoleMapperTest {
     @Resource
     RoleMapper roleMapper;
 
+
     @Test
     public void testRoleMapper() {
         List<RoleEntity> roleEntityList = roleMapper.selectRoleEntityListByIdList(List.of(1L, 2L));
 
+        RoleEntity roleEntity = roleMapper.selectRoleEntityById(1L);
+
         System.out.println(roleEntityList);
+
+        System.out.println(roleEntity);
     }
 
 }
