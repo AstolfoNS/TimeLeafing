@@ -3,9 +3,10 @@ package com.astolfo.application.service.impl;
 import com.astolfo.application.dto.LoginRequest;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
-import com.astolfo.infrastructure.common.util.JwtUtil;
-import com.astolfo.infrastructure.common.util.RedisCacheUtil;
+import com.astolfo.infrastructure.common.util.component.JwtUtil;
+import com.astolfo.infrastructure.common.util.component.RedisCacheUtil;
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.util.SecurityUtil;
 import com.astolfo.webinterface.vo.LogoutResponse;
 import com.astolfo.application.service.AuthService;
 import com.astolfo.infrastructure.common.response.ResponseResult;
@@ -52,13 +53,9 @@ public class GuestAuthServiceImpl implements AuthService {
     @Override
     public ResponseResult<LogoutResponse> logout() {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            redisCacheUtil.delete(RedisCacheConstant.Login_USER_PERFIX.concat(SecurityUtil.getRequiredCurrentUserId().toString()));
 
-            LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
-
-            redisCacheUtil.delete(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getStringId()));
-
-            return ResponseResult.okResult(new LogoutResponse(loginUserDetails.getUsername()));
+            return ResponseResult.okResult(new LogoutResponse(SecurityUtil.getRequiredCurrentUserName()));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.LOGOUT_FAILED);
         }

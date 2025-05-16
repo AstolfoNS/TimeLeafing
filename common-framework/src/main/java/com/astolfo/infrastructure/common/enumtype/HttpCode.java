@@ -29,7 +29,8 @@ public enum HttpCode {
     ARTICLE_PRIVATE(602, "该文章不公开"),
     ARTICLE_NOT_FOUND(603, "没有查找到文章"),
 
-    GET_PRESIGNED_URL_FAILED(701, "获取预签名URL失败");
+    GET_PRESIGNED_URL_FAILED(701, "获取预签名URL失败"),
+    DELETE_MINIO_FILE_FAILED(702, "删除MINIO中的文件失败");
 
 
     private final Integer code;

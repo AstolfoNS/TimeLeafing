@@ -1,4 +1,4 @@
-package com.astolfo.infrastructure.common.util;
+package com.astolfo.infrastructure.common.util.component;
 
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;

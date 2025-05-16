@@ -1,6 +1,6 @@
 package com.astolfo.domain.domain.rbac.model.valueobject.enumtype;
 
-import com.astolfo.common.util.EnumStringMappingUtil;
+import com.astolfo.infrastructure.common.util.shared.EnumStringMappingUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

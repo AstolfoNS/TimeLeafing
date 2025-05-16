@@ -5,10 +5,10 @@ import com.astolfo.webinterface.vo.PresignedUrl;
 
 public interface MinioFileService {
 
-    ResponseResult<PresignedUrl> getPresignedUrlToPut(
-            String bucketName,
-            Long id,
-            String fileName
-    );
+    ResponseResult<PresignedUrl> getPresignedUrlToPut(String bucketName, String ObjectName);
+
+    ResponseResult<PresignedUrl> getPresignedUrlToGet(String bucketName, String ObjectName);
+
+    ResponseResult<Void> deleteFile(String bucketName, String objectName);
 
 }

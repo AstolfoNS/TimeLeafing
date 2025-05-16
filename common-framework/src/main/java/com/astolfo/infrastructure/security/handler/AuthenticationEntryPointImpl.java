@@ -2,7 +2,7 @@ package com.astolfo.infrastructure.security.handler;
 
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.infrastructure.common.util.ServletUtil;
+import com.astolfo.infrastructure.common.util.component.ServletUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

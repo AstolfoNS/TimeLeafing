@@ -4,10 +4,7 @@ import com.astolfo.application.service.MinioFileService;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.webinterface.vo.PresignedUrl;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/minio/")
 @RestController
@@ -17,13 +14,19 @@ public class MinioFileController {
     MinioFileService minioFileService;
 
 
-    @GetMapping("/presigned-url/{bucketName}/{id}/{filename}")
-    public ResponseResult<PresignedUrl> presignedUrlToPut(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("id") Long id,
-            @PathVariable("filename") String filename
-    ) {
-        return minioFileService.getPresignedUrlToPut(bucketName, id, filename);
+    @GetMapping("/presigned-url/put")
+    public ResponseResult<PresignedUrl> presignedUrlToPut(@RequestParam("bucketName") String bucketName, @RequestParam("objectName") String objectName) {
+        return minioFileService.getPresignedUrlToPut(bucketName, objectName);
+    }
+
+    @GetMapping("/presigned-url/get")
+    public ResponseResult<PresignedUrl> presignedUrlToGet(@RequestParam("bucketName") String bucketName, @RequestParam("objectName") String objectName) {
+        return minioFileService.getPresignedUrlToGet(bucketName, objectName);
+    }
+
+    @DeleteMapping("/{bucketName}/{objectName}")
+    public ResponseResult<Void> deleteFile(@PathVariable("bucketName") String bucketName, @PathVariable("objectName") String objectName) {
+        return minioFileService.deleteFile(bucketName, objectName);
     }
 
 }

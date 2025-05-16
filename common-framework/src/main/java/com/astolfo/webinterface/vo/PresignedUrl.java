@@ -11,6 +11,4 @@ public class PresignedUrl {
 
     private String presignedUrl;
 
-    private String objectName;
-
 }

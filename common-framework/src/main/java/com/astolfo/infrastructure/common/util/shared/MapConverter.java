@@ -1,4 +1,4 @@
-package com.astolfo.common.util;
+package com.astolfo.infrastructure.common.util.shared;
 
 import java.util.HashMap;
 import java.util.Map;
