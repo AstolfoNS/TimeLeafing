@@ -1,10 +1,10 @@
 package com.astolfo.infrastructure.common.util;
 
-import com.astolfo.infrastructure.config.minio.MinioProperties;
 import io.minio.*;
 import io.minio.http.Method;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,24 +18,22 @@ public class MinioUtil {
     @Resource
     private MinioClient minioClient;
 
-    @Resource
-    private MinioProperties minioProperties;
+    @Value("#{minioProperties.bucketName}")
+    private String bucketName;
 
 
-    /**
-     * 上传文件（支持 MultipartFile）
-     */
     public String uploadFile(MultipartFile file, String objectName) {
         try (InputStream inputStream = file.getInputStream()) {
             PutObjectArgs args = PutObjectArgs
                     .builder()
-                    .bucket(minioProperties.getBucketName())
+                    .bucket(bucketName)
                     .object(objectName)
                     .stream(inputStream, file.getSize(), -1)
                     .contentType(file.getContentType())
                     .build();
 
             minioClient.putObject(args);
+
             return objectName;
         } catch (Exception exception) {
             log.error("MinIO: 文件上传失败", exception);
@@ -44,9 +42,6 @@ public class MinioUtil {
         }
     }
 
-    /**
-     * 上传文件（支持 InputStream）
-     */
     public String uploadFile(
             InputStream inputStream,
             long size,
@@ -56,13 +51,14 @@ public class MinioUtil {
         try {
             PutObjectArgs args = PutObjectArgs
                     .builder()
-                    .bucket(minioProperties.getBucketName())
+                    .bucket(bucketName)
                     .object(objectName)
                     .stream(inputStream, size, -1)
                     .contentType(contentType)
                     .build();
 
             minioClient.putObject(args);
+
             return objectName;
         } catch (Exception exception) {
             log.error("MinIO: 文件流上传失败", exception);
@@ -71,14 +67,11 @@ public class MinioUtil {
         }
     }
 
-    /**
-     * 获取预签名访问 URL（有效期单位：分钟）
-     */
     public String getPreSignedUrl(String objectName, int expireMinutes) {
         try {
             GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs
                     .builder()
-                    .bucket(minioProperties.getBucketName())
+                    .bucket(bucketName)
                     .object(objectName)
                     .method(Method.GET)
                     .expiry(expireMinutes, TimeUnit.MINUTES)
@@ -92,18 +85,15 @@ public class MinioUtil {
         }
     }
 
-    /**
-     * 删除对象
-     */
     public void deleteFile(String objectName) {
         try {
-            minioClient.removeObject(
-                    RemoveObjectArgs
-                            .builder()
-                            .bucket(minioProperties.getBucketName())
-                            .object(objectName)
-                            .build()
-            );
+            RemoveObjectArgs args = RemoveObjectArgs
+                    .builder()
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .build();
+
+            minioClient.removeObject(args);
         } catch (Exception exception) {
             log.error("MinIO: 删除文件失败", exception);
 
@@ -111,17 +101,15 @@ public class MinioUtil {
         }
     }
 
-    /**
-     * 获取对象（返回 InputStream）
-     */
     public InputStream getObject(String objectName) {
         try {
-            return minioClient.getObject(GetObjectArgs
+            GetObjectArgs args = GetObjectArgs
                     .builder()
-                    .bucket(minioProperties.getBucketName())
+                    .bucket(bucketName)
                     .object(objectName)
-                    .build()
-            );
+                    .build();
+
+            return minioClient.getObject(args);
         } catch (Exception exception) {
             log.error("MinIO: 获取文件流失败", exception);
 
