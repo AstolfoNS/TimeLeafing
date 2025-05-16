@@ -60,7 +60,7 @@ public class MinioUtil {
 
 
         public String uniqueFileName(Long id, String fileName) {
-            return bucketName + id.toString() + "/" + UUID.randomUUID().toString().replace("-", "") + "_" + fileName;
+            return bucketName + "/" + id.toString() + "/" + UUID.randomUUID().toString().replace("-", "") + "_" + fileName;
         }
 
         public String generatePresignedPutUrl(String objectName, Integer expiry) {
@@ -86,7 +86,7 @@ public class MinioUtil {
         }
 
         public PresignedUrl getPresignedUrlToPut(String objectName) {
-            return new PresignedUrl(objectName, generatePresignedPutUrl(objectName));
+            return new PresignedUrl(generatePresignedPutUrl(objectName), objectName);
         }
 
         public PresignedUrl getPresignedUrlToPut(Long id, String fileName) {
@@ -115,7 +115,7 @@ public class MinioUtil {
         }
 
         public PresignedUrl getPresignedUrlToGet(String objectName) {
-            return new PresignedUrl(objectName, generatePresignedGetUrl(objectName));
+            return new PresignedUrl(generatePresignedGetUrl(objectName), objectName);
         }
 
         public PresignedUrl getPresignedUrlToGet(Long id, String fileName) {
