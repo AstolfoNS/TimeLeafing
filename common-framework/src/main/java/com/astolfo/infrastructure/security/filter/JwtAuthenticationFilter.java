@@ -10,6 +10,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Objects;
 
+@Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -47,10 +49,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String userId = jwtUtil.parseToken(token).getStringId();
 
-        LoginUserDetails loginUserDetails = redisCacheUtil.getObject(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
+        LoginUserDetails loginUserDetails = redisCacheUtil.get(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
 
         if (Objects.isNull(loginUserDetails)) {
-            throw new RuntimeException("User is not logged in");
+            log.error("JWT认证过程中未从redis中找到用户，用户未登录，UserId: {}", userId);
+
+            throw new RuntimeException("用户未登录");
         }
 
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities()));

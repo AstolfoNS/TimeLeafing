@@ -3,6 +3,7 @@ package com.astolfo.infrastructure.common.util;
 import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.*;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -62,7 +64,9 @@ public class JwtUtil {
         try {
             return new ParseToken(jwtDecoder.decode(token));
         } catch (JwtException exception) {
-            throw new JwtException("Invalid Jwt Token", exception);
+            log.error("无效的JWT token");
+
+            throw new JwtException("无效的JWT token", exception);
         }
     }
 

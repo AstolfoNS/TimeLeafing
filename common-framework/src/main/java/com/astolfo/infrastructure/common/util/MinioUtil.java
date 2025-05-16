@@ -39,6 +39,7 @@ public class MinioUtil {
             return objectName;
         } catch (Exception exception) {
             log.error("MinIO: 文件上传失败", exception);
+
             throw new RuntimeException("上传失败: " + exception.getMessage());
         }
     }
@@ -65,6 +66,7 @@ public class MinioUtil {
             return objectName;
         } catch (Exception exception) {
             log.error("MinIO: 文件流上传失败", exception);
+
             throw new RuntimeException("上传失败: " + exception.getMessage());
         }
     }
@@ -85,6 +87,7 @@ public class MinioUtil {
             return minioClient.getPresignedObjectUrl(args);
         } catch (Exception exception) {
             log.error("MinIO: 获取文件访问链接失败", exception);
+
             throw new RuntimeException("获取访问链接失败: " + exception.getMessage());
         }
     }
@@ -103,6 +106,7 @@ public class MinioUtil {
             );
         } catch (Exception exception) {
             log.error("MinIO: 删除文件失败", exception);
+
             throw new RuntimeException("删除失败: " + exception.getMessage());
         }
     }
@@ -120,6 +124,7 @@ public class MinioUtil {
             );
         } catch (Exception exception) {
             log.error("MinIO: 获取文件流失败", exception);
+
             throw new RuntimeException("获取文件失败: " + exception.getMessage());
         }
     }

@@ -25,7 +25,7 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("该用户名不存在"));
 
         List<Permission> permissionList = userPermissionService.findPermissionListByUser(user);
 
