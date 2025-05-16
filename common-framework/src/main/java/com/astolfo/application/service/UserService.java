@@ -7,6 +7,8 @@ public interface UserService {
 
     ResponseResult<UserInfo> getUserInfo();
 
+    ResponseResult<UserInfo> getUserInfo(Long id);
+
     ResponseResult<UserInfo> getUserInfo(String username);
 
 }

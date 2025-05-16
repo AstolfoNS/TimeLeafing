@@ -62,7 +62,7 @@ public class SecurityConfig {
                         auth -> {
                             auth.requestMatchers("/guest-auth/login", "/guest-auth/register").permitAll();
                             auth.requestMatchers("/admin-auth/login", "/admin-auth/register").permitAll();
-                            auth.requestMatchers("/global/**").permitAll();
+                            auth.requestMatchers("/access/**").permitAll();
                             
                             auth.anyRequest().authenticated();
                         }

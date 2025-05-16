@@ -19,15 +19,25 @@ public class UserServiceImpl implements UserService {
     @Resource
     UserInfoMapper userInfoMapper;
 
+
     @Override
     public ResponseResult<UserInfo> getUserInfo() {
         return ResponseResult.okResult(userInfoMapper.userToUserInfo(SecurityUtil.getRequiredCurrentUser()));
     }
 
     @Override
+    public ResponseResult<UserInfo> getUserInfo(Long id) {
+        try {
+            return ResponseResult.okResult(userInfoMapper.userToUserInfo(userRepository.findUserById(id).orElseThrow()));
+        } catch (Exception exception) {
+            return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
+        }
+    }
+
+    @Override
     public ResponseResult<UserInfo> getUserInfo(String username) {
         try {
-            return ResponseResult.okResult(userInfoMapper.userToUserInfo(userRepository.findUserByUsername(username).orElse(null)));
+            return ResponseResult.okResult(userInfoMapper.userToUserInfo(userRepository.findUserByUsername(username).orElseThrow()));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }
