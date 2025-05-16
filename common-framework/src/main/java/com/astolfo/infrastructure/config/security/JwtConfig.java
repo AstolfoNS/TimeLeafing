@@ -21,13 +21,13 @@ public class JwtConfig {
     @Value("#{jwtProperties.jwtSecret}")
     private String jwtSecret;
 
-    @Value("#{jwtProperties.algorithm}")
-    private String algorithm;
+    @Value("#{jwtProperties.jcaAlgorithm}")
+    private String jcaAlgorithm;
 
 
     @Bean
     public SecretKeySpec secretKeySpec() {
-        return new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), algorithm);
+        return new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), jcaAlgorithm);
     }
 
     @Bean

@@ -17,7 +17,10 @@ public class JwtProperties {
     @Value("${spring.security.jwt.issuer}")
     private String issuer;
 
-    @Value("${spring.security.jwt.algorithm}")
-    private String algorithm;
+    @Value("${spring.security.jwt.jwt-algorithm}")
+    private String jwtAlgorithm;
+
+    @Value("${spring.security.jwt.jca-algorithm}")
+    private String jcaAlgorithm;
 
 }
