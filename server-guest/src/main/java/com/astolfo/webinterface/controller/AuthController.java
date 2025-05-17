@@ -8,7 +8,7 @@ import com.astolfo.webinterface.vo.TokenResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/guest-auth")
+@RequestMapping("/api/guest-auth")
 @RestController
 public class AuthController {
 

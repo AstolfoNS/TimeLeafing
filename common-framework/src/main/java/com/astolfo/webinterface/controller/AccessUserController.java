@@ -6,7 +6,7 @@ import com.astolfo.webinterface.vo.UserInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/access/user")
+@RequestMapping("/api/access/user")
 @RestController
 public class AccessUserController {
 
