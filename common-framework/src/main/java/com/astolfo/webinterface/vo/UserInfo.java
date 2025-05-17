@@ -1,5 +1,6 @@
 package com.astolfo.webinterface.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserInfo {
 
     private Long id;
@@ -17,6 +19,8 @@ public class UserInfo {
 
     private String username;
 
+    private String nickname;
+
     private String avatar;
 
     private String gender;
@@ -24,4 +28,5 @@ public class UserInfo {
     private String introduction;
 
     private LocalDateTime lastLoginTime;
+
 }

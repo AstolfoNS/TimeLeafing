@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
     `email`                     VARCHAR(256) UNIQUE NOT NULL,                                                           -- 用户邮箱
     `username`                  VARCHAR(128) UNIQUE NOT NULL,                                                           -- 用户名（唯一）
+    `nickname`                  VARCHAR(128) NOT NULL,                                                                  -- 昵称
     `password`                  VARCHAR(128) NOT NULL,                                                                  -- 用户密码
     `avatar`                    VARCHAR(256),                                                                           -- 用户头像
     `gender`                    ENUM('MALE', 'FEMALE', 'UNKNOWN') DEFAULT 'UNKNOWN',                                    -- 用户性别
@@ -307,13 +308,16 @@ CREATE TABLE IF NOT EXISTS `article_bookmark` (
 INSERT INTO user (
     email,
     username,
+    nickname,
     password
 ) VALUES (
     'Astolfo@ganil.com',
     'Astolfo',
+    'Astolfo',
     '$2a$10$HKi4IndCnEKigfbpV9d0Le3ryzy2vjX0TY.NQ0QGuGFCKixsqYuO6' -- 123456
 ), (
     'Alice@gamil.com',
+    'Alice',
     'Alice',
     '$2a$10$6dCjcUX//aiSYcYFMfsKruLqnxEY3u6.wYPF/3jAhJbwReV2N/xaK' -- 456123
 );

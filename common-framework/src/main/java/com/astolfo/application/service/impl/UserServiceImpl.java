@@ -1,7 +1,10 @@
 package com.astolfo.application.service.impl;
 
-import com.astolfo.application.mapper.UserInfoMapper;
+import com.astolfo.application.dto.UpdateUserInfoRequest;
+import com.astolfo.application.update.UpdateUserInfoRequestUpdate;
+import com.astolfo.webinterface.mapper.UserInfoMapper;
 import com.astolfo.application.service.UserService;
+import com.astolfo.domain.domain.rbac.model.User;
 import com.astolfo.domain.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
@@ -18,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     UserInfoMapper userInfoMapper;
+
+    @Resource
+    UpdateUserInfoRequestUpdate updateUserInfoRequestUpdate;
 
 
     @Override
@@ -42,4 +48,18 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }
     }
+
+    @Override
+    public ResponseResult<Void> updateUserInfo(UpdateUserInfoRequest updateUserInfoRequest) {
+        try {
+            User user = userRepository.findUserById(SecurityUtil.getRequiredCurrentUserId()).orElseThrow();
+
+            userRepository.save(updateUserInfoRequestUpdate.toUser(updateUserInfoRequest, user));
+
+            return ResponseResult.okResult();
+        } catch (Exception exception) {
+            return ResponseResult.errorResult(HttpCode.USER_UPDATE_FAILED);
+        }
+    }
+
 }
