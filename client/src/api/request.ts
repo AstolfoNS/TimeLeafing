@@ -16,11 +16,9 @@ request.interceptors.request.use(
     error => Promise.reject(error)
 )
 
-// 响应拦截器
 request.interceptors.response.use(
     response => response.data,
     error => {
-        // 可在此处统一处理错误提示
         console.error(error)
         return Promise.reject(error)
     }
