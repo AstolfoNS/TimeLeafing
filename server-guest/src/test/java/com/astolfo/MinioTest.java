@@ -1,6 +1,6 @@
 package com.astolfo;
 
-import com.astolfo.infrastructure.common.util.MinioUtil;
+import com.astolfo.infrastructure.common.util.component.MinioUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

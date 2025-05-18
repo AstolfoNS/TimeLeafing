@@ -1,4 +1,4 @@
-package com.astolfo.common.util;
+package com.astolfo.infrastructure.common.util.shared;
 
 import lombok.extern.slf4j.Slf4j;
 

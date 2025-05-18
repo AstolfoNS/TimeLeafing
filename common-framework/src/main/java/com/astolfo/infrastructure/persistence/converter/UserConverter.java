@@ -26,6 +26,8 @@ public class UserConverter {
 
             user.setUsername(userEntity.getUsername());
 
+            user.setNickname(userEntity.getNickname());
+
             user.setPassword(userEntity.getPassword());
 
             user.setPassword(userEntity.getPassword());
@@ -60,6 +62,8 @@ public class UserConverter {
         userEntity.setEmail(user.getEmail().getEmail());
 
         userEntity.setUsername(user.getUsername());
+
+        userEntity.setNickname(user.getNickname());
 
         userEntity.setPassword(user.getPassword());
 

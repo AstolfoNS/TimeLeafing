@@ -24,12 +24,14 @@ public enum HttpCode {
     LOGIN_FAILED(507, "用户名或密码错误"),
     USER_NOT_EXIST(508, "该用户不存在"),
     LOGOUT_FAILED(509, "退出失败"),
+    USER_UPDATE_FAILED(510, "用户信息更新失败"),
 
     ARTICLE_NOT_EXIST(601, "该文章不存在"),
     ARTICLE_PRIVATE(602, "该文章不公开"),
     ARTICLE_NOT_FOUND(603, "没有查找到文章"),
 
-    GET_PRESIGNED_URL_FAILED(701, "获取预签名URL失败");
+    GET_PRESIGNED_URL_FAILED(701, "获取预签名URL失败"),
+    DELETE_MINIO_FILE_FAILED(702, "删除MINIO中的文件失败");
 
 
     private final Integer code;

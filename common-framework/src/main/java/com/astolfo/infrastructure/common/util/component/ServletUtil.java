@@ -1,4 +1,4 @@
-package com.astolfo.infrastructure.common.util;
+package com.astolfo.infrastructure.common.util.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;

@@ -1,6 +1,6 @@
-package com.astolfo.infrastructure.common.util;
+package com.astolfo.infrastructure.common.util.component;
 
-import com.astolfo.common.util.MapConverter;
+import com.astolfo.infrastructure.common.util.shared.MapConverter;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
