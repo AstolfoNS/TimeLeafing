@@ -42,7 +42,6 @@ public class WebConfig implements WebMvcConfigurer, WebMvcRegistrations {
                 Method method,
                 @NotNull RequestMappingInfo mapping
         ) {
-            Class<?> beanType = method.getDeclaringClass();
             RequestMappingInfo newMapping = RequestMappingInfo
                     .paths(this.prefix)
                     .build()

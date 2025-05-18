@@ -6,7 +6,7 @@ import com.astolfo.webinterface.vo.PresignedUrl;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/minio/")
+@RequestMapping("/minio/")
 @RestController
 public class MinioFileController {
 
