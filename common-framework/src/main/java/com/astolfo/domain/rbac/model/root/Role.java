@@ -8,16 +8,15 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Setter(AccessLevel.PRIVATE)
+@Getter
 public class Role {
 
     // 唯一标识
     private RoleId id;
 
     // 基础属性
-    private RoleName name;
+    private RoleName roleName;
 
     private String description;
 
@@ -32,6 +31,50 @@ public class Role {
 
     private Boolean isDeleted;
 
+    @Data
+    public static class Details {
+
+        // 唯一标识
+        private RoleId id;
+
+        // 基础属性
+        private RoleName roleName;
+
+        private String description;
+
+        private List<PermissionId> permissionIdList;
+
+        // 生命周期属性
+        private Boolean enabled;
+
+        private LocalDateTime createTime;
+
+        private LocalDateTime updateTime;
+
+        private Boolean isDeleted;
+    }
+
+    private Role(Details details) {
+        setId(details.getId());
+
+        setRoleName(details.getRoleName());
+
+        setDescription(details.getDescription());
+
+        setPermissionIdList(details.getPermissionIdList());
+
+        setEnabled(details.getEnabled());
+
+        setCreateTime(details.getCreateTime());
+
+        setUpdateTime(details.getUpdateTime());
+
+        setIsDeleted(details.getIsDeleted());
+    }
+
+    public static Role of(Details details) {
+        return new Role(details);
+    }
 
     public void disable() {
         setEnabled(false);
@@ -49,5 +92,25 @@ public class Role {
     public void restore() {
         setIsDeleted(false);
         enable();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Role role = (Role) o;
+
+        return id.equals(role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

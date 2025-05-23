@@ -3,6 +3,7 @@ package com.astolfo.domain.rbac.service.impl;
 import com.astolfo.domain.rbac.model.root.Permission;
 import com.astolfo.domain.rbac.model.root.User;
 import com.astolfo.domain.rbac.model.valueobject.Email;
+import com.astolfo.domain.rbac.model.valueobject.PermissionId;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.model.valueobject.Username;
 import com.astolfo.domain.rbac.repository.PermissionRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class UserPermissionServiceImpl implements UserPermissionService {
@@ -30,15 +32,26 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 
 
     @Override
+    public List<PermissionId> findPermissionIdListByUser(User user) {
+        return userRoleService
+                .findRoleListByUser(user)
+                .stream()
+                .flatMap(role -> role.getPermissionIdList().stream())
+                .distinct()
+                .toList();
+    }
+
+    @Override
+    public List<String> findPermissionSymbolNameByUser(User user) {
+        return findPermissionListByUser(user)
+                .stream()
+                .map(permission -> permission.getSymbol().getSymbol())
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Permission> findPermissionListByUser(@Nonnull User user) {
-        return permissionRepository.findPermissionListByIdList(
-                userRoleService
-                        .findRoleListByUser(user)
-                        .stream()
-                        .flatMap(role -> role.getPermissionIdList().stream())
-                        .distinct()
-                        .toList()
-        );
+        return permissionRepository.findPermissionListByIdList(findPermissionIdListByUser(user));
     }
 
     @Override

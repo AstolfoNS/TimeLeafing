@@ -1,6 +1,5 @@
 package com.astolfo.infrastructure.security.userdetails;
 
-import com.astolfo.infrastructure.security.userdetails.details.LoginUserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,31 +16,54 @@ import java.util.stream.Collectors;
 @Data
 public class LoginUser implements UserDetails {
 
-    private LoginUserDetails loginUserDetails;
+    private Long userId;
 
+    private String username;
 
+    private String password;
+
+    private Collection<String> authorityList;
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class Details {
+
+        private Long userId;
+
+        private String username;
+
+        private String password;
+
+        private Collection<String> authorityList;
+    }
+
+    private LoginUser(Details loginUserDetails) {
+        setUserId(loginUserDetails.getUserId());
+
+        setUsername(loginUserDetails.getUsername());
+
+        setPassword(loginUserDetails.getPassword());
+
+        setAuthorityList(loginUserDetails.getAuthorityList());
+    }
+
+    public static LoginUser of(Details loginUserDetails) {
+        return new LoginUser(loginUserDetails);
+    }
+
+    @JsonIgnore
     public String getStringId() {
-        return loginUserDetails.getUserId().toString();
+        return userId.toString();
     }
 
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return loginUserDetails
-                .getAuthorityList()
+        return authorityList
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPassword() {
-        return loginUserDetails.getPasswordHash();
-    }
-
-    @Override
-    public String getUsername() {
-        return loginUserDetails.getUsername();
     }
 
 }
