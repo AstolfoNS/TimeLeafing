@@ -30,16 +30,18 @@ public class GuestAuthServiceImpl implements AuthService {
     private JwtUtil jwtUtil;
 
 
+    private Authentication LoginRequestAuthenticationToken(LoginRequest loginRequest) {
+        return new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+    }
+
+    private Authentication getAuthentication(LoginRequest loginRequest) {
+        return authenticationManager.authenticate(LoginRequestAuthenticationToken(loginRequest));
+    }
+
     @Override
     public ResponseResult<TokenResponse> login(LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-
-        String password = loginRequest.getPassword();
-
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
-            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            LoginUser loginUser = (LoginUser) getAuthentication(loginRequest).getPrincipal();
 
             redisCacheUtil.set(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
 
