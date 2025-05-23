@@ -1,4 +1,4 @@
-package com.astolfo.infrastructure.persistence.repository.impl.rbac;
+package com.astolfo.infrastructure.persistence.impl.repository.rbac;
 
 import com.astolfo.domain.rbac.model.valueobject.PermissionId;
 import com.astolfo.domain.rbac.model.valueobject.Symbol;
@@ -56,11 +56,15 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     @Transactional
     @Override
     public Permission save(@Nonnull Permission permission) {
-        PermissionEntity permissionEntity = permissionConverter.toEntity(permission);
+        try {
+            PermissionEntity permissionEntity = permissionConverter.toEntity(permission);
 
-        permissionMapper.insertOrUpdate(permissionEntity);
+            permissionMapper.insertOrUpdate(permissionEntity);
 
-        return permissionConverter.toDomain(permissionEntity);
+            return permissionConverter.toDomain(permissionEntity);
+        } catch (Exception exception) {
+            throw new RuntimeException("保存Permission时发生错误", exception);
+        }
     }
 }
 
