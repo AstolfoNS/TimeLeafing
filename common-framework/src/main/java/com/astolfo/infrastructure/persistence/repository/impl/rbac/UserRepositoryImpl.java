@@ -40,7 +40,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private List<UserEntity> findUserEntityListByIdList(List<UserId> userIdList) {
-        // TODO: findUserEntityListByIdList
+        userMapper.selectUserEntityListByIdList(
+                userIdList
+                        .stream()
+                        .map(UserId::getUserId)
+                        .toList()
+        );
 
         return null;
     }

@@ -27,7 +27,7 @@
         FROM
             role
         WHERE
-            role.name = #{name}
+            role.role_name = #{name}
     </select>
 
     <select id="selectRoleEntityListByIdList" parameterType="java.util.List" resultMap="RoleEntityPermissionIdListMap">

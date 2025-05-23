@@ -21,6 +21,15 @@
             user.id = #{id}
     </select>
 
+    <select id="selectUserEntityByEmail" parameterType="java.lang.String" resultMap="UserEntityRoleIdListMap">
+        SELECT
+            user.*
+        FROM
+            user
+        WHERE
+            user.email = #{email}
+    </select>
+
     <select id="selectUserEntityByUsername" parameterType="java.lang.String" resultMap="UserEntityRoleIdListMap">
         SELECT
             user.*
@@ -30,13 +39,14 @@
             user.username = #{username}
     </select>
 
-    <select id="selectUserEntityByEmail" parameterType="java.lang.String" resultMap="UserEntityRoleIdListMap">
+    <select id="selectUserEntityListByIdList" parameterType="java.util.List" resultMap="UserEntityRoleIdListMap">
         SELECT
             user.*
         FROM
             user
         WHERE
-            user.email = #{email}
+            user.id IN <foreach collection="idList" item="id" open="(" separator="," close=")">#{id}</foreach>
+
     </select>
 
 </mapper>
