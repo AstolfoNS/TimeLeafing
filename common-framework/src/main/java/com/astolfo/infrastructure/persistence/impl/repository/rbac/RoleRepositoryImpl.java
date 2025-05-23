@@ -1,4 +1,4 @@
-package com.astolfo.infrastructure.persistence.repository.impl.rbac;
+package com.astolfo.infrastructure.persistence.impl.repository.rbac;
 
 import com.astolfo.domain.rbac.model.root.Role;
 import com.astolfo.domain.rbac.model.valueobject.RoleId;
@@ -84,10 +84,14 @@ public class RoleRepositoryImpl implements RoleRepository {
     @Transactional
     @Override
     public Role save(@Nonnull Role role) {
-        RoleEntity roleEntity = roleConverter.toEntity(role);
+        try {
+            RoleEntity roleEntity = roleConverter.toEntity(role);
 
-        roleMapper.insertOrUpdate(roleEntity);
+            roleMapper.insertOrUpdate(roleEntity);
 
-        return roleConverter.toDomain(roleEntity);
+            return roleConverter.toDomain(roleEntity);
+        } catch (Exception exception) {
+            throw new RuntimeException("保存Role时发生错误", exception);
+        }
     }
 }
