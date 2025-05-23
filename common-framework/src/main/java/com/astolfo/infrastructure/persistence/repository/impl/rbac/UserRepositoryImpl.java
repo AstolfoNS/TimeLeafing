@@ -40,14 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private List<UserEntity> findUserEntityListByIdList(List<UserId> userIdList) {
-        userMapper.selectUserEntityListByIdList(
-                userIdList
-                        .stream()
-                        .map(UserId::getUserId)
-                        .toList()
-        );
-
-        return null;
+        return userMapper.selectUserEntityListByIdList(UserId.toLong(userIdList));
     }
 
     private UserEntity findUserEntityWithoutRoleIdListByUsername(Username username) {
@@ -63,12 +56,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private List<UserEntity> findUserEntityListWithoutRoleIdListByIdList(List<UserId> userIdList) {
-        return userMapper.selectByIds(
-                userIdList
-                        .stream()
-                        .map(UserId::getUserId)
-                        .toList()
-        );
+        return userMapper.selectByIds(UserId.toLong(userIdList));
     }
 
     @Override

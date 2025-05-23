@@ -35,12 +35,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     private List<RoleEntity> findRoleEntityListByIdList(List<RoleId> roleIdList) {
-        return roleMapper.selectRoleEntityListByIdList(
-                roleIdList
-                        .stream()
-                        .map(RoleId::getRoleId)
-                        .toList()
-        );
+        return roleMapper.selectRoleEntityListByIdList(RoleId.toLong(roleIdList));
     }
 
     private RoleEntity findRoleEntityWithoutPermissionIdListById(RoleId roleId) {
@@ -52,12 +47,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     private List<RoleEntity> findRoleEntityListWithoutPermissionIdListByIdList(List<RoleId> roleIdList) {
-        return roleMapper.selectByIds(
-                roleIdList
-                        .stream()
-                        .map(RoleId::getRoleId)
-                        .toList()
-        );
+        return roleMapper.selectByIds(RoleId.toLong(roleIdList));
     }
 
     @Override

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class PermissionRepositoryImpl implements PermissionRepository {
@@ -35,12 +34,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     private List<PermissionEntity> findPermissionEntityListByIdList(List<PermissionId> permissionIdList) {
-        return permissionMapper.selectByIds(
-                permissionIdList
-                        .stream()
-                        .map(PermissionId::getPermissionId)
-                        .collect(Collectors.toList())
-        );
+        return permissionMapper.selectByIds(PermissionId.toLong(permissionIdList));
     }
 
     @Override
