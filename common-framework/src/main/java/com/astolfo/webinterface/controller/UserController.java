@@ -15,14 +15,14 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/info")
-    public ResponseResult<UserProfile> getUserInfo() {
-        return userService.getUserInfo();
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfile() {
+        return userService.getUserProfile();
     }
 
     @PostMapping("/update-profile")
-    public ResponseResult<Void> updateUserInfo(@RequestBody UserProfileRequest updateUserInfoRequest) {
-        return userService.updateUserInfo(updateUserInfoRequest);
+    public ResponseResult<Void> updateUserInfo(@RequestBody UserProfileRequest userProfileRequest) {
+        return userService.updateUserProfile(userProfileRequest);
     }
 
 }

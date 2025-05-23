@@ -1,6 +1,7 @@
 package com.astolfo.webinterface.controller;
 
 import com.astolfo.application.service.UserService;
+import com.astolfo.domain.rbac.model.valueobject.Email;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.model.valueobject.Username;
 import com.astolfo.infrastructure.common.response.ResponseResult;
@@ -16,14 +17,19 @@ public class AccessUserController {
     UserService userService;
 
 
-    @GetMapping("/info")
-    public ResponseResult<UserProfile> getUserInfo(@RequestParam("id") Long userId) {
-        return userService.getUserInfo(UserId.of(userId));
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileById(@RequestParam("id") Long userId) {
+        return userService.getUserProfileById(UserId.of(userId));
     }
 
-    @GetMapping("/{username}/info")
-    public ResponseResult<UserProfile> getUserInfo(@PathVariable("username") String username) {
-        return userService.getUserInfo(Username.of(username));
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileByEmail(String email) {
+        return userService.getUserProfileByEmail(Email.of(email));
+    }
+
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileByUsername(@RequestParam("username") String username) {
+        return userService.getUserProfileByUsername(Username.of(username));
     }
 
 }
