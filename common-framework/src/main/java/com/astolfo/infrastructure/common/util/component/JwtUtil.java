@@ -1,6 +1,7 @@
 package com.astolfo.infrastructure.common.util.component;
 
 import com.astolfo.infrastructure.security.userdetails.LoginUser;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,20 +33,30 @@ public class JwtUtil {
     private String jwtAlgorithm;
 
 
-    public String generateToken(
-            LoginUser loginUserDetails,
+    private JwtClaimsSet buildChaim(
+            LoginUser loginUser,
             Instant issuedAt,
             Long expiresInMillis
     ) {
-        JwtClaimsSet claim = JwtClaimsSet
+        return JwtClaimsSet
                 .builder()
-                .subject(loginUserDetails.getStringId())
+                .subject(loginUser.getStringId())
                 .issuedAt(issuedAt)
                 .issuer(issuer)
                 .expiresAt(issuedAt.plusMillis(expiresInMillis))
                 .build();
+    }
 
+    public String generateToken(@Nonnull JwtClaimsSet claim) {
         return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.valueOf(jwtAlgorithm)).build(), claim)).getTokenValue();
+    }
+
+    public String generateToken(
+            LoginUser loginUser,
+            Instant issuedAt,
+            Long expiresInMillis
+    ) {
+        return generateToken(buildChaim(loginUser, issuedAt, expiresInMillis));
     }
 
     public String generateToken(LoginUser loginUserDetails, Long expireInMillis) {
