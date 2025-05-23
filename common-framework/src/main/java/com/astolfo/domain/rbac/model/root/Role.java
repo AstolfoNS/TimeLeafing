@@ -16,7 +16,7 @@ public class Role {
     private RoleId id;
 
     // 基础属性
-    private RoleName name;
+    private RoleName roleName;
 
     private String description;
 
@@ -38,7 +38,7 @@ public class Role {
         private RoleId id;
 
         // 基础属性
-        private RoleName name;
+        private RoleName roleName;
 
         private String description;
 
@@ -57,7 +57,7 @@ public class Role {
     private Role(Details details) {
         setId(details.getId());
 
-        setName(details.getName());
+        setRoleName(details.getRoleName());
 
         setDescription(details.getDescription());
 

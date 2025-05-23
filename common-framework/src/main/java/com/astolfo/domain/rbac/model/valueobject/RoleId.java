@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -24,6 +27,20 @@ public class RoleId {
         } else {
             throw new IllegalArgumentException("Invalid roleId: " + roleId);
         }
+    }
+
+    public static List<Long> toLong(List<RoleId> roleIdList) {
+        return roleIdList
+                .stream()
+                .map(RoleId::getRoleId)
+                .collect(Collectors.toList());
+    }
+
+    public static List<RoleId> toId(List<Long> idList) {
+        return idList
+                .stream()
+                .map(RoleId::of)
+                .collect(Collectors.toList());
     }
 
 }

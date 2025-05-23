@@ -18,6 +18,7 @@ public class UserConverterImpl implements UserConverter {
     public User toDomain(UserEntity userEntity) {
         User.Details details = new User.Details();
 
+        // 转化
         details.setId(UserId.of(userEntity.getId()));
 
         details.setEmail(Email.of(userEntity.getEmail()));
@@ -36,13 +37,7 @@ public class UserConverterImpl implements UserConverter {
 
         details.setLastLoginTime(userEntity.getLastLoginTime());
 
-        details.setRoleIdList(
-                userEntity
-                        .getRoleIdList()
-                        .stream()
-                        .map(RoleId::of)
-                        .collect(Collectors.toList())
-        );
+        details.setRoleIdList(RoleId.toId(userEntity.getRoleIdList()));
 
         details.setEnabled(userEntity.getEnabled());
 
@@ -52,6 +47,7 @@ public class UserConverterImpl implements UserConverter {
 
         details.setIsDeleted(userEntity.getIsDeleted());
 
+        // 创建
         return User.of(details);
     }
 
@@ -67,6 +63,7 @@ public class UserConverterImpl implements UserConverter {
     public UserEntity toEntity(User user) {
         UserEntity userEntity = new UserEntity();
 
+        // 转化
         userEntity.setId(user.getId().getUserId());
 
         userEntity.setEmail(user.getEmail().getEmail());
@@ -85,13 +82,7 @@ public class UserConverterImpl implements UserConverter {
 
         userEntity.setLastLoginTime(user.getLastLoginTime());
 
-        userEntity.setRoleIdList(
-                user
-                        .getRoleIdList()
-                        .stream()
-                        .map(RoleId::getRoleId)
-                        .collect(Collectors.toList())
-        );
+        userEntity.setRoleIdList(RoleId.toLong(user.getRoleIdList()));
 
         userEntity.setEnabled(user.getEnabled());
 
@@ -101,6 +92,7 @@ public class UserConverterImpl implements UserConverter {
 
         userEntity.setIsDeleted(user.getIsDeleted());
 
+        // 输出
         return userEntity;
     }
 
