@@ -1,9 +1,9 @@
 package com.astolfo.infrastructure.security.util;
 
 
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
-import com.astolfo.domain.domain.rbac.model.User;
+import com.astolfo.infrastructure.security.userdetails.LoginUser;
 
+import com.astolfo.infrastructure.security.userdetails.details.LoginUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,32 +32,32 @@ public final class SecurityUtil {
         }
     }
 
-    public static LoginUserDetails getRequiredLoginUserDetails() {
+    public static LoginUser getRequiredLoginUser() {
         UserDetails userDetails = getUserDetails();
 
-        if (Objects.isNull(userDetails) || !(userDetails instanceof LoginUserDetails)) {
+        if (Objects.isNull(userDetails) || !(userDetails instanceof LoginUser)) {
             log.error("userDetails不合法");
 
             throw new IllegalStateException("userDetails不合法");
         } else {
-            return (LoginUserDetails) userDetails;
+            return (LoginUser) userDetails;
         }
     }
 
-    public static User getRequiredCurrentUser() {
-        User user = getRequiredLoginUserDetails().getUser();
+    public static LoginUserDetails getRequiredCurrentUser() {
+        LoginUserDetails loginUserDetails = getRequiredLoginUser().getLoginUserDetails();
 
-        if (Objects.isNull(user)) {
+        if (Objects.isNull(loginUserDetails)) {
             log.error("LoginUserDetails中的User为null");
 
             throw new IllegalStateException("LoginUserDetails中的User为null");
         } else {
-            return user;
+            return loginUserDetails;
         }
     }
 
     public static Long getRequiredCurrentUserId() {
-        return getRequiredCurrentUser().getId();
+        return getRequiredCurrentUser().getUserId();
     }
 
     public static String getRequiredCurrentUserName() {

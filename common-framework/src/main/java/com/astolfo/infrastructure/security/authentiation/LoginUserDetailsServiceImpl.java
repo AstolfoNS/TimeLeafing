@@ -1,17 +1,12 @@
 package com.astolfo.infrastructure.security.authentiation;
 
-import com.astolfo.domain.domain.rbac.model.Permission;
-import com.astolfo.domain.domain.rbac.model.User;
-import com.astolfo.domain.domain.rbac.repository.UserRepository;
-import com.astolfo.domain.service.UserPermissionService;
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.rbac.service.UserPermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class LoginUserDetailsServiceImpl implements UserDetailsService {
@@ -25,10 +20,8 @@ public class LoginUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("该用户名不存在"));
+        // TODO: loadUserByUsername
 
-        List<Permission> permissionList = userPermissionService.findPermissionListByUser(user);
-
-        return new LoginUserDetails(user, permissionList);
+        return null;
     }
 }

@@ -1,12 +1,16 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.domain.rbac.model.Role;
-import com.astolfo.domain.domain.rbac.repository.RoleRepository;
+import com.astolfo.domain.rbac.model.root.Role;
+import com.astolfo.domain.rbac.model.valueobject.RoleId;
+import com.astolfo.domain.rbac.model.valueobject.RoleName;
+import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.persistence.converter.RoleConverter;
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,41 +20,80 @@ import java.util.Optional;
 public class RoleRepositoryImpl implements RoleRepository {
 
     @Resource
-    RoleMapper roleMapper;
+    private RoleMapper roleMapper;
 
     @Resource
-    RoleConverter roleConverter;
+    private RoleConverter roleConverter;
 
 
-    private RoleEntity findRoleEntityById(Long id) {
-        return roleMapper.selectRoleEntityById(id);
+    private RoleEntity findRoleEntityById(RoleId roleId) {
+        return roleMapper.selectRoleEntityById(roleId.getRoleId());
     }
 
-    private RoleEntity findRoleEntityByName(String name) {
-        return roleMapper.selectRoleEntityByName(name);
+    private RoleEntity findRoleEntityByRoleName(RoleName roleName) {
+        return roleMapper.selectRoleEntityByName(roleName.getRoleName());
     }
 
-    private List<RoleEntity> findRoleEntityListByIdList(List<Long> idList) {
-        return roleMapper.selectRoleEntityListByIdList(idList);
+    private List<RoleEntity> findRoleEntityListByIdList(List<RoleId> roleIdList) {
+        return roleMapper.selectRoleEntityListByIdList(
+                roleIdList
+                        .stream()
+                        .map(RoleId::getRoleId)
+                        .toList()
+        );
+    }
+
+    private RoleEntity findRoleEntityWithoutPermissionIdListById(RoleId roleId) {
+        return roleMapper.selectById(roleId.getRoleId());
+    }
+
+    private RoleEntity findRoleEntityWithoutPermissionIdListByRoleName(RoleName roleName) {
+         return roleMapper.selectOne(Wrappers.<RoleEntity>lambdaQuery().eq(RoleEntity::getRoleName, roleName.getRoleName()));
+    }
+
+    private List<RoleEntity> findRoleEntityListWithoutPermissionIdListByIdList(List<RoleId> roleIdList) {
+        return roleMapper.selectByIds(
+                roleIdList
+                        .stream()
+                        .map(RoleId::getRoleId)
+                        .toList()
+        );
     }
 
     @Override
-    public Optional<Role> findRoleByName(@Nonnull String name) {
-        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityByName(name)));
+    public Optional<Role> findRoleById(@Nonnull RoleId roleId) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityById(roleId)));
     }
 
     @Override
-    public Optional<Role> findRoleById(@Nonnull Long id) {
-        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityById(id)));
+    public Optional<Role> findRoleByRoleName(@Nonnull RoleName roleName) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityByRoleName(roleName)));
     }
 
     @Override
-    public List<Role> findRoleListByIdList(@Nonnull List<Long> idList) {
-        return roleConverter.toDomain(findRoleEntityListByIdList(idList));
+    public List<Role> findRoleListByIdList(@Nonnull List<RoleId> roleIdList) {
+        return roleConverter.toDomain(findRoleEntityListByIdList(roleIdList));
+    }
+
+    @Override
+    public Optional<Role> findRoleWithoutPermissionIdListById(@NotNull RoleId roleId) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityWithoutPermissionIdListById(roleId)));
+    }
+
+    @Override
+    public Optional<Role> findRoleWithoutPermissionIdListByRoleName(@NotNull RoleName roleName) {
+        return Optional.ofNullable(roleConverter.toDomain(findRoleEntityWithoutPermissionIdListByRoleName(roleName)));
+    }
+
+    @Override
+    public List<Role> findRoleListWithoutPermissionIdListByIdList(@NotNull List<RoleId> roleIdList) {
+        return roleConverter.toDomain(findRoleEntityListWithoutPermissionIdListByIdList(roleIdList));
     }
 
     @Override
     public Role save(@Nonnull Role role) {
+        // TODO: save
+
         return null;
     }
 }

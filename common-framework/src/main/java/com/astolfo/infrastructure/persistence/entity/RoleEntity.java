@@ -21,7 +21,7 @@ public class RoleEntity {
     private Long id;
 
     // 基础属性
-    private String name;
+    private String roleName;
 
     private String description;
 

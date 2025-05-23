@@ -3,7 +3,7 @@ package com.astolfo.infrastructure.security.filter;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.util.component.JwtUtil;
 import com.astolfo.infrastructure.common.util.component.RedisCacheUtil;
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUser;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -49,15 +49,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String userId = jwtUtil.parseToken(token).getStringId();
 
-        LoginUserDetails loginUserDetails = redisCacheUtil.get(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
+        LoginUser loginUser = redisCacheUtil.get(RedisCacheConstant.Login_USER_PERFIX.concat(userId));
 
-        if (Objects.isNull(loginUserDetails)) {
+        if (Objects.isNull(loginUser)) {
             log.error("JWT认证过程中未从redis中找到用户，用户未登录，UserId: {}", userId);
 
             throw new RuntimeException("用户未登录");
         }
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities()));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities()));
 
         filterChain.doFilter(request, response);
     }

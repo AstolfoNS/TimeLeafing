@@ -1,7 +1,8 @@
 package com.astolfo;
 
-import com.astolfo.domain.domain.rbac.model.Permission;
-import com.astolfo.domain.service.UserPermissionService;
+import com.astolfo.domain.rbac.model.root.Permission;
+import com.astolfo.domain.rbac.model.valueobject.UserId;
+import com.astolfo.domain.rbac.service.UserPermissionService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ public class UserPermissionServiceTest {
 
     @Test
     public void USerPermissionServiceTest() {
-        List<Permission> permissionList = userPermissionService.findUserPermissionListById(1L);
+        List<Permission> permissionList = userPermissionService.findUserPermissionListById(UserId.of(1L));
 
         System.out.println(permissionList);
     }

@@ -6,12 +6,12 @@
 #     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
 #     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
-#     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
-#
-# 如果表是关系表，则默认具有以下属性：
-#
-#    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-#    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
+                                                                                                                                                            #     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
+                                                                                                                                                            #
+                                                                                                                                                            # 如果表是关系表，则默认具有以下属性：
+                                                                                                                                                            #
+                                                                                                                                                            #    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
+                                                                                                                                                            #    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
 
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 CREATE TABLE IF NOT EXISTS `role` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 角色ID
 
-    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 角色名（如 USER / ADMIN / SYSTEM）
+    `role_name`                 VARCHAR(128) UNIQUE NOT NULL,                                                           -- 角色名（如 USER / ADMIN / SYSTEM）
     `description`               VARCHAR(256),                                                                           -- 角色描述
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `article` (
 CREATE TABLE IF NOT EXISTS `tag` (
     `id`                        BIGINT PRIMARY KEY AUTO_INCREMENT,                                                      -- 标签ID
 
-    `name`                      VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
+    `tag_name`                  VARCHAR(128) UNIQUE NOT NULL,                                                           -- 标签名（唯一）
 
     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 修改时间
     `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
 
-    FOREIGN KEY (parent_id) REFERENCES comment(id),                                                                     -- 自引用外键：指向父评论
+                                         FOREIGN KEY (parent_id) REFERENCES comment(id),                                                                     -- 自引用外键：指向父评论
     FOREIGN KEY (root_id) REFERENCES comment(id),                                                                       -- 自引用外键：指向根评论
 
     FOREIGN KEY (article_id) REFERENCES article(id),
@@ -328,14 +328,14 @@ FROM
     user;
 
 INSERT INTO role (
-    name
+    role_name
 ) VALUES (
-    'USER'
-), (
-    'ADMIN'
-), (
-    'SYSTEM'
-);
+             'USER'
+         ), (
+             'ADMIN'
+         ), (
+             'SYSTEM'
+         );
 
 SELECT
     *
@@ -347,14 +347,14 @@ INSERT INTO permission (
     url,
     http_method
 ) VALUES (
-    'article:read',
-    'article/read',
-    'GET'
-), (
-    'user:update',
-    'user/update',
-    'POST'
-);
+             'article:read',
+             'article/read',
+             'GET'
+         ), (
+             'user:update',
+             'user/update',
+             'POST'
+         );
 
 SELECT
     *
@@ -365,12 +365,12 @@ INSERT INTO user_role (
     user_id,
     role_id
 ) VALUES (
-    1, 2
-), (
-    1, 1
-), (
-    2, 1
-);
+             1, 2
+         ), (
+             1, 1
+         ), (
+             2, 1
+         );
 
 SELECT
     *
@@ -381,12 +381,12 @@ INSERT INTO role_permission (
     role_id,
     permission_id
 ) VALUES (
-    1, 1
-), (
-    2, 1
-), (
-    2, 2
-);
+             1, 1
+         ), (
+             2, 1
+         ), (
+             2, 2
+         );
 
 SELECT
     *

@@ -1,6 +1,6 @@
 package com.astolfo.infrastructure.common.util.component;
 
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUser;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class JwtUtil {
 
 
     public String generateToken(
-            LoginUserDetails loginUserDetails,
+            LoginUser loginUserDetails,
             Instant issuedAt,
             Long expiresInMillis
     ) {
@@ -48,11 +48,11 @@ public class JwtUtil {
         return jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.valueOf(jwtAlgorithm)).build(), claim)).getTokenValue();
     }
 
-    public String generateToken(LoginUserDetails loginUserDetails, Long expireInMillis) {
+    public String generateToken(LoginUser loginUserDetails, Long expireInMillis) {
         return generateToken(loginUserDetails, Instant.now(), expireInMillis);
     }
 
-    public String generateToken(LoginUserDetails loginUserDetails) {
+    public String generateToken(LoginUser loginUserDetails) {
         return generateToken(loginUserDetails, expire);
     }
 

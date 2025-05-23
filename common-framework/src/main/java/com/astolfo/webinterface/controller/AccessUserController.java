@@ -1,8 +1,11 @@
 package com.astolfo.webinterface.controller;
 
 import com.astolfo.application.service.UserService;
+import com.astolfo.domain.rbac.model.valueobject.Email;
+import com.astolfo.domain.rbac.model.valueobject.UserId;
+import com.astolfo.domain.rbac.model.valueobject.Username;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.webinterface.vo.UserInfo;
+import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +17,19 @@ public class AccessUserController {
     UserService userService;
 
 
-    @GetMapping("/info")
-    public ResponseResult<UserInfo> getUserInfo(@RequestParam("id") Long id) {
-        return userService.getUserInfo(id);
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileById(@RequestParam("id") Long userId) {
+        return userService.getUserProfileById(UserId.of(userId));
     }
 
-    @GetMapping("/{username}/info")
-    public ResponseResult<UserInfo> getUserInfo(@PathVariable("username") String username) {
-        return userService.getUserInfo(username);
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileByEmail(String email) {
+        return userService.getUserProfileByEmail(Email.of(email));
+    }
+
+    @GetMapping("/profile")
+    public ResponseResult<UserProfile> getUserProfileByUsername(@RequestParam("username") String username) {
+        return userService.getUserProfileByUsername(Username.of(username));
     }
 
 }
