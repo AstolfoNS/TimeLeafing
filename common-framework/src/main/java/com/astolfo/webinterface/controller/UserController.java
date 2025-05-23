@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Resource
-    private UserProfileService userService;
+    private UserProfileService userProfileService;
 
 
     @GetMapping("/profile")
     public ResponseResult<UserProfile> getUserProfile() {
-        return userService.getUserProfile();
+        return userProfileService.getUserProfile();
     }
 
     @PostMapping("/update-profile")
     public ResponseResult<Void> updateUserInfo(@RequestBody UserProfileRequest userProfileRequest) {
-        return userService.updateUserProfile(userProfileRequest);
+        return userProfileService.updateUserProfile(userProfileRequest);
     }
 
 }

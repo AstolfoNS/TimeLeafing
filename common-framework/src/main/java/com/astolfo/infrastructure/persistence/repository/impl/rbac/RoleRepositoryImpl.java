@@ -12,6 +12,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -80,10 +81,13 @@ public class RoleRepositoryImpl implements RoleRepository {
         return roleConverter.toDomain(findRoleEntityListWithoutPermissionIdListByIdList(roleIdList));
     }
 
+    @Transactional
     @Override
     public Role save(@Nonnull Role role) {
-        // TODO: save
+        RoleEntity roleEntity = roleConverter.toEntity(role);
 
-        return null;
+        roleMapper.insertOrUpdate(roleEntity);
+
+        return roleConverter.toDomain(roleEntity);
     }
 }

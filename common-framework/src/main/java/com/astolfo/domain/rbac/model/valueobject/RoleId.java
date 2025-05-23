@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -30,17 +31,25 @@ public class RoleId {
     }
 
     public static List<Long> toLong(List<RoleId> roleIdList) {
-        return roleIdList
-                .stream()
-                .map(RoleId::getRoleId)
-                .collect(Collectors.toList());
+        if (Objects.isNull(roleIdList)) {
+            return List.of();
+        } else {
+            return roleIdList
+                    .stream()
+                    .map(RoleId::getRoleId)
+                    .collect(Collectors.toList());
+        }
     }
 
     public static List<RoleId> toId(List<Long> idList) {
+        if (Objects.isNull(idList)) {
+            return List.of();
+        } else {
         return idList
                 .stream()
                 .map(RoleId::of)
                 .collect(Collectors.toList());
+        }
     }
 
 }

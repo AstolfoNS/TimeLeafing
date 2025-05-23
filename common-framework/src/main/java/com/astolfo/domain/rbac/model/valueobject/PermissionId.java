@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -27,16 +28,24 @@ public class PermissionId {
     }
 
     public static List<Long> toLong(List<PermissionId> permissionIdList) {
-        return permissionIdList
-                .stream()
-                .map(PermissionId::getPermissionId)
-                .collect(Collectors.toList());
+        if (Objects.isNull(permissionIdList)) {
+            return List.of();
+        } else {
+            return permissionIdList
+                    .stream()
+                    .map(PermissionId::getPermissionId)
+                    .collect(Collectors.toList());
+        }
     }
 
     public static List<PermissionId> toId(List<Long> idList) {
-        return idList
-                .stream()
-                .map(PermissionId::of)
-                .collect(Collectors.toList());
+        if (Objects.isNull(idList)) {
+            return List.of();
+        } else {
+            return idList
+                    .stream()
+                    .map(PermissionId::of)
+                    .collect(Collectors.toList());
+        }
     }
 }

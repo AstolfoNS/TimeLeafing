@@ -65,9 +65,9 @@ public class User {
 
         private LocalDateTime lastLoginTime;
 
-        // 生命周期属性
         private List<RoleId> roleIdList;
 
+        // 生命周期属性
         private Boolean enabled;
 
         private LocalDateTime createTime;

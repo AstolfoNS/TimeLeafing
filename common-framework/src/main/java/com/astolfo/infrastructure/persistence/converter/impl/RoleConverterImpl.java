@@ -9,6 +9,7 @@ import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,10 +42,14 @@ public class RoleConverterImpl implements RoleConverter {
 
     @Override
     public List<Role> toDomain(List<RoleEntity> roleEntityList) {
-        return roleEntityList
+        if (Objects.isNull(roleEntityList)) {
+            return List.of();
+        } else {
+            return roleEntityList
                 .stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -74,9 +79,13 @@ public class RoleConverterImpl implements RoleConverter {
 
     @Override
     public List<RoleEntity> toEntity(List<Role> roleList) {
-        return roleList
-                .stream()
-                .map(this::toEntity)
-                .collect(Collectors.toList());
+        if (Objects.isNull(roleList)) {
+            return List.of();
+        } else {
+            return roleList
+                    .stream()
+                    .map(this::toEntity)
+                    .collect(Collectors.toList());
+        }
     }
 }

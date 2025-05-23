@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -53,10 +54,14 @@ public class UserConverterImpl implements UserConverter {
 
     @Override
     public List<User> toDomain(List<UserEntity> userEntityList) {
-        return userEntityList
-                .stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+        if (Objects.isNull(userEntityList)) {
+            return List.of();
+        } else {
+            return userEntityList
+                    .stream()
+                    .map(this::toDomain)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -98,9 +103,13 @@ public class UserConverterImpl implements UserConverter {
 
     @Override
     public List<UserEntity> toEntity(List<User> userList) {
-        return userList
-                .stream()
-                .map(this::toEntity)
-                .collect(Collectors.toList());
+        if (Objects.isNull(userList)) {
+            return List.of();
+        } else {
+            return userList
+                    .stream()
+                    .map(this::toEntity)
+                    .collect(Collectors.toList());
+        }
     }
 }

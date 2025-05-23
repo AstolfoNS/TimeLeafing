@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -31,17 +31,25 @@ public class UserId {
     }
 
     public static List<Long> toLong(List<UserId> userIdList) {
-        return userIdList
-                .stream()
-                .map(UserId::getUserId)
-                .collect(Collectors.toList());
+        if (Objects.isNull(userIdList)) {
+            return List.of();
+        } else {
+            return userIdList
+                    .stream()
+                    .map(UserId::getUserId)
+                    .collect(Collectors.toList());
+        }
     }
 
     public static List<UserId> toId(List<Long> idList) {
-        return idList
-                .stream()
-                .map(UserId::of)
-                .collect(Collectors.toList());
+        if (Objects.isNull(idList)) {
+            return List.of();
+        } else {
+            return idList
+                    .stream()
+                    .map(UserId::of)
+                    .collect(Collectors.toList());
+        }
     }
 
 }

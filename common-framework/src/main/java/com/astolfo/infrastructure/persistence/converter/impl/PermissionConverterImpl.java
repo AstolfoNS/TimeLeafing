@@ -7,6 +7,7 @@ import com.astolfo.infrastructure.persistence.entity.PermissionEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -43,10 +44,14 @@ public class PermissionConverterImpl implements PermissionConverter {
 
     @Override
     public List<Permission> toDomain(List<PermissionEntity> permissionEntityList) {
-        return permissionEntityList
+        if (Objects.isNull(permissionEntityList)) {
+            return List.of();
+        } else {
+            return permissionEntityList
                 .stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -80,9 +85,13 @@ public class PermissionConverterImpl implements PermissionConverter {
 
     @Override
     public List<PermissionEntity> toEntity(List<Permission> permissionList) {
-        return permissionList
+        if (Objects.isNull(permissionList)) {
+            return List.of();
+        }  else {
+            return permissionList
                 .stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
+        }
     }
 }

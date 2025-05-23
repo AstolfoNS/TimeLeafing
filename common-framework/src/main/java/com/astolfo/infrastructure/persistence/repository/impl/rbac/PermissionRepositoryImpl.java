@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,9 +53,14 @@ public class PermissionRepositoryImpl implements PermissionRepository {
         return permissionConverter.toDomain(findPermissionEntityListByIdList(permissionIdList));
     }
 
+    @Transactional
     @Override
     public Permission save(@Nonnull Permission permission) {
-        return null;
+        PermissionEntity permissionEntity = permissionConverter.toEntity(permission);
+
+        permissionMapper.insertOrUpdate(permissionEntity);
+
+        return permissionConverter.toDomain(permissionEntity);
     }
 }
 

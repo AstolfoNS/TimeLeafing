@@ -13,8 +13,10 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -99,10 +101,13 @@ public class UserRepositoryImpl implements UserRepository {
         return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
     }
 
+    @Transactional
     @Override
     public User save(@Nonnull User user) {
-        // TODO: save
+        UserEntity userEntity = userConverter.toEntity(user);
 
-        return null;
+        userMapper.insertOrUpdate(userEntity);
+
+        return userConverter.toDomain(userEntity);
     }
 }
