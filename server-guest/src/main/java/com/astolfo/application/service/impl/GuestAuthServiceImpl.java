@@ -5,7 +5,7 @@ import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.util.component.JwtUtil;
 import com.astolfo.infrastructure.common.util.component.RedisCacheUtil;
-import com.astolfo.infrastructure.security.userdetails.LoginUserDetails;
+import com.astolfo.infrastructure.security.userdetails.LoginUser;
 import com.astolfo.infrastructure.security.util.SecurityUtil;
 import com.astolfo.webinterface.vo.LogoutResponse;
 import com.astolfo.application.service.AuthService;
@@ -15,7 +15,6 @@ import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service("GuestAuthService")
@@ -40,11 +39,11 @@ public class GuestAuthServiceImpl implements AuthService {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-            LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
-            redisCacheUtil.set(RedisCacheConstant.Login_USER_PERFIX.concat(loginUserDetails.getStringId()), loginUserDetails);
+            redisCacheUtil.set(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
 
-            return ResponseResult.okResult(new TokenResponse(loginUserDetails.getUsername(), jwtUtil.generateToken(loginUserDetails)));
+            return ResponseResult.okResult(new TokenResponse(loginUser.getUsername(), jwtUtil.generateToken(loginUser)));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
         }

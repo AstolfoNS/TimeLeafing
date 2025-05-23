@@ -1,8 +1,9 @@
 package com.astolfo.infrastructure.persistence.repository.impl.rbac;
 
-import com.astolfo.domain.domain.rbac.model.valueobject.entity.Symbol;
-import com.astolfo.domain.domain.rbac.model.Permission;
-import com.astolfo.domain.domain.rbac.repository.PermissionRepository;
+import com.astolfo.domain.rbac.model.valueobject.PermissionId;
+import com.astolfo.domain.rbac.model.valueobject.Symbol;
+import com.astolfo.domain.rbac.model.root.Permission;
+import com.astolfo.domain.rbac.repository.PermissionRepository;
 import com.astolfo.infrastructure.persistence.converter.PermissionConverter;
 import com.astolfo.infrastructure.persistence.entity.PermissionEntity;
 import com.astolfo.infrastructure.persistence.mapper.PermissionMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class PermissionRepositoryImpl implements PermissionRepository {
@@ -28,12 +30,17 @@ public class PermissionRepositoryImpl implements PermissionRepository {
         return permissionMapper.selectOne(Wrappers.<PermissionEntity>lambdaQuery().eq(PermissionEntity::getSymbol, symbol.getSymbol()));
     }
 
-    private PermissionEntity findPermissionEntityById(Long id) {
-        return permissionMapper.selectById(id);
+    private PermissionEntity findPermissionEntityById(PermissionId permissionId) {
+        return permissionMapper.selectById(permissionId.getPermissionId());
     }
 
-    private List<PermissionEntity> findPermissionEntityListByIdList(List<Long> idList) {
-        return permissionMapper.selectByIds(idList);
+    private List<PermissionEntity> findPermissionEntityListByIdList(List<PermissionId> permissionIdList) {
+        return permissionMapper.selectByIds(
+                permissionIdList
+                        .stream()
+                        .map(PermissionId::getPermissionId)
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override
@@ -42,13 +49,13 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public Optional<Permission> findPermissionById(@Nonnull Long id) {
-        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityById(id)));
+    public Optional<Permission> findPermissionById(@Nonnull PermissionId permissionId) {
+        return Optional.ofNullable(permissionConverter.toDomain(findPermissionEntityById(permissionId)));
     }
 
     @Override
-    public List<Permission> findPermissionListByIdList(@Nonnull List<Long> idList) {
-        return permissionConverter.toDomain(findPermissionEntityListByIdList(idList));
+    public List<Permission> findPermissionListByIdList(@Nonnull List<PermissionId> permissionIdList) {
+        return permissionConverter.toDomain(findPermissionEntityListByIdList(permissionIdList));
     }
 
     @Override

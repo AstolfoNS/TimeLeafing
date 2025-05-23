@@ -12,11 +12,15 @@ public class AdminAuthServiceImpl implements AuthService {
 
     @Override
     public ResponseResult<TokenResponse> login(LoginRequest loginRequest) {
+        // TODO: login
+
         return null;
     }
 
     @Override
     public ResponseResult<LogoutResponse> logout() {
+        // TODO: logout
+
         return null;
     }
 }

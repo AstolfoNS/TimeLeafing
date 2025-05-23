@@ -1,9 +1,9 @@
 package com.astolfo.webinterface.controller;
 
-import com.astolfo.application.dto.UpdateUserInfoRequest;
+import com.astolfo.application.dto.UserProfileRequest;
 import com.astolfo.application.service.UserService;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.webinterface.vo.UserInfo;
+import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +16,12 @@ public class UserController {
 
 
     @GetMapping("/info")
-    public ResponseResult<UserInfo> getUserInfo() {
+    public ResponseResult<UserProfile> getUserInfo() {
         return userService.getUserInfo();
     }
 
-    public ResponseResult<Void> updateUserInfo(@RequestBody UpdateUserInfoRequest updateUserInfoRequest) {
+    @PostMapping("/update-profile")
+    public ResponseResult<Void> updateUserInfo(@RequestBody UserProfileRequest updateUserInfoRequest) {
         return userService.updateUserInfo(updateUserInfoRequest);
     }
 

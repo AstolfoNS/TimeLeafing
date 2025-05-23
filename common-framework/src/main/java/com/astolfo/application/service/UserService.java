@@ -1,17 +1,23 @@
 package com.astolfo.application.service;
 
-import com.astolfo.application.dto.UpdateUserInfoRequest;
+import com.astolfo.application.dto.UserProfileRequest;
+import com.astolfo.domain.rbac.model.valueobject.Email;
+import com.astolfo.domain.rbac.model.valueobject.UserId;
+import com.astolfo.domain.rbac.model.valueobject.Username;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.webinterface.vo.UserInfo;
+import com.astolfo.webinterface.vo.PresignedUrl;
+import com.astolfo.webinterface.vo.UserProfile;
 
 public interface UserService {
 
-    ResponseResult<UserInfo> getUserInfo();
+    ResponseResult<UserProfile> getUserProfile();
 
-    ResponseResult<UserInfo> getUserInfo(Long id);
+    ResponseResult<UserProfile> getUserProfileById(UserId userId);
 
-    ResponseResult<UserInfo> getUserInfo(String username);
+    ResponseResult<UserProfile> getUserProfileByEmail(Email email);
 
-    ResponseResult<Void> updateUserInfo(UpdateUserInfoRequest updateUserInfoRequest);
+    ResponseResult<UserProfile> getUserProfileByUsername(Username username);
+
+    ResponseResult<Void> updateUserProfile(UserProfileRequest userProfileRequest);
 
 }
