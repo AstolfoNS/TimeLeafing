@@ -1,7 +1,7 @@
 package com.astolfo.webinterface.controller;
 
 import com.astolfo.application.dto.UserProfileRequest;
-import com.astolfo.application.service.UserService;
+import com.astolfo.application.service.UserProfileService;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private UserProfileService userService;
 
 
     @GetMapping("/profile")

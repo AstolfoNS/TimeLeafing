@@ -1,6 +1,6 @@
 package com.astolfo.webinterface.controller;
 
-import com.astolfo.application.service.UserService;
+import com.astolfo.application.service.UserProfileService;
 import com.astolfo.domain.rbac.model.valueobject.Email;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.model.valueobject.Username;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccessUserController {
 
     @Resource
-    UserService userService;
+    UserProfileService userService;
 
 
     @GetMapping("/profile")
