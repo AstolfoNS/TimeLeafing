@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Log4j2
@@ -20,17 +21,15 @@ public class UserRepositoryTest {
 
     @Test
     public void testUserRepository() {
-        Optional<User> userOptional1 = userRepository.findUserWithoutRoleIdListById(UserId.of(1L));
+        try {
+            Optional<User> userOptional = userRepository.findUserById(UserId.of(1L));
 
-//        log.info(userOptional1);
+            User user = userOptional.orElse(null);
 
-        System.out.println(userOptional1.orElse(null));
-
-        Optional<User> userOptional2 = userRepository.findUserWithoutRoleIdListByUsername(Username.of("Astolfo"));
-
-//        log.info(userOptional2);
-
-        System.out.println(userOptional2.orElse(null));
+            System.out.println(user);
+        } catch (Exception exception) {
+            log.error("exception: ", exception);
+        }
     }
 
 }

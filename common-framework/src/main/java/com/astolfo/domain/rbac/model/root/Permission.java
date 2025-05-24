@@ -8,6 +8,7 @@ import com.astolfo.domain.rbac.model.valueobject.UrlPattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 public class Permission {
@@ -64,6 +65,46 @@ public class Permission {
         private LocalDateTime updateTime;
 
         private Boolean isDeleted;
+    }
+
+    public Long getIdLong() {
+        if (Objects.isNull(id)) {
+            return null;
+        } else {
+            return id.getPermissionId();
+        }
+    }
+
+    public String getSymbolString() {
+        if (Objects.isNull(symbol)) {
+            return null;
+        } else {
+            return symbol.getSymbol();
+        }
+    }
+
+    public String getUrlString() {
+        if (Objects.isNull(url)) {
+            return null;
+        } else {
+            return url.toString();
+        }
+    }
+
+    public String getHttpMethodString() {
+        if (Objects.isNull(httpMethod)) {
+            return null;
+        } else {
+            return httpMethod.toString();
+        }
+    }
+
+    public String getPointString() {
+        if (Objects.isNull(point)) {
+            return null;
+        } else {
+            return point.toString();
+        }
     }
 
     private Permission(Details details) {

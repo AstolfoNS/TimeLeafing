@@ -25,6 +25,7 @@ public enum HttpCode {
     USER_NOT_EXIST(508, "该用户不存在"),
     LOGOUT_FAILED(509, "退出失败"),
     USER_UPDATE_FAILED(510, "用户信息更新失败"),
+    USER_REGISTER_FAILED(511, "用户注册失败"),
 
     ARTICLE_NOT_EXIST(601, "该文章不存在"),
     ARTICLE_PRIVATE(602, "该文章不公开"),

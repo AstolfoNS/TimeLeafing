@@ -3,9 +3,11 @@ package com.astolfo.domain.rbac.model.root;
 import com.astolfo.domain.rbac.model.valueobject.Gender;
 import com.astolfo.domain.rbac.model.valueobject.*;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
@@ -65,7 +67,7 @@ public class User {
 
         private LocalDateTime lastLoginTime;
 
-        private List<RoleId> roleIdList;
+        private List<RoleId> roleIdList = List.of();
 
         // 生命周期属性
         private Boolean enabled;
@@ -75,6 +77,19 @@ public class User {
         private LocalDateTime updateTime;
 
         private Boolean isDeleted;
+    }
+
+    @Data
+    public static class NewUser {
+        private Email email;
+
+        private Username username;
+
+        private Nickname nickname;
+
+        private PasswordHash passwordHash;
+
+        private Gender gender;
     }
 
     private User(Details details) {
@@ -107,8 +122,104 @@ public class User {
         setIsDeleted(details.getIsDeleted());
     }
 
+    private User(NewUser newUser) {
+        setEmail(newUser.getEmail());
+
+        setUsername(newUser.getUsername());
+
+        setNickname(newUser.getNickname());
+
+        setPasswordHash(newUser.getPasswordHash());
+
+        setGender(newUser.getGender());
+    }
+
+    public Long getIdLong() {
+        if (Objects.isNull(id)) {
+            return null;
+        } else {
+            return id.getUserId();
+        }
+    }
+
+    public String getEmailString() {
+        if (Objects.isNull(email)) {
+            return null;
+        } else {
+            return email.getEmail();
+        }
+    }
+
+    public String getUsernameString() {
+        if (Objects.isNull(username)) {
+            return null;
+        } else {
+            return username.getUsername();
+        }
+    }
+
+    public String getNicknameString() {
+        if (Objects.isNull(nickname)) {
+            return null;
+        } else {
+            return nickname.getNickname();
+        }
+    }
+
+    public String getPasswordHashString() {
+        if (Objects.isNull(passwordHash)) {
+            return null;
+        } else {
+            return passwordHash.getPasswordHash();
+        }
+    }
+
+    public String getAvatarString() {
+        if (Objects.isNull(avatar)) {
+            return null;
+        } else {
+            return avatar.getAvatar();
+        }
+    }
+
+    public String getGenderString() {
+        if (Objects.isNull(gender)) {
+            return null;
+        } else {
+            return gender.getGender();
+        }
+    }
+
     public static User of(Details details) {
         return new User(details);
+    }
+
+    public static User of(NewUser newUser) {
+        return new User(newUser);
+    }
+
+    public void updateNickname(Nickname nickname) {
+        setNickname(nickname);
+    }
+
+    public void updateAvatar(Avatar avatar) {
+        // TODO: 修改头像逻辑（使用minIO）
+
+        setAvatar(avatar);
+    }
+
+    public void updateGender(Gender gender) {
+        setGender(gender);
+    }
+
+    public void updateIntroduction(String introduction) {
+        setIntroduction(introduction);
+    }
+
+    public void updatePasswordHash(PasswordHash passwordHash) {
+        // TODO: 修改密码逻辑
+
+        setPasswordHash(passwordHash);
     }
 
     public void recordLogin() {

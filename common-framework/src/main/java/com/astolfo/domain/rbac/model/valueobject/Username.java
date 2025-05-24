@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -13,16 +15,22 @@ public class Username {
 
 
     public static boolean isValid(String username) {
-        // TODO: valid
-
-        return true;
+        return username.matches("^[a-zA-Z0-9_-]{3,30}$");
     }
 
     public static Username of(String username) {
-        if (isValid(username)) {
-            return new Username(username);
+        if (Objects.isNull(username)) {
+            return null;
         } else {
-            throw new IllegalArgumentException("Invalid username: " + username);
+            return new Username(username);
+        }
+    }
+
+    public static Username checkOf(String username) throws IllegalArgumentException {
+        if (isValid(username)) {
+            return of(username);
+        } else {
+            throw new IllegalArgumentException("用户名只能包含字母、数字、下划线、短横线，并且长度在3到30之间");
         }
     }
 

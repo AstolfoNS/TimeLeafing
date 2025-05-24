@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -12,19 +14,12 @@ public class Symbol {
     private String symbol;
 
 
-    public static boolean isValid(String symbol) {
-        // TODO: valid
-
-        return true;
-    }
-
     public static Symbol of(String symbol) {
-        if (isValid(symbol)) {
-            return new Symbol(symbol);
+        if (Objects.isNull(symbol)) {
+            return null;
         } else {
-            throw new IllegalArgumentException("Invalid symbol: " + symbol);
+            return new Symbol(symbol);
         }
-
     }
 
 }

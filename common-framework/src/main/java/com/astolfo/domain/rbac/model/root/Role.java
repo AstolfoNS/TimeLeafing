@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
@@ -20,7 +21,7 @@ public class Role {
 
     private String description;
 
-    private List<PermissionId> permissionIdList;
+    private List<PermissionId> permissionIdList = List.of();
 
     // 生命周期属性
     private Boolean enabled;
@@ -52,6 +53,22 @@ public class Role {
         private LocalDateTime updateTime;
 
         private Boolean isDeleted;
+    }
+
+    public Long getIdLong() {
+        if (Objects.isNull(id)) {
+            return null;
+        } else {
+            return id.getRoleId();
+        }
+    }
+
+    public String getRoleNameString() {
+        if (Objects.isNull(roleName)) {
+            return null;
+        } else {
+            return roleName.getRoleName();
+        }
     }
 
     private Role(Details details) {

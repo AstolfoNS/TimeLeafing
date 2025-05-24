@@ -6,12 +6,12 @@
 #     `enabled`                   BOOLEAN DEFAULT true,                                                                   -- 是否可用
 #     `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
 #     `update_time`               DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,                         -- 更新时间
-                                                                                                                                                            #     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
-                                                                                                                                                            #
-                                                                                                                                                            # 如果表是关系表，则默认具有以下属性：
-                                                                                                                                                            #
-                                                                                                                                                            #    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
-                                                                                                                                                            #    `is_deleted`                BOOLEAN DEFAULT false,                                                                  -- 是否被删除（软删）
+#     `is_deleted`                BOOLEAN DEFAULT false                                                                   -- 是否被删除（软删）
+#
+# 如果表是关系表，则默认具有以下属性：
+#
+#    `create_time`               DATETIME DEFAULT CURRENT_TIMESTAMP,                                                     -- 创建时间
+
 
 
 

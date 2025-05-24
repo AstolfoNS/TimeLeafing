@@ -1,5 +1,7 @@
 package com.astolfo;
 
+import com.astolfo.domain.rbac.model.root.Role;
+import com.astolfo.domain.rbac.repository.RoleRepository;
 import com.astolfo.infrastructure.persistence.entity.RoleEntity;
 import com.astolfo.infrastructure.persistence.mapper.RoleMapper;
 import jakarta.annotation.Resource;
@@ -14,16 +16,16 @@ public class RoleMapperTest {
     @Resource
     RoleMapper roleMapper;
 
+    @Resource
+    RoleRepository roleRepository;
+
 
     @Test
     public void testRoleMapper() {
-        List<RoleEntity> roleEntityList = roleMapper.selectRoleEntityListByIdList(List.of(1L, 2L));
 
-        RoleEntity roleEntity = roleMapper.selectRoleEntityById(1L);
+        List<Role> roleList = roleRepository.findRoleListByIdList(List.of());
 
-        System.out.println(roleEntityList);
-
-        System.out.println(roleEntity);
+        System.out.println(roleList);
     }
 
 }

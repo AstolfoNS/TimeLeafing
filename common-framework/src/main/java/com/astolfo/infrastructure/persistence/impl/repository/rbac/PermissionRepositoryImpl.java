@@ -50,7 +50,11 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     @Override
     public List<Permission> findPermissionListByIdList(@Nonnull List<PermissionId> permissionIdList) {
-        return permissionConverter.toDomain(findPermissionEntityListByIdList(permissionIdList));
+        if (permissionIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return permissionConverter.toDomain(findPermissionEntityListByIdList(permissionIdList));
+        }
     }
 
     @Transactional

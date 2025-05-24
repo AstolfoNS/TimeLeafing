@@ -8,6 +8,7 @@ import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.persistence.converter.UserConverter;
 import com.astolfo.infrastructure.persistence.entity.UserEntity;
 import com.astolfo.infrastructure.persistence.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
@@ -79,7 +80,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findUserListByIdList(@Nonnull List<UserId> userIdList) {
-        return userConverter.toDomain(findUserEntityListByIdList(userIdList));
+        if (userIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return userConverter.toDomain(findUserEntityListByIdList(userIdList));
+        }
     }
 
     @Override
@@ -99,7 +104,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findUserListWithoutRoleIdListByIdList(@Nonnull List<UserId> userIdList) {
-        return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
+        if (userIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
+        }
+    }
+
+    @Override
+    public boolean existsByUsername(@Nonnull Username username) {
+        return userMapper.selectCount(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getUsername, username.getUsername())) > 0;
+    }
+
+    @Override
+    public boolean existsByEmail(@Nonnull Email email) {
+        return userMapper.selectCount(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getEmail, email.getEmail())) > 0;
     }
 
     @Transactional
@@ -112,7 +131,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             return userConverter.toDomain(userEntity);
         } catch (Exception exception) {
-            throw new RuntimeException("保存User是发生错误", exception);
+            throw new RuntimeException("保存User时发生错误", exception);
         }
     }
 }

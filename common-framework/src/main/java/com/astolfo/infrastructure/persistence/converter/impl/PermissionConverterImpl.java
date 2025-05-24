@@ -58,17 +58,17 @@ public class PermissionConverterImpl implements PermissionConverter {
     public PermissionEntity toEntity(Permission permission) {
         PermissionEntity permissionEntity = new PermissionEntity();
 
-        permissionEntity.setId(permission.getId().getPermissionId());
+        permissionEntity.setId(permission.getIdLong());
 
-        permissionEntity.setSymbol(permission.getSymbol().getSymbol());
+        permissionEntity.setSymbol(permission.getSymbolString());
 
         permissionEntity.setDescription(permission.getDescription());
 
-        permissionEntity.setUrl(permission.getUrl().getUrlPattern());
+        permissionEntity.setUrl(permission.getUrlString());
 
-        permissionEntity.setHttpMethod(permission.getHttpMethod().getHttpMethod());
+        permissionEntity.setHttpMethod(permission.getHttpMethodString());
 
-        permissionEntity.setPoint(permission.getPoint().getPoint());
+        permissionEntity.setPoint(permission.getPointString());
 
         permissionEntity.setOrderNum(permission.getOrderNum());
 

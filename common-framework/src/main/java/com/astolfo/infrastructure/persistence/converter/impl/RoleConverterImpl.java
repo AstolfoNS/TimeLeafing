@@ -57,9 +57,9 @@ public class RoleConverterImpl implements RoleConverter {
         RoleEntity roleEntity = new RoleEntity();
 
         // 转化
-        roleEntity.setId(role.getId().getRoleId());
+        roleEntity.setId(role.getIdLong());
 
-        roleEntity.setRoleName(role.getRoleName().getRoleName());
+        roleEntity.setRoleName(role.getRoleNameString());
 
         roleEntity.setDescription(role.getDescription());
 
