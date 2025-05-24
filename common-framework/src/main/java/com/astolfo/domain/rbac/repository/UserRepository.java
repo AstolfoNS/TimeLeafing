@@ -5,7 +5,6 @@ import com.astolfo.domain.rbac.model.valueobject.Email;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.model.valueobject.Username;
 import jakarta.annotation.Nonnull;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +26,10 @@ public interface UserRepository {
     Optional<User> findUserWithoutRoleIdListById(@Nonnull UserId userId);
 
     List<User> findUserListWithoutRoleIdListByIdList(@Nonnull List<UserId> userIdList);
+
+    boolean existsByUsername(@Nonnull Username username);
+
+    boolean existsByEmail(@Nonnull Email email);
 
     User save(@Nonnull User user);
 
