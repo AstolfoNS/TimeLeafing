@@ -20,4 +20,12 @@ public class Username {
         return new Username(username);
     }
 
+    public static Username checkOf(String username) throws IllegalArgumentException {
+        if (isValid(username)) {
+            return of(username);
+        } else {
+            throw new IllegalArgumentException("用户名只能包含字母、数字、下划线、短横线，并且长度在3到30之间");
+        }
+    }
+
 }

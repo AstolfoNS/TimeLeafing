@@ -20,4 +20,12 @@ public class Email {
         return new Email(email);
     }
 
+    public static Email checkOf(String email) throws IllegalArgumentException {
+        if (isValid(email)) {
+            return of(email);
+        }  else {
+            throw new IllegalArgumentException("邮箱格式不正确");
+        }
+    }
+
 }

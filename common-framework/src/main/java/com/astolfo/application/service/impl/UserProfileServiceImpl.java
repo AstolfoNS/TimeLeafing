@@ -9,7 +9,6 @@ import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.domain.rbac.service.UserService;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.infrastructure.security.util.SecurityUtil;
 import com.astolfo.webinterface.vo.PresignedUrl;
 import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
@@ -107,12 +106,16 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public ResponseResult<Void> updateUserPassword(PasswordHash passwordHash) {
+        // TODO: update user password
+
 
         return null;
     }
 
     @Override
     public ResponseResult<PresignedUrl> updateUserAvatar(UserProfileRequest userProfileRequest) {
+        // TODO: update user avatar
+
 
         return null;
     }
