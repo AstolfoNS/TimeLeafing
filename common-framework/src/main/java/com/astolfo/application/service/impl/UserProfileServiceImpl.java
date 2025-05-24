@@ -1,15 +1,15 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.dto.UserProfileRequest;
+import com.astolfo.application.service.AuthenticationService;
 import com.astolfo.domain.rbac.model.root.User;
-import com.astolfo.domain.rbac.model.valueobject.Email;
-import com.astolfo.domain.rbac.model.valueobject.UserId;
-import com.astolfo.domain.rbac.model.valueobject.Username;
+import com.astolfo.domain.rbac.model.valueobject.*;
 import com.astolfo.application.service.UserProfileService;
 import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.infrastructure.security.util.SecurityUtil;
+import com.astolfo.webinterface.vo.PresignedUrl;
 import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private AuthenticationService authenticationService;
 
 
     private UserProfile toUserProfile(User user) {
@@ -46,11 +49,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public ResponseResult<UserProfile> getUserProfile() {
         try {
-            UserId id = UserId.of(SecurityUtil.getRequiredCurrentUserId());
-
-            User user = userRepository.findUserWithoutRoleIdListById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-            return ResponseResult.okResult(toUserProfile(user));
+            return ResponseResult.okResult(toUserProfile(authenticationService.getCurrentUser()));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }
@@ -91,7 +90,32 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public ResponseResult<Void> updateUserProfile(UserProfileRequest userProfileRequest) {
-        // TODO: updateUserProfile
+        try {
+            User user = authenticationService.getCurrentUser();
+
+            user.updateNickname(Nickname.of(userProfileRequest.getNickname()));
+
+            user.updateGender(Gender.of(userProfileRequest.getGender()));
+
+            user.updateIntroduction(userProfileRequest.getIntroduction());
+
+            userRepository.save(user);
+
+            return ResponseResult.okResult();
+        } catch (Exception exception) {
+            return ResponseResult.errorResult(HttpCode.USER_UPDATE_FAILED);
+        }
+    }
+
+    @Override
+    public ResponseResult<Void> updateUserPassword(PasswordHash passwordHash) {
+
+        return null;
+    }
+
+    @Override
+    public ResponseResult<PresignedUrl> updateUserAvatar(UserProfileRequest userProfileRequest) {
+
         return null;
     }
 }

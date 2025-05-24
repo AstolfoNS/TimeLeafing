@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/update-profile")
-    public ResponseResult<Void> updateUserInfo(@RequestBody UserProfileRequest userProfileRequest) {
+    public ResponseResult<Void> updateUserProfile(@RequestBody UserProfileRequest userProfileRequest) {
         return userProfileService.updateUserProfile(userProfileRequest);
     }
 

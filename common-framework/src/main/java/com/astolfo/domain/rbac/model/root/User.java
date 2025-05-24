@@ -77,6 +77,19 @@ public class User {
         private Boolean isDeleted;
     }
 
+    @Data
+    public static class NewUser {
+        private Email email;
+
+        private Username username;
+
+        private Nickname nickname;
+
+        private PasswordHash passwordHash;
+
+        private Gender gender;
+    }
+
     private User(Details details) {
         setId(details.getId());
 
@@ -107,8 +120,48 @@ public class User {
         setIsDeleted(details.getIsDeleted());
     }
 
+    private User(NewUser newUser) {
+        setEmail(newUser.getEmail());
+
+        setUsername(newUser.getUsername());
+
+        setNickname(newUser.getNickname());
+
+        setPasswordHash(newUser.getPasswordHash());
+
+        setGender(newUser.getGender());
+    }
+
     public static User of(Details details) {
         return new User(details);
+    }
+
+    public static User of(NewUser newUser) {
+        return new User(newUser);
+    }
+
+    public void updateNickname(Nickname nickname) {
+        setNickname(nickname);
+    }
+
+    public void updateAvatar(Avatar avatar) {
+        // TODO: 修改头像逻辑（使用minIO）
+
+        setAvatar(avatar);
+    }
+
+    public void updateGender(Gender gender) {
+        setGender(gender);
+    }
+
+    public void updateIntroduction(String introduction) {
+        setIntroduction(introduction);
+    }
+
+    public void updatePasswordHash(PasswordHash passwordHash) {
+        // TODO: 修改密码逻辑
+
+        setPasswordHash(passwordHash);
     }
 
     public void recordLogin() {
