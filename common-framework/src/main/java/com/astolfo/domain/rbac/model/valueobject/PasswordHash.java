@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,7 +19,11 @@ public class PasswordHash {
     }
 
     public static PasswordHash of(String passwordHash) {
-        return new PasswordHash(passwordHash);
+        if (Objects.isNull(passwordHash)) {
+            return null;
+        } else {
+            return new PasswordHash(passwordHash);
+        }
     }
 
     public static PasswordHash of(String password, PasswordEncoder passwordEncoder) throws IllegalArgumentException {

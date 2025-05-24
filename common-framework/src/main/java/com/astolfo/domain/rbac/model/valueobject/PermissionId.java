@@ -15,15 +15,12 @@ public class PermissionId {
 
     private Long permissionId;
 
-    public static boolean isValid(Long permissionId) {
-        return true;
-    }
 
     public static PermissionId of(Long permissionId) {
-        if (isValid(permissionId)) {
+        if (Objects.isNull(permissionId)) {
+            return null;
+        }  else {
             return new PermissionId(permissionId);
-        } else {
-            throw new IllegalArgumentException("Invalid permissionId: " + permissionId);
         }
     }
 

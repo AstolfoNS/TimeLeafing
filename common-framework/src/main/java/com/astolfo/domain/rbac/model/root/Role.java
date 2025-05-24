@@ -20,7 +20,7 @@ public class Role {
 
     private String description;
 
-    private List<PermissionId> permissionIdList;
+    private List<PermissionId> permissionIdList = List.of();
 
     // 生命周期属性
     private Boolean enabled;

@@ -17,7 +17,11 @@ public class UserId {
 
 
     public static UserId of(Long userId) {
-        return new UserId(userId);
+        if(Objects.isNull(userId)) {
+            return null;
+        } else {
+            return new UserId(userId);
+        }
     }
 
     public static List<Long> toLong(List<UserId> userIdList) {

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -13,16 +15,22 @@ public class Nickname {
 
 
     public static boolean isValid(String nickname) {
-        // TODO: valid
+        return nickname.matches("^[a-zA-Z0-9_-]{3,30}$");
+    }
 
-        return true;
+    public static Nickname checkOf(String nickname) {
+        if (isValid(nickname)) {
+            return of(nickname);
+        } else {
+            throw new IllegalArgumentException("昵称只能包含字母、数字、下划线、短横线，并且长度在3到30之间");
+        }
     }
 
     public static Nickname of(String nickname) {
-        if (isValid(nickname)) {
-            return new Nickname(nickname);
+        if (Objects.isNull(nickname)) {
+            return null;
         } else {
-            throw new IllegalArgumentException("Invalid nickname: " + nickname);
+            return new Nickname(nickname);
         }
     }
 

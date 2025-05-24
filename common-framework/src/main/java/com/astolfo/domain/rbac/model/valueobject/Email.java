@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,7 +19,11 @@ public class Email {
     }
 
     public static Email of(String email) {
-        return new Email(email);
+        if (Objects.isNull(email)) {
+            return null;
+        } else {
+            return new Email(email);
+        }
     }
 
     public static Email checkOf(String email) throws IllegalArgumentException {

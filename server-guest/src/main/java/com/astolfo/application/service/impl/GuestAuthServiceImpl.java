@@ -6,6 +6,7 @@ import com.astolfo.application.service.UserSessionService;
 import com.astolfo.domain.rbac.model.root.User;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.rbac.service.UserService;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.util.component.JwtUtil;
 import com.astolfo.infrastructure.security.userdetails.LoginUser;
@@ -28,6 +29,9 @@ public class GuestAuthServiceImpl implements AuthService {
     private UserSessionService userSessionService;
 
     @Resource
+    private UserService userService;
+
+    @Resource
     private UserRepository userRepository;
 
     @Resource
@@ -39,7 +43,7 @@ public class GuestAuthServiceImpl implements AuthService {
         try {
             LoginUser loginUser = authenticationService.authenticateByLoginRequest(loginRequest);
 
-            User user = userRepository.findUserWithoutRoleIdListById(UserId.of(loginUser.getUserId())).orElseThrow(() -> new RuntimeException("User Not Found"));
+            User user = userService.findUserWithoutRoleIdListById(UserId.of(loginUser.getUserId()));
 
             user.recordLogin();
 
@@ -49,7 +53,7 @@ public class GuestAuthServiceImpl implements AuthService {
 
             return ResponseResult.okResult(new TokenResponse(jwtUtil.generateToken(loginUser)));
         } catch (Exception exception) {
-            return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
+            return ResponseResult.errorResult(HttpCode.LOGIN_FAILED.getCode(), exception.getMessage());
         }
     }
 

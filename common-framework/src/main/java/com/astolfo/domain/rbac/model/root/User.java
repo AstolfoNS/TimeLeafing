@@ -65,7 +65,7 @@ public class User {
 
         private LocalDateTime lastLoginTime;
 
-        private List<RoleId> roleIdList;
+        private List<RoleId> roleIdList = List.of();
 
         // 生命周期属性
         private Boolean enabled;

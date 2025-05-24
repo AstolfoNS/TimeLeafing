@@ -38,7 +38,7 @@ public class UserEntity {
     private LocalDateTime lastLoginTime;
 
     @TableField(exist = false)
-    private List<Long> roleIdList;
+    private List<Long> roleIdList = List.of();
 
     // 生命周期
     private Boolean enabled;

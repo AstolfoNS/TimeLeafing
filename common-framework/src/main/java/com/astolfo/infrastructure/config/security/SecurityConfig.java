@@ -60,8 +60,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         auth -> {
-                            auth.requestMatchers("/api/guest-auth/login", "/api/guest-auth/register").permitAll();
-                            auth.requestMatchers("/api/admin-auth/login", "/api/admin-auth/register").permitAll();
+                            auth.requestMatchers("/api/register").permitAll();
+                            auth.requestMatchers("/api/guest-auth/login").permitAll();
+                            auth.requestMatchers("/api/admin-auth/login").permitAll();
                             auth.requestMatchers("/api/access/**").permitAll();
                             
                             auth.anyRequest().authenticated();

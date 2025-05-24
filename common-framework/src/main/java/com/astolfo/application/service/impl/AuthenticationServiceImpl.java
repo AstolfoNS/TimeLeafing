@@ -4,7 +4,7 @@ import com.astolfo.application.dto.LoginRequest;
 import com.astolfo.application.service.AuthenticationService;
 import com.astolfo.domain.rbac.model.root.User;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
-import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.rbac.service.UserService;
 import com.astolfo.infrastructure.security.userdetails.LoginUser;
 import com.astolfo.infrastructure.security.util.SecurityUtil;
 import jakarta.annotation.Resource;
@@ -20,7 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     @Resource
-    private UserRepository userRepository;
+    private UserService userService;
 
 
     @Override
@@ -39,13 +39,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User getCurrentUser() {
-        return userRepository.findUserById(UserId.of(SecurityUtil.getRequiredCurrentUserId())).orElseThrow(() -> new RuntimeException("User Not Found"));
+    public User getCurrentUser() throws RuntimeException {
+        return userService.findUserById(UserId.of(SecurityUtil.getRequiredCurrentUserId()));
     }
 
     @Override
-    public User getCurrentUserWithoutRoleIdList() {
-        return userRepository.findUserWithoutRoleIdListById(UserId.of(SecurityUtil.getRequiredCurrentUserId())).orElseThrow(() -> new RuntimeException("User Not Found"));
+    public User getCurrentUserWithoutRoleIdList() throws RuntimeException {
+        return userService.findUserWithoutRoleIdListById(UserId.of(SecurityUtil.getRequiredCurrentUserId()));
     }
 
 }

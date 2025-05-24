@@ -21,6 +21,6 @@ public enum Gender {
 
 
     public static Gender of(String gender) {
-        return MAP.get(gender);
+        return MAP.getOrDefault(gender, UNKNOWN);
     }
 }

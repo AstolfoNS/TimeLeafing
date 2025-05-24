@@ -26,7 +26,7 @@ public class RoleEntity {
     private String description;
 
     @TableField(exist = false)
-    private List<Long> permissionIdList;
+    private List<Long> permissionIdList = List.of();
 
     // 生命周期
     private Boolean enabled;

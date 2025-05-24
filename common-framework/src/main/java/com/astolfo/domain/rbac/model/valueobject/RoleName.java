@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -11,17 +13,12 @@ public class RoleName {
 
     private String roleName;
 
-    public static boolean isValid(String roleName) {
-        // TODO: valid
-
-        return true;
-    }
 
     public static RoleName of(String roleName) {
-        if (isValid(roleName)) {
-            return new RoleName(roleName);
+        if (Objects.isNull(roleName)) {
+            return null;
         } else {
-            throw new IllegalArgumentException("Invalid roleName: " + roleName);
+            return new RoleName(roleName);
         }
     }
 

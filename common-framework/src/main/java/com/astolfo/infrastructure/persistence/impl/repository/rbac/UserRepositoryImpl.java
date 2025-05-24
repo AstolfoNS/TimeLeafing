@@ -80,7 +80,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findUserListByIdList(@Nonnull List<UserId> userIdList) {
-        return userConverter.toDomain(findUserEntityListByIdList(userIdList));
+        if (userIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return userConverter.toDomain(findUserEntityListByIdList(userIdList));
+        }
     }
 
     @Override
@@ -100,7 +104,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findUserListWithoutRoleIdListByIdList(@Nonnull List<UserId> userIdList) {
-        return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
+        if (userIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
+        }
     }
 
     @Override
@@ -123,7 +131,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             return userConverter.toDomain(userEntity);
         } catch (Exception exception) {
-            throw new RuntimeException("保存User是发生错误", exception);
+            throw new RuntimeException("保存User时发生错误", exception);
         }
     }
 }

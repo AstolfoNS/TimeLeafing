@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,7 +19,11 @@ public class Username {
     }
 
     public static Username of(String username) {
-        return new Username(username);
+        if (Objects.isNull(username)) {
+            return null;
+        } else {
+            return new Username(username);
+        }
     }
 
     public static Username checkOf(String username) throws IllegalArgumentException {

@@ -14,7 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -63,7 +65,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
     public List<Role> findRoleListByIdList(@Nonnull List<RoleId> roleIdList) {
-        return roleConverter.toDomain(findRoleEntityListByIdList(roleIdList));
+        if (roleIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return roleConverter.toDomain(findRoleEntityListByIdList(roleIdList));
+        }
     }
 
     @Override
@@ -78,7 +84,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
     public List<Role> findRoleListWithoutPermissionIdListByIdList(@NotNull List<RoleId> roleIdList) {
-        return roleConverter.toDomain(findRoleEntityListWithoutPermissionIdListByIdList(roleIdList));
+        if (roleIdList.isEmpty()) {
+            return List.of();
+        } else {
+            return roleConverter.toDomain(findRoleEntityListWithoutPermissionIdListByIdList(roleIdList));
+        }
     }
 
     @Transactional
