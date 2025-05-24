@@ -14,6 +14,8 @@ import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
 
@@ -30,17 +32,17 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserProfile toUserProfile(User user) {
         UserProfile userProfile = new UserProfile();
 
-        userProfile.setId(user.getId().getUserId());
+        userProfile.setId(Objects.isNull(user.getId()) ? null : user.getId().getUserId());
 
-        userProfile.setEmail(user.getEmail().getEmail());
+        userProfile.setEmail(Objects.isNull(user.getEmail()) ? null : user.getEmail().getEmail());
 
-        userProfile.setUsername(user.getUsername().getUsername());
+        userProfile.setUsername(Objects.isNull(user.getUsername()) ? null : user.getUsername().getUsername());
 
-        userProfile.setNickname(user.getNickname().getNickname());
+        userProfile.setNickname(Objects.isNull(user.getNickname()) ? null : user.getNickname().getNickname());
 
-        userProfile.setAvatar(user.getAvatar().getAvatar());
+        userProfile.setAvatar(Objects.isNull(user.getAvatar()) ? null : user.getAvatar().getAvatar());
 
-        userProfile.setGender(user.getGender().getGender());
+        userProfile.setGender(Objects.isNull(user.getGender()) ? null : user.getGender().getGender());
 
         userProfile.setIntroduction(user.getIntroduction());
 
@@ -54,7 +56,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         try {
             return ResponseResult.okResult(toUserProfile(authenticationService.getCurrentUser()));
         } catch (Exception exception) {
-            return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
+            return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST.getCode(), exception.getMessage());
         }
     }
 

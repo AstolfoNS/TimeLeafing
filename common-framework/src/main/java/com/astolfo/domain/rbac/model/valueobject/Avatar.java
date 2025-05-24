@@ -11,7 +11,7 @@ import java.util.Objects;
 @Data
 public class Avatar {
 
-    String avatar;
+    private String avatar;
 
 
     public static Avatar of(String avatar) {
