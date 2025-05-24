@@ -3,9 +3,11 @@ package com.astolfo.domain.rbac.model.root;
 import com.astolfo.domain.rbac.model.valueobject.Gender;
 import com.astolfo.domain.rbac.model.valueobject.*;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
@@ -130,6 +132,62 @@ public class User {
         setPasswordHash(newUser.getPasswordHash());
 
         setGender(newUser.getGender());
+    }
+
+    public Long getIdLong() {
+        if (Objects.isNull(id)) {
+            return null;
+        } else {
+            return id.getUserId();
+        }
+    }
+
+    public String getEmailString() {
+        if (Objects.isNull(email)) {
+            return null;
+        } else {
+            return email.getEmail();
+        }
+    }
+
+    public String getUsernameString() {
+        if (Objects.isNull(username)) {
+            return null;
+        } else {
+            return username.getUsername();
+        }
+    }
+
+    public String getNicknameString() {
+        if (Objects.isNull(nickname)) {
+            return null;
+        } else {
+            return nickname.getNickname();
+        }
+    }
+
+    public String getPasswordHashString() {
+        if (Objects.isNull(passwordHash)) {
+            return null;
+        } else {
+            return passwordHash.getPasswordHash();
+        }
+    }
+
+    public String getAvatarString() {
+        if (Objects.isNull(avatar)) {
+            return null;
+        } else {
+            return avatar.getAvatar();
+        }
+    }
+
+    public String getGenderString() {
+        if (Objects.isNull(gender)) {
+            return null;
+        } else {
+            return gender.getGender();
+        }
     }
 
     public static User of(Details details) {

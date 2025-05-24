@@ -32,17 +32,17 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserProfile toUserProfile(User user) {
         UserProfile userProfile = new UserProfile();
 
-        userProfile.setId(Objects.isNull(user.getId()) ? null : user.getId().getUserId());
+        userProfile.setId(user.getIdLong());
 
-        userProfile.setEmail(Objects.isNull(user.getEmail()) ? null : user.getEmail().getEmail());
+        userProfile.setEmail(user.getEmailString());
 
-        userProfile.setUsername(Objects.isNull(user.getUsername()) ? null : user.getUsername().getUsername());
+        userProfile.setUsername(user.getUsernameString());
 
-        userProfile.setNickname(Objects.isNull(user.getNickname()) ? null : user.getNickname().getNickname());
+        userProfile.setNickname(user.getNicknameString());
 
-        userProfile.setAvatar(Objects.isNull(user.getAvatar()) ? null : user.getAvatar().getAvatar());
+        userProfile.setAvatar(user.getAvatarString());
 
-        userProfile.setGender(Objects.isNull(user.getGender()) ? null : user.getGender().getGender());
+        userProfile.setGender(user.getGenderString());
 
         userProfile.setIntroduction(user.getIntroduction());
 

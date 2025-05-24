@@ -69,19 +69,19 @@ public class UserConverterImpl implements UserConverter {
         UserEntity userEntity = new UserEntity();
 
         // 转化
-        userEntity.setId(Objects.isNull(user.getId()) ? null : user.getId().getUserId());
+        userEntity.setId(user.getIdLong());
 
-        userEntity.setEmail(Objects.isNull(user.getEmail()) ? null : user.getEmail().getEmail());
+        userEntity.setEmail(user.getEmailString());
 
-        userEntity.setUsername(Objects.isNull(user.getUsername()) ? null : user.getUsername().getUsername());
+        userEntity.setUsername(user.getUsernameString());
 
-        userEntity.setNickname(Objects.isNull(user.getNickname()) ? null : user.getNickname().getNickname());
+        userEntity.setNickname(user.getNicknameString());
 
-        userEntity.setPassword(Objects.isNull(user.getPasswordHash()) ? null : user.getPasswordHash().getPasswordHash());
+        userEntity.setPassword(user.getPasswordHashString());
 
-        userEntity.setAvatar(Objects.isNull(user.getAvatar()) ? null : user.getAvatar().getAvatar());
+        userEntity.setAvatar(user.getAvatarString());
 
-        userEntity.setGender(Objects.isNull(user.getGender()) ? null : user.getGender().getGender());
+        userEntity.setGender(user.getGenderString());
 
         userEntity.setIntroduction(user.getIntroduction());
 
