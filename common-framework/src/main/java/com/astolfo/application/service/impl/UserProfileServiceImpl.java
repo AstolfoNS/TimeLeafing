@@ -6,6 +6,7 @@ import com.astolfo.domain.rbac.model.root.User;
 import com.astolfo.domain.rbac.model.valueobject.*;
 import com.astolfo.application.service.UserProfileService;
 import com.astolfo.domain.rbac.repository.UserRepository;
+import com.astolfo.domain.rbac.service.UserService;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.response.ResponseResult;
 import com.astolfo.infrastructure.security.util.SecurityUtil;
@@ -19,6 +20,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private AuthenticationService authenticationService;
@@ -58,9 +62,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public ResponseResult<UserProfile> getUserProfileById(UserId userId) {
         try {
-            User user = userRepository.findUserWithoutRoleIdListById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-            return ResponseResult.okResult(toUserProfile(user));
+            return ResponseResult.okResult(toUserProfile(userService.findUserWithoutRoleIdListById(userId)));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }
@@ -69,9 +71,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public ResponseResult<UserProfile> getUserProfileByEmail(Email email) {
          try {
-            User user = userRepository.findUserWithoutRoleIdListByEmail(email).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-            return ResponseResult.okResult(toUserProfile(user));
+            return ResponseResult.okResult(toUserProfile(userService.findUserWithoutRoleIdListByEmail(email)));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }
@@ -80,9 +80,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public ResponseResult<UserProfile> getUserProfileByUsername(Username username) {
         try {
-            User user = userRepository.findUserWithoutRoleIdListByUsername(username).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-            return ResponseResult.okResult(toUserProfile(user));
+            return ResponseResult.okResult(toUserProfile(userService.findUserWithoutRoleIdListByUsername(username)));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.USER_NOT_EXIST);
         }

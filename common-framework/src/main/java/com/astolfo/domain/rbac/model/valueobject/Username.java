@@ -13,17 +13,11 @@ public class Username {
 
 
     public static boolean isValid(String username) {
-        // TODO: valid
-
-        return true;
+        return username.matches("^[a-zA-Z0-9_-]{3,30}$");
     }
 
     public static Username of(String username) {
-        if (isValid(username)) {
-            return new Username(username);
-        } else {
-            throw new IllegalArgumentException("Invalid username: " + username);
-        }
+        return new Username(username);
     }
 
 }

@@ -13,18 +13,11 @@ public class Email {
 
 
     public static boolean isValid(String email) {
-        // TODO: valid
-
-        return true;
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
 
     public static Email of(String email) {
-        if (isValid(email)) {
-            return new Email(email);
-        } else {
-            throw new IllegalArgumentException("Invalid email: " + email);
-        }
+        return new Email(email);
     }
-
 
 }
