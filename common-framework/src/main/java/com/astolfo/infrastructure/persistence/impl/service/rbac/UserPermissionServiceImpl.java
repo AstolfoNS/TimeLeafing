@@ -1,4 +1,4 @@
-package com.astolfo.domain.rbac.service.impl;
+package com.astolfo.infrastructure.persistence.impl.service.rbac;
 
 import com.astolfo.domain.rbac.model.root.Permission;
 import com.astolfo.domain.rbac.model.root.User;

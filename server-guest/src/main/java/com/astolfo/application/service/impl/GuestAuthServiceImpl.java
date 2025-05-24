@@ -1,6 +1,9 @@
 package com.astolfo.application.service.impl;
 
 import com.astolfo.application.dto.LoginRequest;
+import com.astolfo.domain.rbac.model.root.User;
+import com.astolfo.domain.rbac.model.valueobject.UserId;
+import com.astolfo.domain.rbac.repository.UserRepository;
 import com.astolfo.infrastructure.common.constant.RedisCacheConstant;
 import com.astolfo.infrastructure.common.enumtype.HttpCode;
 import com.astolfo.infrastructure.common.util.component.JwtUtil;
@@ -24,26 +27,37 @@ public class GuestAuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Resource
+    private UserRepository userRepository;
+
+    @Resource
     private RedisCacheUtil redisCacheUtil;
 
     @Resource
     private JwtUtil jwtUtil;
 
 
+    private Authentication LoginRequestAuthenticationToken(LoginRequest loginRequest) {
+        return new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+    }
+
+    private Authentication getAuthenticationByLoginRequest(LoginRequest loginRequest) {
+        return authenticationManager.authenticate(LoginRequestAuthenticationToken(loginRequest));
+    }
+
     @Override
     public ResponseResult<TokenResponse> login(LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-
-        String password = loginRequest.getPassword();
-
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            LoginUser loginUser = (LoginUser) getAuthenticationByLoginRequest(loginRequest).getPrincipal();
 
-            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            User user = userRepository.findUserById(UserId.of(loginUser.getUserId())).orElseThrow(() -> new RuntimeException("User Not Found"));
+
+            user.recordLogin();
+
+            userRepository.save(user);
 
             redisCacheUtil.set(RedisCacheConstant.Login_USER_PERFIX.concat(loginUser.getStringId()), loginUser);
 
-            return ResponseResult.okResult(new TokenResponse(loginUser.getUsername(), jwtUtil.generateToken(loginUser)));
+            return ResponseResult.okResult(new TokenResponse(jwtUtil.generateToken(loginUser)));
         } catch (Exception exception) {
             return ResponseResult.errorResult(HttpCode.LOGIN_FAILED);
         }

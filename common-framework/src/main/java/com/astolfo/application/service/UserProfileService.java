@@ -5,10 +5,9 @@ import com.astolfo.domain.rbac.model.valueobject.Email;
 import com.astolfo.domain.rbac.model.valueobject.UserId;
 import com.astolfo.domain.rbac.model.valueobject.Username;
 import com.astolfo.infrastructure.common.response.ResponseResult;
-import com.astolfo.webinterface.vo.PresignedUrl;
 import com.astolfo.webinterface.vo.UserProfile;
 
-public interface UserService {
+public interface UserProfileService {
 
     ResponseResult<UserProfile> getUserProfile();
 

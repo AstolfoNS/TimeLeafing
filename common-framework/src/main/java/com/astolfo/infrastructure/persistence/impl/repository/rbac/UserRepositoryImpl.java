@@ -1,4 +1,4 @@
-package com.astolfo.infrastructure.persistence.repository.impl.rbac;
+package com.astolfo.infrastructure.persistence.impl.repository.rbac;
 
 import com.astolfo.domain.rbac.model.root.User;
 import com.astolfo.domain.rbac.model.valueobject.Email;
@@ -11,12 +11,15 @@ import com.astolfo.infrastructure.persistence.mapper.UserMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -99,10 +102,17 @@ public class UserRepositoryImpl implements UserRepository {
         return userConverter.toDomain(findUserEntityListWithoutRoleIdListByIdList(userIdList));
     }
 
+    @Transactional
     @Override
     public User save(@Nonnull User user) {
-        // TODO: save
+        try {
+            UserEntity userEntity = userConverter.toEntity(user);
 
-        return null;
+            userMapper.insertOrUpdate(userEntity);
+
+            return userConverter.toDomain(userEntity);
+        } catch (Exception exception) {
+            throw new RuntimeException("保存User是发生错误", exception);
+        }
     }
 }

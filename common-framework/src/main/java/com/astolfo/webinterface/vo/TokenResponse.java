@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TokenResponse {
 
-    private String username;
-
     private String token;
 
 }

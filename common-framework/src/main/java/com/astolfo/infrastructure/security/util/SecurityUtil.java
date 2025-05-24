@@ -3,7 +3,6 @@ package com.astolfo.infrastructure.security.util;
 
 import com.astolfo.infrastructure.security.userdetails.LoginUser;
 
-import com.astolfo.infrastructure.security.userdetails.details.LoginUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,24 +43,12 @@ public final class SecurityUtil {
         }
     }
 
-    public static LoginUserDetails getRequiredCurrentUser() {
-        LoginUserDetails loginUserDetails = getRequiredLoginUser().getLoginUserDetails();
-
-        if (Objects.isNull(loginUserDetails)) {
-            log.error("LoginUserDetails中的User为null");
-
-            throw new IllegalStateException("LoginUserDetails中的User为null");
-        } else {
-            return loginUserDetails;
-        }
-    }
-
     public static Long getRequiredCurrentUserId() {
-        return getRequiredCurrentUser().getUserId();
+        return getRequiredLoginUser().getUserId();
     }
 
     public static String getRequiredCurrentUserName() {
-        return getRequiredCurrentUser().getUsername();
+        return getRequiredLoginUser().getUsername();
     }
 
 }

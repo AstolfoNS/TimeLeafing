@@ -1,6 +1,7 @@
 package com.astolfo.infrastructure.config.webmvc;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.annotation.Nonnull;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -29,25 +30,28 @@ public class WebConfig implements WebMvcConfigurer, WebMvcRegistrations {
         return new ApiPrefixHandlerMapping("/api");
     }
 
+    @Setter
     private static class ApiPrefixHandlerMapping extends RequestMappingHandlerMapping {
-        private final String prefix;
+        private String prefix;
 
         public ApiPrefixHandlerMapping(String prefix) {
-            this.prefix = prefix;
+            setPrefix(prefix);
+        }
+
+        private RequestMappingInfo getNewRequestMapping(RequestMappingInfo mapping) {
+            return RequestMappingInfo
+                    .paths(this.prefix)
+                    .build()
+                    .combine(mapping);
         }
 
         @Override
         protected void registerHandlerMethod(
-                @NotNull Object handler,
-                Method method,
-                @NotNull RequestMappingInfo mapping
+                @Nonnull Object handler,
+                @Nonnull Method method,
+                @Nonnull RequestMappingInfo mapping
         ) {
-            RequestMappingInfo newMapping = RequestMappingInfo
-                    .paths(this.prefix)
-                    .build()
-                    .combine(mapping);
-
-            super.registerHandlerMethod(handler, method, newMapping);
+            super.registerHandlerMethod(handler, method, getNewRequestMapping(mapping));
         }
     }
 
