@@ -16,7 +16,14 @@ import { createApp } from "vue";
 // Styles
 import "unfonts.css";
 
+// Pinia
+import { createPinia } from "pinia";
+
 const app = createApp(App);
+
+const pinia = createPinia();
+
+app.use(pinia);
 
 registerPlugins(app);
 
