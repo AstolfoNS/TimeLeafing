@@ -14,8 +14,6 @@ import com.astolfo.webinterface.vo.UserProfile;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
 
